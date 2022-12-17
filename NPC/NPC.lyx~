@@ -1,0 +1,275 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Vertex cover
+\end_layout
+
+\begin_layout Standard
+First we suppose that 
+\begin_inset Formula $G$
+\end_inset
+
+ has a clique with vertices 
+\begin_inset Formula $V'\subseteq V$
+\end_inset
+
+ of size 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Then we pick any edge 
+\begin_inset Formula $(u,v)\in\bar{E}$
+\end_inset
+
+.
+ Since the edges in the clique will all be edges from 
+\begin_inset Formula $G$
+\end_inset
+
+, and the edge 
+\begin_inset Formula $(u,v)\notin E$
+\end_inset
+
+ then this means that either 
+\begin_inset Formula $u$
+\end_inset
+
+ or 
+\begin_inset Formula $v$
+\end_inset
+
+ or both cannot be in 
+\begin_inset Formula $V'$
+\end_inset
+
+(since if both were in 
+\begin_inset Formula $V'$
+\end_inset
+
+ it violates our assumption that 
+\begin_inset Formula $(u,v)\in\bar{E}$
+\end_inset
+
+, since the clique only contains edges in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ One of them might not be in 
+\begin_inset Formula $V'$
+\end_inset
+
+ also, since it could be that 
+\begin_inset Formula $v$
+\end_inset
+
+ is in 
+\begin_inset Formula $V'$
+\end_inset
+
+, but there is not edge from 
+\begin_inset Formula $u$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+If we look at the set of vertices 
+\begin_inset Formula $V-V'$
+\end_inset
+
+, then we know theses are the vertices that are not in the clique.
+ We also know that the edges in the clique cannot be any edges in 
+\begin_inset Formula $\bar{E}$
+\end_inset
+
+.
+ We must remember that 
+\begin_inset Formula $u,v$
+\end_inset
+
+ are still vertices in 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ And since either one or both were not in 
+\begin_inset Formula $V'$
+\end_inset
+
+, then at least one (or both) of 
+\begin_inset Formula $u,v$
+\end_inset
+
+ will be in 
+\begin_inset Formula $V-V'$
+\end_inset
+
+.
+ Therefore we now know that the edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ will be covered by 
+\begin_inset Formula $V-V'$
+\end_inset
+
+.
+ We took the edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+randomly from 
+\begin_inset Formula $\bar{E}$
+\end_inset
+
+, and therefore we know that all 
+\begin_inset Formula $\bar{E}$
+\end_inset
+
+ are covered by 
+\begin_inset Formula $V-V'$
+\end_inset
+
+.
+ We know the size of this cover set is 
+\begin_inset Formula $|V|-k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now we need to show the other direction, so we will have to assume that
+ 
+\begin_inset Formula $\bar{G}$
+\end_inset
+
+has a vertex cover 
+\begin_inset Formula $V'$
+\end_inset
+
+ of size 
+\begin_inset Formula $|V'|=|V|-k$
+\end_inset
+
+.
+ If we have an edge 
+\begin_inset Formula $(u,v)\in\bar{E},$
+\end_inset
+
+then we must have that 
+\begin_inset Formula $u$
+\end_inset
+
+ or 
+\begin_inset Formula $v$
+\end_inset
+
+ or both are in 
+\begin_inset Formula $V'$
+\end_inset
+
+, since we know that 
+\begin_inset Formula $\bar{G}$
+\end_inset
+
+ is covered by 
+\begin_inset Formula $V'$
+\end_inset
+
+ (therefore the edges in 
+\begin_inset Formula $\bar{E}$
+\end_inset
+
+ must be incident on the vertices in 
+\begin_inset Formula $V'$
+\end_inset
+
+).
+\end_layout
+
+\end_body
+\end_document
