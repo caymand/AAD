@@ -97,7 +97,7 @@ Abstract problem
 \end_layout
 
 \begin_layout Itemize
-NPC problems informal
+NPC problems
 \end_layout
 
 \end_deeper
@@ -1964,29 +1964,8 @@ tour
 \begin_inset Formula $v\in V$
 \end_inset
 
-, 
-\begin_inset Formula $|V|=n$
-\end_inset
-
  representing cities, and the edges representing roads.
- The salesman must now visit each vertex in 
-\begin_inset Formula $G$
-\end_inset
-
- exactly once.
- The cost function 
-\begin_inset Formula $c(i,j)$
-\end_inset
-
- states the cost of traveling from city 
-\begin_inset Formula $i$
-\end_inset
-
- to city 
-\begin_inset Formula $j$
-\end_inset
-
-.
+ The salesman 
 \end_layout
 
 \begin_layout Subsection

@@ -76,7 +76,1621 @@
 \begin_body
 
 \begin_layout Section
-Vertex cover
+Summary
+\end_layout
+
+\begin_layout Itemize
+Informal definition/description of classes of problems
+\end_layout
+
+\begin_layout Itemize
+Decision Problems and Optimization problems
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Abstract problem 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ decision problems
+\end_layout
+
+\begin_layout Itemize
+NPC problems informal
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Encoding of problem instances
+\end_layout
+
+\begin_layout Itemize
+Formal definition of problems
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Languages
+\end_layout
+
+\begin_layout Itemize
+Definition of P and NP
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Polynomial time reducible
+\end_layout
+
+\begin_layout Itemize
+NPC definition
+\end_layout
+
+\begin_layout Itemize
+Method for proving NPC
+\end_layout
+
+\begin_layout Itemize
+Vertex cover is NPC
+\end_layout
+
+\begin_layout Section
+Detailed Summary
+\end_layout
+
+\begin_layout Subsection
+Classes of problems
+\end_layout
+
+\begin_layout Standard
+The set of problems in 
+\begin_inset Formula $P$
+\end_inset
+
+ are those that can be solved in 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ The class of 
+\begin_inset Formula $NP$
+\end_inset
+
+ are those problems that can be verified in polynomial time.
+ Meaning, if a certificate of a solution is given, we can verify the validity
+ of that certificate.
+ NP-completeness problems concernes itself with decision problems rather
+ than optimization problems.
+ That is, we concern ourselves with not finding the optimal solution to
+ a problem, but we would rather like to get a yes/no answer solution to
+ a problem.
+ 
+\end_layout
+
+\begin_layout Standard
+We can more formally define the a 
+\begin_inset Quotes eld
+\end_inset
+
+problem
+\begin_inset Quotes erd
+\end_inset
+
+ as an abstract problem 
+\begin_inset Formula $Q$
+\end_inset
+
+.
+ This is a binary relation between a set of problem 
+\emph on
+instances
+\emph default
+, 
+\begin_inset Formula $I$
+\end_inset
+
+
+\emph on
+, 
+\emph default
+and a set 
+\begin_inset Formula $S$
+\end_inset
+
+ of solutions to the the problem instance.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+make drawing here to show this is a relation not a function
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ is a set, since the solutions might not in general be unique and there
+ might be more than one solution to a problem instance.
+ A problem instance could for instance in the SHORTEST-PATH problem be a
+ tripple 
+\begin_inset Formula $(s,t,G)$
+\end_inset
+
+ (source, destination and graph), and a solution would be a sequence of
+ vertices for the shortest path.
+ For NPC this definition of an abstract problem is too big, since decision
+ problems concern themselves with decision problems and thereby expect yes/no
+ solutions.
+ Therefore, in the context of NPC problems, we can relax the definition
+ of an abstract definition as a function (instead of a relation) that maps
+ instances 
+\begin_inset Formula $I$
+\end_inset
+
+ into the solution set 
+\begin_inset Formula $\{0,1\}$
+\end_inset
+
+(yes/no answers).
+ With this definition, SHORTEST-PATH optimization problem can be cast into
+ another problem PATH, which a decision problem, whos instances consists
+ of the 4-tuple 
+\begin_inset Formula $(s,t,G,k)$
+\end_inset
+
+ that asks whether there is a path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+ in 
+\begin_inset Formula $G$
+\end_inset
+
+ of length at most 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Encodings
+\end_layout
+
+\begin_layout Standard
+Since the problems actually runs on a machine, the program solving the problem
+ will take an encoding of the problem instance.
+ This encoding will typically be a binary string, and a problem with encoding
+ as a binary string is known as a 
+\series bold
+\emph on
+concrete problem
+\series default
+\emph default
+.
+ This means, that if an algorithm finds a solution to an instance 
+\begin_inset Formula $i$
+\end_inset
+
+ of size 
+\begin_inset Formula $n=|i|$
+\end_inset
+
+ in 
+\begin_inset Formula $O(T(n))$
+\end_inset
+
+ then it solves the problem in 
+\begin_inset Formula $O(T(n))$
+\end_inset
+
+ time.
+ This carries over to the definition of polynomial time solvable, since
+ this means that an algorithm solves a problem in 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ if it given an problem instance with encoded size 
+\begin_inset Formula $n$
+\end_inset
+
+ is solved in 
+\begin_inset Formula $O(T(n))=O(n^{k})$
+\end_inset
+
+, and this is the class of problems 
+\begin_inset Formula $P$
+\end_inset
+
+ - problems that can be solved in polynomial time proportional to their
+ encoding size.
+ 
+\end_layout
+
+\begin_layout Standard
+With encodings we can therefore map the abstract problems to concrete problems.
+ There are however problems with the encodings, where specific encodings
+ will determine the efficiency(running time) of the algorithm.
+ We shall use the encoding 
+\begin_inset Formula $\langle k\rangle$
+\end_inset
+
+ to refer to any 
+\begin_inset Quotes eld
+\end_inset
+
+concise
+\begin_inset Quotes erd
+\end_inset
+
+ encoding of 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This means that whatever encoding is used, it is polynominally time related
+ to the binary representation.
+ This way, we can work in the concise representation and then always afterwards
+ convert to the binary format.
+ 
+\series bold
+\emph on
+Therefore, it is assumed that all problem instances are binary strings encoded
+ in a concise way.
+\end_layout
+
+\begin_layout Subsubsection
+Why encodings matter
+\end_layout
+
+\begin_layout Standard
+We can have an algorithm that takes a single 
+\begin_inset Formula $k$
+\end_inset
+
+ as input and runs in 
+\begin_inset Formula $\Theta(k)$
+\end_inset
+
+ time.
+ With unary encoding, meaning 
+\begin_inset Formula $k$
+\end_inset
+
+ones, this means that the algorithm runs in 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ for length 
+\begin_inset Formula $n=k$
+\end_inset
+
+ inputs.
+ If we however use normal binary encoding, then a number of size 
+\begin_inset Formula $k$
+\end_inset
+
+ requires 
+\begin_inset Formula $\lfloor\log_{2}k\rfloor+1$
+\end_inset
+
+ bits to encode., and we instead have the input length 
+\begin_inset Formula $n=\lfloor\log_{2}k\rfloor+1$
+\end_inset
+
+.
+ However, the running time is still 
+\begin_inset Formula $\Theta(k)$
+\end_inset
+
+, but since we now have a shorter encoding this means that 
+\begin_inset Formula $k=2^{\log_{2}n}$
+\end_inset
+
+ which gives running time of 
+\begin_inset Formula $\Theta(2^{n})$
+\end_inset
+
+ and we have exponential running time in the size of the input.
+ Since the running time of an abstract problem depends so heavily on the
+ encoding, we can in reality not talk about running time of an abstract
+ problem without specifying the encoding.
+\end_layout
+
+\begin_layout Subsection
+Languages
+\end_layout
+
+\begin_layout Standard
+From language theory, an alphabet 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is a finite set of symbols.
+ In this setting, 
+\begin_inset Formula $\Sigma=\{0,1\}$
+\end_inset
+
+.
+ A language 
+\begin_inset Formula $L$
+\end_inset
+
+ is any string made from an alphabet.
+ The language over all strings is denoted by 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+.
+ Decision problems, 
+\begin_inset Formula $Q$
+\end_inset
+
+, are a mapping, or function, from problem instances 
+\begin_inset Formula $x$
+\end_inset
+
+ to a 
+\begin_inset Formula $\{0,1\}$
+\end_inset
+
+ solution.
+ Since we encode problem instances as binary strings 
+\begin_inset Formula $x\in\Sigma^{*}$
+\end_inset
+
+, and decision problems are characterized by the yes-problem instances(those
+ where 
+\begin_inset Formula $Q(x)=1$
+\end_inset
+
+ with all other input being 
+\begin_inset Formula $0$
+\end_inset
+
+), we can view decision problems as languages over 
+\begin_inset Formula $\Sigma^{*}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L=\{x\in\Sigma^{*}:Q(x)=1\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With the definition of decision problems as languages, we can view the decision
+ problem PATH as the language
+\begin_inset Formula 
+\begin{align}
+\text{PATH}=\{\langle s,t,G,k\rangle\in\Sigma^{*}: & G=(V,E)\text{is an undirected graph and}\\
+ & s,t\in V\\
+ & k\text{is and integer}\\
+ & \text{there exists a path from \ensuremath{s\rightsquigarrow t} of at most \ensuremath{k} edges}\}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The language accepted by an algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+is the set of binary strings 
+\begin_inset Formula $x\in\Sigma^{*}$
+\end_inset
+
+for which
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L=\{x\in\Sigma^{*}:A(x)=1\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An algorithm rejcts a string if 
+\begin_inset Formula $A(x)=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A language 
+\begin_inset Formula $L$
+\end_inset
+
+ is decided by 
+\begin_inset Formula $A$
+\end_inset
+
+ if every string in 
+\begin_inset Formula $L$
+\end_inset
+
+ is accepted by 
+\begin_inset Formula $A$
+\end_inset
+
+ and all other strings are rejected.
+ This leads to the definition of accepted and decided in polynomial time.
+ What is important to note is perhaps that if an algorithm only accepts
+ a language, then it can just halt for invalid strings, which is not allowed
+ if it decides a language.
+\end_layout
+
+\begin_layout Standard
+By this we can formally define the complexity class 
+\begin_inset Formula $P$
+\end_inset
+
+ as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+P & =\{L\subseteq\{0,1\}^{*}:\text{there exists an algorithm \ensuremath{A}that }\\
+ & \text{decides \ensuremath{L}in polynomial time}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+meaning all the languages that can be decided in polynomial time.
+ From this follows a theorem saying that the class of problems 
+\begin_inset Formula $P$
+\end_inset
+
+ are the languages that are accepted by polynomial time algorithms.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P=\{L:L\text{ is accepted by a polynomial time algorithm}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof:
+\end_layout
+
+\begin_layout Standard
+We can prove this by showing that 
+\begin_inset Formula $P$
+\end_inset
+
+ is both an inclusive subset, 
+\begin_inset Formula $\subseteq$
+\end_inset
+
+, and inclusive superset, 
+\begin_inset Formula $\supseteq$
+\end_inset
+
+, of the above set.
+ It is trivial to show that 
+\begin_inset Formula $P$
+\end_inset
+
+ is a subset of this, since by the definition of 
+\begin_inset Formula $P$
+\end_inset
+
+ being those languages that are decided, and since the languages that are
+ decided in polynomial time are a subset of those that are accepted in polynomia
+l time.
+ This is true, since the definition of deciding meant that it accepts 
+\begin_inset Formula $L$
+\end_inset
+
+ and rejects all other inputs.
+\end_layout
+
+\begin_layout Standard
+Therefore, we need to show that the above set is a subset as well, meaning
+ that if a language is accepted by a polynomial time algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+ then it also decided by another polynomial time algorithm, say 
+\begin_inset Formula $A'$
+\end_inset
+
+.
+ We can prove this by simulation, and we let 
+\begin_inset Formula $A'$
+\end_inset
+
+ by an algorithm that runs 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Since we know that 
+\begin_inset Formula $A$
+\end_inset
+
+ accepts a language in polynomial time, it accepts 
+\begin_inset Formula $L$
+\end_inset
+
+ in at most 
+\begin_inset Formula $cn^{k}$
+\end_inset
+
+ steps.
+ Therfore, we can let 
+\begin_inset Formula $A'$
+\end_inset
+
+ be the algorithm that simulates 
+\begin_inset Formula $A$
+\end_inset
+
+ for 
+\begin_inset Formula $cn^{k}$
+\end_inset
+
+steps.
+ Thereafter, it can check if 
+\begin_inset Formula $A$
+\end_inset
+
+ accepted the string, in which case 
+\begin_inset Formula $A'$
+\end_inset
+
+ returns 
+\begin_inset Formula $1$
+\end_inset
+
+, otherwise 
+\begin_inset Formula $A'$
+\end_inset
+
+ will return 0.
+ Simulating 
+\begin_inset Formula $A$
+\end_inset
+
+ induces an overhead that is no more than a polynomial factor, and therefore
+ 
+\begin_inset Formula $A'$
+\end_inset
+
+ is still a polynomial time algorithm that can decide 
+\begin_inset Formula $L$
+\end_inset
+
+, and therefore deciding a language is a superset of accepting a language
+\end_layout
+
+\begin_layout Standard
+We have now shown the set is a subset and superset of the definition, meaning
+ it also belongs to the complexity class 
+\begin_inset Formula $P$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Polynomial time verification
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe look into ham-cycle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+\emph on
+verification 
+\series default
+\emph default
+algorithm is a two-argument algorithm 
+\begin_inset Formula $A(x,y)$
+\end_inset
+
+, where 
+\begin_inset Formula $x$
+\end_inset
+
+ is the problem instance 
+\begin_inset Formula $y$
+\end_inset
+
+ is a certificate.
+ We say that 
+\begin_inset Formula $A$
+\end_inset
+
+ verifies 
+\begin_inset Formula $x$
+\end_inset
+
+ if there exists a certificate 
+\begin_inset Formula $y$
+\end_inset
+
+ such that 
+\begin_inset Formula $A(x,y)=1$
+\end_inset
+
+.
+ The language verified by 
+\begin_inset Formula $A$
+\end_inset
+
+is 
+\begin_inset Formula 
+\[
+L=\{x=\{0,1\}^{*}:\text{there exists \ensuremath{y\in\{0,1\}^{*}}such that \ensuremath{A(x,y)=1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An aglorithm verifies a language if for any 
+\begin_inset Formula $x\in L$
+\end_inset
+
+ there exists a 
+\begin_inset Formula $y$
+\end_inset
+
+ that can be used to prove that 
+\begin_inset Formula $x\in L$
+\end_inset
+
+.
+ There must however be no 
+\begin_inset Formula $y$
+\end_inset
+
+ that can be used that 
+\begin_inset Formula $x$
+\end_inset
+
+ is in 
+\begin_inset Formula $L$
+\end_inset
+
+ when it is not the case.
+ 
+\end_layout
+
+\begin_layout Subsection
+The class NP
+\end_layout
+
+\begin_layout Standard
+We can use the notion of a verification algorithm to define the complexity
+ class of 
+\begin_inset Formula $NP$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition
+\end_layout
+
+\begin_layout Standard
+A language 
+\begin_inset Formula $L\in NP$
+\end_inset
+
+ if and only if there exists a polynomial time verification algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+ and constant 
+\begin_inset Formula $c$
+\end_inset
+
+ such that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{cc}
+L=\{x\in\{0,1\}^{*}: & \text{there is a \ensuremath{y\in\{0,1\}^{*}}with}\\
+ & |y|=O(|x|^{c})\text{ such that \ensuremath{A(x,y)=1}}
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+By this definition, then 
+\begin_inset Formula $P\subseteq NP$
+\end_inset
+
+ since we can always design a verification algorithm that ignores the certificat
+e and just runs the algorithm with instance 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Polynomial reducible
+\end_layout
+
+\begin_layout Standard
+A language 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ is polynomial reducible to another language 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L_{1}\le_{p}L_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+if there exists a polynomial time computable function 
+\begin_inset Formula $f:\{0,1\}^{*}\rightarrow\{0,1\}^{*}$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $x\in\{0,1\}^{*}$
+\end_inset
+
+we get that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x\in L_{1}\iff f(x)\in L_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This means that the reduction function 
+\begin_inset Formula $f$
+\end_inset
+
+ provides a polynomial time mapping, such that every 
+\begin_inset Formula $x\in L_{1}$
+\end_inset
+
+will be in 
+\begin_inset Formula $f(x)\in L_{2}$
+\end_inset
+
+ and if 
+\begin_inset Formula $x\notin L_{1}$
+\end_inset
+
+will not be in 
+\begin_inset Formula $f(x)\notin L_{2}$
+\end_inset
+
+.
+ The function 
+\begin_inset Formula $f$
+\end_inset
+
+ maps instances 
+\begin_inset Formula $x$
+\end_inset
+
+ of the decision problem identified by 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ into instances 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ of the decision problem identified by language 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ and solving a decision problem in either 
+\begin_inset Formula $L_{2}/L_{1}$
+\end_inset
+
+ provides the solution to the decision problem in the other language.
+ We call 
+\begin_inset Formula $f$
+\end_inset
+
+ a 
+\series bold
+\emph on
+reduction function
+\series default
+ 
+\emph default
+and the algorithm, 
+\begin_inset Formula $F$
+\end_inset
+
+, that computes 
+\begin_inset Formula $f$
+\end_inset
+
+ is called the 
+\series bold
+\emph on
+reduction algorithm
+\series default
+\emph default
+, since the decision problem of solving problem instance for the language
+ 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ is reducible to solving 
+\begin_inset Formula $f(x)$
+\end_inset
+
+ in 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+.
+ 
+\emph on
+In a sense, solving 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+is no harder than solving 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+since we can always convert the problem instance to a problem in 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We can actually say that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+L_{1}\le_{p}L_{2}\land L_{2}\in L_{1}\implies L_{1}\in P
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+since we can use 
+\begin_inset Formula $f$
+\end_inset
+
+ to convert a problem in 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ to a problem in 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ in polynomial time, and solve the decision problem in 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ in polynomial time.
+\end_layout
+
+\begin_layout Subsection
+NPC
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition: 
+\series default
+A language 
+\begin_inset Formula $L$
+\end_inset
+
+is 
+\begin_inset Formula $NP$
+\end_inset
+
+-complete if
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $L\in NP$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $L\text{'\ensuremath{\leq_{p}L}}$
+\end_inset
+
+for every 
+\begin_inset Formula $L'\text{\ensuremath{\in NP}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This states that NP are the hardest problemst in NP, since they to a polynomial
+ factor are at least as hard as all other NP problems.
+ The second problem is known as NP-hardness.
+\end_layout
+
+\begin_layout Subsection
+Proving NPC
+\end_layout
+
+\begin_layout Standard
+The general formula for showing NPC for a new language 
+\begin_inset Formula $L$
+\end_inset
+
+, is to use reduction from an already known NPC language 
+\begin_inset Formula $L'\in\text{NPC}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Prove that 
+\begin_inset Formula $L\in\text{NP}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Select an known NPC language 
+\begin_inset Formula $L'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Show that 
+\begin_inset Formula $L'\leq_{p}L$
+\end_inset
+
+.
+ That is, show that there is a polynomial time computable function 
+\begin_inset Formula $f:\{0,1\}^{*}\rightarrow\{0,1\}^{*}$
+\end_inset
+
+ such that for all 
+\begin_inset Formula $x\in\{0,1\}^{*}$
+\end_inset
+
+we have 
+\begin_inset Formula $x\in L'\iff f(x)\in L$
+\end_inset
+
+.
+ That is, show that 
+\begin_inset Formula $L$
+\end_inset
+
+ is NP-hard.
+\end_layout
+
+\begin_layout Subsection
+Satisfiability
+\end_layout
+
+\begin_layout Standard
+A problem instance for SAT is a boolean formula 
+\begin_inset Formula $\phi$
+\end_inset
+
+ consisting of
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $n$
+\end_inset
+
+ boolean variables 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $m$
+\end_inset
+
+ boolean connectives - this is any unary of binary boolean function
+\end_layout
+
+\begin_layout Enumerate
+parenthesis - this is used to specify the ordering of operators
+\end_layout
+
+\begin_layout Standard
+A satisfying assignment is an assignment of the 
+\begin_inset Formula $n$
+\end_inset
+
+ variables that causes 
+\begin_inset Formula $\phi$
+\end_inset
+
+ to be 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ We also say that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is satisfiable if such an assignment exists.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+remember encoding
+\end_layout
+
+\end_inset
+
+The language of the problem SAT is defined as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{SAT}=\{\langle\phi\rangle:\phi\text{ is a satisfiable boolean formula}\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and is the language of all boolean formulas that are satisfiable.
+\end_layout
+
+\begin_layout Subsubsection
+Showing the language is in NP
+\end_layout
+
+\begin_layout Standard
+Showing that 
+\begin_inset Formula $L$
+\end_inset
+
+ is in NP means that we have to show that there is a polynomial time verificatio
+n algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+ that given a certificate and problem instance can verify if the instance
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ is in 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ As the certificate we pick the assignment of the 
+\begin_inset Formula $n$
+\end_inset
+
+ variables.
+ The verification has to prove an instance 
+\begin_inset Formula $x$
+\end_inset
+
+ is in 
+\begin_inset Formula $L$
+\end_inset
+
+ given the certificate.
+ This means that when 
+\begin_inset Formula $y$
+\end_inset
+
+ is a an assignment of variables we can simply run the boolean formula described
+ by 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ If 1 is returned the assignment is satisfiable.
+ Otherwise it is not.
+ The running time of 
+\begin_inset Formula $A$
+\end_inset
+
+ is the running time of the formula.
+ The running time must be polynomial in the size of the formula - number
+ of connectives and boolean variables.
+\end_layout
+
+\begin_layout Subsubsection
+Showing NP-hardness
+\end_layout
+
+\begin_layout Standard
+Showing NP-hardness means we have to take circuit-sat and reduce it into
+ the SAT problem.
+ 
+\end_layout
+
+\begin_layout Standard
+If we have a circuit-satisfiable circuit 
+\begin_inset Formula $C$
+\end_inset
+
+ then we start by assigning a variable 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to each wire of the circuit.
+ Then, we can view each gate of 
+\begin_inset Formula $C$
+\end_inset
+
+ as a mapping from its input wire to its output wire (there will always
+ be one output wire, which might then later fan out).
+ Then we simply construct a subformula 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+ for each gate in the circuit doing exactly what the gate did.
+ For instance, if we have an AND gate with three input, we can express the
+ output as 
+\begin_inset Formula $x_{4}\iff(x_{1}\land x_{2}\land x_{3})$
+\end_inset
+
+.
+ We can construct a subformula for each gate.
+ To produce the formula 
+\begin_inset Formula $\phi$
+\end_inset
+
+, we AND the output wire 
+\begin_inset Formula $x_{m}$
+\end_inset
+
+ of 
+\begin_inset Formula $C$
+\end_inset
+
+ with all the subformulas ANDed together 
+\begin_inset Formula $\phi=x_{m}\land\phi_{1}\land\phi_{2}\land,...,\land\phi_{k}$
+\end_inset
+
+.
+ Since we get a satisfying circuit when the output wire is 1, then this
+ formula simply says that the output wire should be what we expect and that
+ each gate should do what it is intended to do.
+ Therefore, whenver 
+\begin_inset Formula $C$
+\end_inset
+
+ is satisfiable, then 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is also satisfiable.
+ We have now shown 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $F$
+\end_inset
+
+ runs in polynomial time in the number of gates and wires, since we just
+ assigned a variable for each wire, and then made a subformula for each
+ gate.
+\end_layout
+
+\begin_layout Subsection
+Showing 3CNF is NPC
+\end_layout
+
+\begin_layout Subsection
+The Clique problem
+\end_layout
+
+\begin_layout Standard
+A 
+\series bold
+clique
+\series default
+ in an undirected graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ is a set of vertices 
+\begin_inset Formula $V'\subseteq V$
+\end_inset
+
+, such that each pair of vertices in 
+\begin_inset Formula $V'$
+\end_inset
+
+ are connected by an endge in 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ That is, for each pair of distinct 
+\begin_inset Formula $u,v\in V'$
+\end_inset
+
+, then 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ is an edge in the original graph.
+ The size of a clique is the number of vertices in a clique.
+ 
+\series bold
+The clique problem
+\series default
+ is an optimization problem of finding the largest clique in a graph.
+ The decision problem can be formalized as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{CLIQUE}=\{\langle G,k\rangle:G\text{is a graph containing a clique of size }k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The naive solution would be to consider each 
+\begin_inset Formula $k$
+\end_inset
+
+ subset of vertices and check if it is a clique.
+ This would be 
+\begin_inset Formula $_{|V|}C_{k}$
+\end_inset
+
+which is 
+\begin_inset Formula $\Omega(k^{2}({]V] \choose k})$
+\end_inset
+
+.
+ The problem is that 
+\begin_inset Formula $k$
+\end_inset
+
+ will often be near 
+\begin_inset Formula $|V|/2$
+\end_inset
+
+ and it is therefore not polynomial.
+\end_layout
+
+\begin_layout Subsubsection
+Clique is in NP
+\end_layout
+
+\begin_layout Standard
+The verification algorithm will take the subset of vertices 
+\begin_inset Formula $V'\subseteq V$
+\end_inset
+
+ as a certificate.
+ It will then check that 
+\begin_inset Formula $|V'|=k$
+\end_inset
+
+ and that each pair of vertices in 
+\begin_inset Formula $V'$
+\end_inset
+
+ has an edge in 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ This can be done in polynomial time in 
+\begin_inset Formula $V'$
+\end_inset
+
+ and therefore also in 
+\begin_inset Formula $V$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Clique is NP-hard
+\end_layout
+
+\begin_layout Standard
+It can be shown that CLIQUE is NP-hard by the reduction 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\text{3-CNF-SAT}\le_{p}\text{CLIQUE}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reduction algorithm will now be defined.
+ A formula 
+\begin_inset Formula $\phi$
+\end_inset
+
+ in 3-CNF consists of a sequence of 
+\begin_inset Formula $k$
+\end_inset
+
+ clauses ANDed together 
+\begin_inset Formula $\phi=C_{1}\land C_{2}\land,...,\land C_{k}$
+\end_inset
+
+.
+ Each clause consists of 3-different litterals that are ORed together.
+ We will construct a graph that only has a clique of size 
+\begin_inset Formula $k$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is satisfiable.
+ Note the if and only iff from the definition of the function 
+\begin_inset Formula $f$
+\end_inset
+
+ - it needs to be a mapping.
+\end_layout
+
+\begin_layout Standard
+Now, we take each clause 
+\begin_inset Formula $C_{r}=l_{1}^{r}\lor l_{2}^{r}\lor l_{3}^{r}$
+\end_inset
+
+ and place the triple 
+\begin_inset Formula $v_{1}^{r}\lor v_{2}^{r}\lor v_{3}^{r}$
+\end_inset
+
+ into the vertex set 
+\begin_inset Formula $V$
+\end_inset
+
+ of the graph to be created.
+ We also place an edge between two vertices 
+\begin_inset Formula $v_{i}^{r}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{j}^{s}$
+\end_inset
+
+ 
+\emph on
+it holds that 
+\begin_inset Formula $r\neq s$
+\end_inset
+
+
+\emph default
+(two different triplets) 
+\emph on
+and the two literals 
+\begin_inset Formula $v_{i}^{r}\text{and}v_{j}^{s}$
+\end_inset
+
+ are consistent
+\emph default
+(not the negation of each other - 
+\begin_inset Formula $x_{1},\sim x_{2}$
+\end_inset
+
+)
+\emph on
+ .
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing the 3CNF-SAT implies CLIQUE
+\end_layout
+
+\begin_layout Standard
+Suppose that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is in fact a satisfying assignment.
+ Then each clause 
+\begin_inset Formula $C_{r}$
+\end_inset
+
+ must contain at least one literal 
+\begin_inset Formula $l_{i}^{r}$
+\end_inset
+
+ that is assignment 1.
+ This literal will in 
+\begin_inset Formula $G$
+\end_inset
+
+ be the vertex 
+\begin_inset Formula $v_{i}^{r}$
+\end_inset
+
+.
+ If we from each clause pick a literal that gets assigned 1, then we will
+ have 
+\begin_inset Formula $k$
+\end_inset
+
+ vertices 
+\begin_inset Formula $V'$
+\end_inset
+
+ in 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ Now, any vertices 
+\begin_inset Formula $v_{i}^{r},v_{j}^{s}\in V'$
+\end_inset
+
+ map to 
+\begin_inset Formula $1$
+\end_inset
+
+ and are of different clauses (that is how we picked them).
+ Furthermore since both literal 
+\begin_inset Formula $l_{i}^{r},l_{j}^{s}$
+\end_inset
+
+ are 
+\begin_inset Formula $1$
+\end_inset
+
+ they cannot be complements of each other - satisfying the other part of
+ how we constructed 
+\begin_inset Formula $G$
+\end_inset
+
+, and therefore there must be an edge between 
+\begin_inset Formula $v_{i}^{r},v_{j}^{s}$
+\end_inset
+
+.
+ We picked two random vertices, so this holds for all vertices.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing CLIQUE implies 3CNF-SAT
+\end_layout
+
+\begin_layout Subsection
+Vertex cover 
 \end_layout
 
 \begin_layout Standard
@@ -326,6 +1940,57 @@ they are an edge of
 \end_inset
 
 ).
+\end_layout
+
+\begin_layout Subsection
+Traveling salesman
+\end_layout
+
+\begin_layout Standard
+In the traveling salesman problem, the salesman wants to make a full 
+\series bold
+tour
+\series default
+ visiting 
+\begin_inset Formula $n$
+\end_inset
+
+ cities at a minimal cost.
+ This can be modelled as a graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ with the vertices 
+\begin_inset Formula $v\in V$
+\end_inset
+
+, 
+\begin_inset Formula $|V|=n$
+\end_inset
+
+ representing cities, and the edges representing roads.
+ The salesman must now visit each vertex in 
+\begin_inset Formula $G$
+\end_inset
+
+ exactly once.
+ The cost function 
+\begin_inset Formula $c(i,j)$
+\end_inset
+
+ states the cost of traveling from city 
+\begin_inset Formula $i$
+\end_inset
+
+ to city 
+\begin_inset Formula $j$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Subset-sum
 \end_layout
 
 \end_body
