@@ -97,7 +97,7 @@ Abstract problem
 \end_layout
 
 \begin_layout Itemize
-NPC problems
+NPC problems informal
 \end_layout
 
 \end_deeper
@@ -132,7 +132,7 @@ Method for proving NPC
 \end_layout
 
 \begin_layout Itemize
-Vertex cover
+Vertex cover is NPC
 \end_layout
 
 \begin_layout Section
@@ -1964,8 +1964,108 @@ tour
 \begin_inset Formula $v\in V$
 \end_inset
 
+, 
+\begin_inset Formula $|V|=n$
+\end_inset
+
  representing cities, and the edges representing roads.
- The salesman 
+ The salesman must now visit each vertex in 
+\begin_inset Formula $G$
+\end_inset
+
+ exactly once.
+ The cost function 
+\begin_inset Formula $c(i,j)$
+\end_inset
+
+ states the cost of traveling from city 
+\begin_inset Formula $i$
+\end_inset
+
+ to city 
+\begin_inset Formula $j$
+\end_inset
+
+.
+ The formal language defining the problem is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+G & =\{\text{\ensuremath{\langle G,c,k\rangle:G=(V,E)}is a complete graph}\\
+ & c\text{ is a function }V\times V\mapsto N\\
+ & k\in N\\
+ & G\text{ has a tour with cost at most }k\\
+\}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing TSP is in NP
+\end_layout
+
+\begin_layout Standard
+Given an instance of the tour, we can as a certificate take the sequence
+ of 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices visited on the tour.
+ The verification algorithm will then check that each vertex in 
+\begin_inset Formula $V$
+\end_inset
+
+ is visited exactly once, and that the edge cost over tour is at most 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This can be done in polynomial time the number of edges visited.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing NP-hardness
+\end_layout
+
+\begin_layout Standard
+It can be shown that TSP is reducible from HAM-CYCLE: 
+\begin_inset Formula $\text{HAM-CYCLE}\le_{p}\text{TSP}$
+\end_inset
+
+.
+ We let the graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ be an instance of the HAM-CYCLE problem.
+ Then we will reduce this to a TSP problem be constructing the graph 
+\begin_inset Formula $G'=(V,E')$
+\end_inset
+
+, where we let the set of edges 
+\begin_inset Formula $E'=\{(i,j):i,j\in V\},i\ne j$
+\end_inset
+
+.
+ That is, there is an edge between every pair of vertices.
+ Since the TSP needs a cost function, we will define
+\begin_inset Formula 
+\[
+C=\left\{ \right\} 
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection

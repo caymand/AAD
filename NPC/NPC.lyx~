@@ -132,7 +132,7 @@ Method for proving NPC
 \end_layout
 
 \begin_layout Itemize
-Vertex cover
+Vertex cover is NPC
 \end_layout
 
 \begin_layout Section
@@ -1987,6 +1987,165 @@ tour
 \end_inset
 
 .
+ The formal language defining the problem is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align}
+G & =\{\text{\ensuremath{\langle G,c,k\rangle:G=(V,E)}is a complete graph}\\
+ & c\text{ is a function }V\times V\mapsto N\\
+ & k\in N\\
+ & G\text{ has a tour with cost at most }k\\
+\}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing TSP is in NP
+\end_layout
+
+\begin_layout Standard
+Given an instance of the tour, we can as a certificate take the sequence
+ of 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices visited on the tour.
+ The verification algorithm will then check that each vertex in 
+\begin_inset Formula $V$
+\end_inset
+
+ is visited exactly once, and that the edge cost over tour is at most 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ This can be done in polynomial time the number of edges visited.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Showing NP-hardness
+\end_layout
+
+\begin_layout Standard
+It can be shown that TSP is reducible from HAM-CYCLE: 
+\begin_inset Formula $\text{HAM-CYCLE}\le_{p}\text{TSP}$
+\end_inset
+
+.
+ We let the graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ be an instance of the HAM-CYCLE problem.
+ Then we will reduce this to a TSP problem be constructing the graph 
+\begin_inset Formula $G'=(V,E')$
+\end_inset
+
+, where we let the set of edges 
+\begin_inset Formula $E'=\{(i,j):i,j\in V\},i\ne j$
+\end_inset
+
+.
+ That is, there is an edge between every pair of vertices.
+ Since the TSP needs a cost function, we will define
+\begin_inset Formula 
+\begin{align*}
+c(i,j) & =\left\{ \begin{array}{c}
+0\text{ if }(i,j)\in E\\
+1\text{ if }(i,j)\notin E
+\end{array}\right.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The transformed instance to the TSP problem is 
+\begin_inset Formula $\langle G,c,0\rangle$
+\end_inset
+
+, since this is the tour of the graph with minimal cost.
+ The graph can easily be created in polynomial time in the number of vertices.
+ What is needed to show is then that 
+\begin_inset Formula $G$
+\end_inset
+
+ has a hamiltonian cycle if and only if 
+\begin_inset Formula $G'$
+\end_inset
+
+ has a tour of 
+\begin_inset Formula $0$
+\end_inset
+
+ (minimal cost tour).
+ If we suppose that 
+\begin_inset Formula $G$
+\end_inset
+
+ has a hamiltonian cycle 
+\begin_inset Formula $h$
+\end_inset
+
+, then each edge visited will be in 
+\begin_inset Formula $E$
+\end_inset
+
+ meaning that the cycle will visit all cities/vertices with cost 
+\begin_inset Formula $0$
+\end_inset
+
+ due to the way we defined the cost function.
+ That is, 
+\begin_inset Formula $G'$
+\end_inset
+
+ has a tour with cost 
+\begin_inset Formula $0$
+\end_inset
+
+, and both problems are yes-instances.
+ Now the other side of the bi-implication.
+ if we suppose that 
+\begin_inset Formula $G'$
+\end_inset
+
+ has a tour with cost at most 0.
+ Then we defined the cost function in such a way that edges in 
+\begin_inset Formula $E'$
+\end_inset
+
+ have costs as either 1 or 0, so the cost must be exactly 0.
+ We need the at most 0 due to the definition of TSP.
+ And since the cost is 0, then the tour visists only edges in 
+\begin_inset Formula $E$
+\end_inset
+
+, and since a tour visists all cities then we visist all edges, so the tour
+ is also a hamiltonian cycle.
+ We have now showed that the bi-implication holds and TSP is also NPC.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe state more directly which bi-implication is proven.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
