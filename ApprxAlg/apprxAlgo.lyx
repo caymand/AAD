@@ -1,0 +1,1031 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Vertex cover
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem: 35.1
+\end_layout
+
+\begin_layout Standard
+APPROX-VERTEX-COVER is a polynomial-time 2-approximation algorithm.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof:
+\end_layout
+
+\begin_layout Standard
+We can use an adjacency list to represent the edges 
+\begin_inset Formula $E'$
+\end_inset
+
+.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why O(V+E) running time?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We get a vertex cover since we loop over edges in 
+\begin_inset Formula $(u,v)\in G.E$
+\end_inset
+
+ and add the endpoints to 
+\begin_inset Formula $C\cup\{u,v\}$
+\end_inset
+
+.
+ Meaning the edge is covered.
+ Then we remove from 
+\begin_inset Formula $E'$
+\end_inset
+
+ all edges incident on 
+\begin_inset Formula $u,v$
+\end_inset
+
+, so we cover also these edges.
+ And thereby we loop until all edges in 
+\begin_inset Formula $E$
+\end_inset
+
+ are covered.
+\end_layout
+
+\begin_layout Standard
+We let 
+\begin_inset Formula $A$
+\end_inset
+
+ bet the set of arbitrary edges picked at each edges of the iteration.
+ Now we will look at the vertex cover to cover these edges in 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ We know that an optimal cover for 
+\begin_inset Formula $A$
+\end_inset
+
+ must include at least on endpoint for each edge to cover all edges in 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ After each edge picked 
+\begin_inset Formula $(u,v)\in E'$
+\end_inset
+
+, we remove from 
+\begin_inset Formula $E'$
+\end_inset
+
+ all edges incident on either 
+\begin_inset Formula $u,v$
+\end_inset
+
+(the endpoints).
+ This means that an optimal cover 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+ over 
+\begin_inset Formula $A$
+\end_inset
+
+ cannot have a vertex covering multiple edges (not possible since we removed
+ edges that had endpoints in 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+).
+ Therefore, we must have the cover is at least as large as the number of
+ edges
+\begin_inset Formula 
+\[
+|C^{*}|\ge|A|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We always pick an edge 
+\begin_inset Formula $(u,v)\in E'$
+\end_inset
+
+ for which we know the endpoints 
+\begin_inset Formula $u,v$
+\end_inset
+
+ are not already in 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ This is ensured by the fact that each time we pick an edge 
+\begin_inset Formula $(i,j)\in E'$
+\end_inset
+
+ we delete from 
+\begin_inset Formula $E'$
+\end_inset
+
+ all edges incident on either 
+\begin_inset Formula $i$
+\end_inset
+
+ or 
+\begin_inset Formula $j$
+\end_inset
+
+ and add 
+\begin_inset Formula $C=\{i,j\}\cup C$
+\end_inset
+
+.
+ Since we pick 
+\begin_inset Formula $|A|$
+\end_inset
+
+ edges in total, and we for each edge add two vertices, we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C=2|A|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+we can combine the two bounds
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C=2|A|\leq2|C^{*}|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and we therefore get the solution is polynomial in time and at most twice
+ as large as the optimal set.
+ thus is is polynomial-time 2-approximate.
+\end_layout
+
+\begin_layout Section
+Traveling-salesman
+\end_layout
+
+\begin_layout Enumerate
+Preorder tree walk - current node, recursively left subree, recursively
+ right subtree
+\end_layout
+
+\begin_layout Enumerate
+Minimum spanning tree - subset of edges with minimum edges that connects
+ all vertices
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $c$
+\end_inset
+
+ is a cost function associated with each edge for which the triangle inequality
+ holds
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Running time of APPROX-TSP-TOUR
+\end_layout
+
+\begin_layout Standard
+The preorder tree walk takes 
+\begin_inset Formula $O(V)$
+\end_inset
+
+ time.
+ Using prims algorithm with an adjacency matrix gives us 
+\begin_inset Formula $O(V^{2})$
+\end_inset
+
+ time for the minimum-spanning tree.
+ Making the running time 
+\begin_inset Formula $O(V^{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem 35.2: APPROX-TSP-TOUR is a polynomial-time 2-approximation algorithm
+ for the traveling-salesman problem with the triangle inequality.
+\end_layout
+
+\begin_layout Standard
+We let 
+\begin_inset Formula $H^{*}$
+\end_inset
+
+ denote the optimal tour.
+ When we have a tour, we can delete any edge to obtain a spanning tree,
+ since a tour reaches all vertices and removing an edge makes it acyclic
+ - thus a spanning tree.
+ Since the edge cost is non-negative, then removing an edge makes the overall
+ cost of the spanning tree smaller than the tour, giving us the lower bound
+\begin_inset Formula 
+\[
+c(T)\leq c(H^{*})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A full walk of 
+\begin_inset Formula $T$
+\end_inset
+
+ visits its node, then the left subtree, and the it visits the node again,
+ and then the right subtree.
+ Thereby, each node in a full walk will be counted twice.
+ Let us call the full walk of the minimum spanning tre 
+\begin_inset Formula $T$
+\end_inset
+
+ for the walk 
+\begin_inset Formula $W$
+\end_inset
+
+.
+ We now get that the walk has the cost
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c(W)=2c(T)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since the full walk visits each vertex more than once it is not generally
+ a tour
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why?
+\end_layout
+
+\end_inset
+
+.
+ However, since the algorithm assumes that the triangle inequality for 
+\begin_inset Formula $c$
+\end_inset
+
+ holds, then deleting any vertex from the walk 
+\begin_inset Formula $W$
+\end_inset
+
+ does not increase the cost of the walk.
+ That is, if we on the walk visit 
+\begin_inset Formula $u,v,w$
+\end_inset
+
+ then we know 
+\begin_inset Formula $c(u,w)\leq c(u,v)+c(v,w)$
+\end_inset
+
+.
+ Thereby we can remove all but the first vertex visited by the full walk.
+ Since we know only counts each vertex once, then this is the same as a
+ preorder tree walk of 
+\begin_inset Formula $T$
+\end_inset
+
+(the only difference from the full walk was that we counted the node again
+ after visiting the left subtree).
+ We let 
+\begin_inset Formula $H$
+\end_inset
+
+ be the preorder walk.
+ Since the tree order came from a minimum spanning tree, it is a hamiltonian
+ cycle if we connect the last vertex of the walk with the root vertex.
+ Furthermore, since 
+\begin_inset Formula $H$
+\end_inset
+
+ was obtained by removing edges from 
+\begin_inset Formula $W$
+\end_inset
+
+ then we know the cost
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c(H)\leq c(W)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+combining this gives us
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+c(H)\leq c(W)=2c(t)\leq2c(H^{*})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so we get the upper bound 
+\begin_inset Formula $c(H)\leq2c(H^{*})$
+\end_inset
+
+, and the algorithm is polynomial in running time and at most twice as slow
+ as an optimal solution.
+\end_layout
+
+\begin_layout Section
+Set covering problem
+\end_layout
+
+\begin_layout Standard
+In the ser-cover problem we are given the instance 
+\begin_inset Formula $(X,F)$
+\end_inset
+
+.
+ We have that 
+\begin_inset Formula $X$
+\end_inset
+
+ is a finite set and 
+\begin_inset Formula $F$
+\end_inset
+
+ is a family of subsets of 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ We wish to find the minimal subset 
+\begin_inset Formula $C\subseteq F$
+\end_inset
+
+ such that the entire subset covers 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ That is we wish to find
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X=\bigcup_{s\in C}S
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The greedy algorithm will keep adding the subset to 
+\begin_inset Formula $S$
+\end_inset
+
+ to 
+\begin_inset Formula $C$
+\end_inset
+
+ that covers the most remaining elements.
+ The number of iterations is bounded by 
+\begin_inset Formula $\min(|X|,|F|)$
+\end_inset
+
+, since we can at most select 
+\begin_inset Formula $|F|$
+\end_inset
+
+ subsets or there are more subsets than elements, in which we run for at
+ most 
+\begin_inset Formula $|X|$
+\end_inset
+
+ iterations.
+ Each iterations selects 
+\begin_inset Formula $S$
+\end_inset
+
+ that covers the most remaining elements.
+ This means we will run for 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why running time here
+\end_layout
+
+\end_inset
+
+.
+ Making the total running time
+\begin_inset Formula 
+\[
+O(|X|\cdot|F|\cdot\min(|X|,|F|))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem 35.4: GREEDY-SET-COVER is a polynomial-time p(n)-approximation algorithm,
+ where 
+\begin_inset Formula $p(n)=H(\max(\{|S|:S\in F\})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof
+\end_layout
+
+\begin_layout Standard
+We analyze the running time by assigning a cost of 
+\begin_inset Formula $1$
+\end_inset
+
+ to the set 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ chosen and added to 
+\begin_inset Formula $C=C\cup S_{i}$
+\end_inset
+
+ at the 
+\begin_inset Formula $i$
+\end_inset
+
+'th iteration of the algorithm.
+ The cost of 
+\begin_inset Formula $1$
+\end_inset
+
+ is then evenly distributed among the elements covered for the first time
+ by 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+(here it is meant that the first time an element is covered by a set 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ then the each element covered for the first time will evenly distributed
+ the cost of 1).
+ We then let 
+\begin_inset Formula $c_{x}$
+\end_inset
+
+ denote the cost assigned to element 
+\begin_inset Formula $x\in X$
+\end_inset
+
+ that is covered for the first time.
+ So the first time 
+\begin_inset Formula $x$
+\end_inset
+
+ is covered, it assigned a fraction of 
+\begin_inset Formula $1$
+\end_inset
+
+ this fraction is denoted by 
+\begin_inset Formula $c_{x}$
+\end_inset
+
+.
+ Furthermore, since this fraction is only assigned once - the first time
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ is covered - then we get this fraction to be
+\begin_inset Formula 
+\[
+c_{x}=\frac{1}{|S_{i}-(S_{1}\cup,...,\cup S_{i-1})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that is, when 
+\begin_inset Formula $x$
+\end_inset
+
+ is covered for the first time, then the elements that are also covered
+ for the first time are those in set 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ minus those that might have already been covered before by previous subsets.
+ Since we know that the algorithm assigns 1 unit of cast at each iteration
+ (each time we select a subset), we get the sum
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|C|=\sum_{x\in X}c_{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+since the sum of 
+\begin_inset Formula $c_{x}$
+\end_inset
+
+ of the elements covered the first time by 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is 1, so adding all these points gives total number of sets added.
+ We know that each 
+\begin_inset Formula $x\in X$
+\end_inset
+
+ must be in at least one cover in the optimal solution 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+(possibly more covers in case of overlapping covers) and this gives us
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{S\in C^{*}}\sum_{x\in S}c_{x}\ge\sum_{x\in X}c_{x}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To be clear, we get the inequality since the subsets 
+\begin_inset Formula $S\in C^{*}$
+\end_inset
+
+ might contain overlapping elements, so we might add 
+\begin_inset Formula $c_{x}$
+\end_inset
+
+ multiple times for each 
+\begin_inset Formula $x\in X$
+\end_inset
+
+.
+ This therefore gives us
+\begin_inset Formula 
+\[
+|C|\leq\sum_{S\in C^{*}}\sum_{x\in S}c_{x}
+\]
+
+\end_inset
+
+Then it can be proven that
+\begin_inset Formula 
+\[
+\sum_{x\in X}c_{x}\leq H(|S|)
+\]
+
+\end_inset
+
+ that is the sum is less than the 
+\begin_inset Formula $|S|$
+\end_inset
+
+-harmonic number for any set 
+\begin_inset Formula $S\in F.$
+\end_inset
+
+ Using this and the bound on 
+\begin_inset Formula $|C|$
+\end_inset
+
+ gives the upper bound
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+|C|\leq\sum_{s\in C^{*}}H(|S|)\leq|C^{*}|\cdot H(\max(\{|S|:s\in F\})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the second inequality holds since if we take the largest set, it gives
+ the largest harmonic number, and we simply add it 
+\begin_inset Formula $|C^{*}|$
+\end_inset
+
+ times.
+ Therefore we must now show the bounder with the harmonic number.
+ Let us consider any set 
+\begin_inset Formula $S\in F$
+\end_inset
+
+ and any 
+\begin_inset Formula $i=1,2,...,|C|$
+\end_inset
+
+.
+ We the let 
+\begin_inset Formula 
+\[
+u_{i}=|S-(S_{1}\cup S_{2}\cup...\cup S_{i})|
+\]
+
+\end_inset
+
+ be the number of elements that are initially uncovered in 
+\begin_inset Formula $S$
+\end_inset
+
+ after having selected 
+\begin_inset Formula $i$
+\end_inset
+
+ subsets (remember we chose the set 
+\begin_inset Formula $S$
+\end_inset
+
+ arbitrarily).
+ Now we let 
+\begin_inset Formula $k$
+\end_inset
+
+ be the least index for which we get the 
+\begin_inset Formula $u_{k}=0$
+\end_inset
+
+.
+ Meaning, at index 
+\begin_inset Formula $k$
+\end_inset
+
+ every element of 
+\begin_inset Formula $S$
+\end_inset
+
+ has been covered by at least one of the subsets 
+\begin_inset Formula $S_{1}...S_{k}$
+\end_inset
+
+.
+ Since we pick the least 
+\begin_inset Formula $k$
+\end_inset
+
+ with this property, we still have that 
+\begin_inset Formula $u_{k-1}=|S_{1}\cup S_{2}\cup...\cup S_{k-1}|>0$
+\end_inset
+
+ and there are still uncovered elements in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ Since choosing a new subset covers at least as many elements of 
+\begin_inset Formula $S$
+\end_inset
+
+ we get that
+\begin_inset Formula $u_{i-1}\ge u_{i}$
+\end_inset
+
+ and.
+ We will also have that 
+\begin_inset Formula $u_{i-1}-u_{i}$
+\end_inset
+
+ elements are covered for the first time when selecting set 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2,...,k$
+\end_inset
+
+, since 
+\begin_inset Formula $u_{i-1}$
+\end_inset
+
+ was the number of uncovered elements after selecting set 
+\begin_inset Formula $S_{i-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $u_{i}$
+\end_inset
+
+ are the number of uncovered elements after selecting set 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ so the difference must be the number of elements 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ covered..
+ We stop at 
+\begin_inset Formula $k$
+\end_inset
+
+ since this is the time when all elements of 
+\begin_inset Formula $S$
+\end_inset
+
+ are covered for the first time.
+ Therefore, we get that the fraction assigned to each element 
+\begin_inset Formula $x\in S$
+\end_inset
+
+ becomes
+\begin_inset Formula 
+\[
+\sum_{x\in S}c_{x}=\sum_{i=1}^{k}(u_{i-1}-u_{i})\cdot\frac{1}{|S_{i}-(S_{1}\cup S_{2}\cup...\cup S_{i-1})|}
+\]
+
+\end_inset
+
+since 
+\begin_inset Formula $u_{i-1}-u_{i}$
+\end_inset
+
+ counts the number of elements covered for the first time when adding set
+ 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+, the denominator 
+\begin_inset Formula $|S_{i}-(S_{1}\cup S_{2}\cup...\cup S_{i-1})|$
+\end_inset
+
+ also counts the number of elements covered by 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+, and each term of the sum is 
+\begin_inset Formula $1$
+\end_inset
+
+, so this counts the total number of sets needed to cover 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ However, that is also what 
+\begin_inset Formula $\sum_{x\in S}c_{x}$
+\end_inset
+
+ does.
+ Since our greedy choice ensures we at each iteration always pick the set
+ that is largest then we know
+\begin_inset Formula 
+\[
+|S_{i}-(S_{1}\cup S_{2}\cup...\cup S_{i-1})|\ge|S-(S_{1}\cup S_{2}\cup...\cup S_{i-1})|=u_{i-1}
+\]
+
+\end_inset
+
+ since otherwise the algorithm would have chosen 
+\begin_inset Formula $S$
+\end_inset
+
+(
+\begin_inset Formula $S$
+\end_inset
+
+would have covered more elements than 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+).
+ We can insert this to get a smaller denominator and thus an upper bound
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\sum_{x\in S}c_{x}\leq & \sum(u_{i-1}-u_{i})\cdot\frac{1}{u_{i-1}}\\
+= & \sum_{i=1}^{k}\sum_{j=u_{i}+1}^{u_{i-1}}\frac{1}{u_{i-1}}\text{(since \ensuremath{(u_{i-1}-u_{i})} is the inner sum and sums are inclsv.)}\\
+\leq & \sum_{i=1}^{k}\sum_{j=u_{i}+1}^{u_{i-1}}\frac{1}{j}\text{ (since \ensuremath{j\leq u_{i-1}}making the fraction larger)}\\
+= & \sum_{i=1}^{k}\left(\sum_{j=1}^{u_{i-1}}\frac{1}{j}-\sum_{j=1}^{u_{i}}\frac{1}{j}\right)\text{(all wil cancel out until we get from before)}\\
+= & \sum_{i=1}^{k}\left(H(u_{i-1})-H(u_{i})\right)\text{ by definition of harmonic number}\\
+= & H(u_{0})-H(u_{k})\text{ by telescoping sum argument}\\
+= & H(u_{0})-H(0)\text{ since we defined \ensuremath{H(0)=0}}\\
+= & H(u_{0})\\
+= & H(|S|)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so now we have completed the proof.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Corollary
+\end_layout
+
+\begin_layout Standard
+There is a bound 
+\begin_inset Formula $\sum_{k=1}^{n}\frac{1}{n}\le\ln n+1$
+\end_inset
+
+.
+ Since we have shown that 
+\begin_inset Formula 
+\[
+p(n)=H(\max\{|S|:S\in F\})=\sum_{k=1}^{\max\{|S|:S\in F\})}\frac{1}{k}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+then we can just upper bound this to
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p(n)\leq H(|X|)=\sum_{k=1}^{|X|}\frac{1}{k}\leq\ln|X|+1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document
