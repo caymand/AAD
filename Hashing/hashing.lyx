@@ -1,0 +1,1004 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Hashing Summary
+\end_layout
+
+\begin_layout Itemize
+Random hash function definition
+\end_layout
+
+\begin_layout Itemize
+Important properties
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Space
+\end_layout
+
+\begin_layout Itemize
+Size
+\end_layout
+
+\begin_layout Itemize
+Properties of r.v 
+\begin_inset Formula $h(x)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Truly random hash function
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Problems with this hash function
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Universal hashing 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+definition
+\end_layout
+
+\begin_layout Itemize
+Hashing with chaining
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Strong universality
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+definition
+\end_layout
+
+\begin_layout Itemize
+coordinated sampling
+\end_layout
+
+\begin_layout Itemize
+lemma 3.2 implication
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Hashing Detailed
+\end_layout
+
+\begin_layout Standard
+In a hash function we want to map a large set of keys from a universe 
+\begin_inset Formula $U$
+\end_inset
+
+ into a finite set of values 
+\begin_inset Formula $[m]$
+\end_inset
+
+.
+ Typically the set of keys will be large.
+ This could be 
+\series bold
+
+\begin_inset Formula $64-bit$
+\end_inset
+
+ 
+\series default
+integers, for which there are 
+\begin_inset Formula $2^{64}$
+\end_inset
+
+ different keys.
+\end_layout
+
+\begin_layout Subsection
+General definition
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition: 
+\series default
+A hash function 
+\begin_inset Formula $h:U\rightarrow[m]$
+\end_inset
+
+ is a random variable in the set of functions 
+\begin_inset Formula $U\rightarrow[m]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An equivalent definition is that each 
+\begin_inset Formula $h(x),x\in U$
+\end_inset
+
+ is a random variable.
+ Meaning, either we can view a hash function as a 
+\begin_inset Quotes eld
+\end_inset
+
+random
+\begin_inset Quotes erd
+\end_inset
+
+ function mapping a typically large set of keys 
+\begin_inset Formula $U$
+\end_inset
+
+ to a finite set of values 
+\begin_inset Formula $[m],$
+\end_inset
+
+or as a random variable 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ that is defined for each value of 
+\begin_inset Formula $x\in U$
+\end_inset
+
+.
+ This is the same thing, since picking a value 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ for each 
+\begin_inset Formula $x$
+\end_inset
+
+ is the same as a function that takes an 
+\begin_inset Formula $x$
+\end_inset
+
+ and gives you a value 
+\begin_inset Formula $h(x)$
+\end_inset
+
+.
+ We typically care about
+\end_layout
+
+\begin_layout Enumerate
+Space - the size of a random seed to calculate 
+\begin_inset Formula $h(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Speed - time to calculate 
+\begin_inset Formula $h(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Properties of the random variable 
+\begin_inset Formula $h(x)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Truly Random Hash function
+\end_layout
+
+\begin_layout Standard
+Using the second (equivalent) definition of a hash function.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition: 
+\series default
+A truly random hash function assigns independently, and uniformly at random,
+ a random variable 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ to each key 
+\begin_inset Formula $x\in U$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Since the universe is of size 
+\series bold
+
+\begin_inset Formula $|U|$
+\end_inset
+
+
+\series default
+, and the we independently and 
+\series bold
+uniformly
+\series default
+ assign a random variable 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ to each 
+\begin_inset Formula $x$
+\end_inset
+
+ then, we can choose among 
+\begin_inset Formula $|U|$
+\end_inset
+
+ different random variables for each 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Since there are 
+\begin_inset Formula $|U|$
+\end_inset
+
+choices for each 
+\begin_inset Formula $h(x)$
+\end_inset
+
+, then we must have that the function 
+\begin_inset Formula $h$
+\end_inset
+
+ is 
+\begin_inset Formula $U$
+\end_inset
+
+-dimensional random variable that is picked among all the random hash functions
+ 
+\begin_inset Formula $U\rightarrow[m]$
+\end_inset
+
+.
+ There are 
+\begin_inset Formula $|U|$
+\end_inset
+
+different hash functions and 
+\begin_inset Formula $m$
+\end_inset
+
+ different values, meaning we can map the universe keys to values in 
+\begin_inset Formula 
+\[
+2^{|U|}\cdot m
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+different ways.
+ Thereby, to store a truly random hash function would require
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\log_{2}(2^{|U|}m)=|U|\log_{2}(2\cdot m)=|U|+|U|\log_{2}(m)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so we need at least 
+\begin_inset Formula $|U|\log_{2}m$
+\end_inset
+
+ bits to store the hash function.
+ This is way too large to store in ram.
+ We have too much randomness making the hash function large to store.
+ The idea is therefore to make the hash function sufficiently random for
+ the application so that it is fast to store, access and calculate - 
+\series bold
+the two first properties
+\series default
+ important to a hash function.
+\end_layout
+
+\begin_layout Subsection
+Universal hashing
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition: 
+\series default
+The hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ is said to be universal if for any given distinct keys 
+\begin_inset Formula $x,y\in U$
+\end_inset
+
+, when 
+\begin_inset Formula $h$
+\end_inset
+
+ is picked uniformly at random we have 
+\emph on
+low collision 
+\begin_inset Formula 
+\[
+\Pr_{h}(h(x)=h(y))\leq\frac{1}{m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The random part here is the hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ that is chosen over some distribution of functions 
+\begin_inset Formula $U\rightarrow[m]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+Hashing with chaining
+\end_layout
+
+\begin_layout Standard
+We can use hashing to construct 
+\emph on
+hash tables with chaining
+\emph default
+.
+ That is, if we have a set of keys 
+\begin_inset Formula $S\subseteq U$
+\end_inset
+
+ we wish to store, then we wish to be able to lookup any key in 
+\begin_inset Formula $S$
+\end_inset
+
+ in expected constant time - this is the hash table.
+ We let 
+\begin_inset Formula $n=|S|$
+\end_inset
+
+ and pick 
+\begin_inset Formula $m\geq n$
+\end_inset
+
+ and a universal hash function 
+\begin_inset Formula $h:U\rightarrow[m]$
+\end_inset
+
+.
+ Now we construct our hash table with chaining as follows.
+ We create an array 
+\begin_inset Formula $L$
+\end_inset
+
+ of length 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Each element 
+\begin_inset Formula $L[i]$
+\end_inset
+
+ is a linked lists(also known as chain) for each key that 
+\emph on
+hashes
+\emph default
+ to 
+\series bold
+
+\begin_inset Formula $i\in[m]$
+\end_inset
+
+
+\series default
+.
+ The important thing about the hash table was that we wish to lookup an
+ element in expected constant time.
+ We can execute the lookup operation by checking whether a key 
+\begin_inset Formula $x\in U$
+\end_inset
+
+ is in the hash table 
+\begin_inset Formula $L$
+\end_inset
+
+ by the lookup 
+\begin_inset Formula $L[h(x)]$
+\end_inset
+
+, since 
+\begin_inset Formula $h$
+\end_inset
+
+ is a function 
+\begin_inset Formula $U\rightarrow[m]$
+\end_inset
+
+ and we created 
+\begin_inset Formula $L$
+\end_inset
+
+ to have length 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ This lookup takes time proportional to 
+\begin_inset Formula $1+|L[h(x)]|$
+\end_inset
+
+.
+ We add the one, since the lookup into 
+\begin_inset Formula $L$
+\end_inset
+
+ is always one operation even when nothing is there.
+ Thereby, the lookup time of our hash table is bounded by the quality of
+ the hash function, since this determines the number of expected collisions.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem: 
+\series default
+for 
+\begin_inset Formula $x\notin S$
+\end_inset
+
+ and a universal hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ we have 
+\begin_inset Formula $E[|L[h(x)]|]\leq1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof: 
+\series default
+The length of the linked list 
+\begin_inset Formula $L[h(x)]=L[i]$
+\end_inset
+
+ is the number of keys 
+\begin_inset Formula $y\in S$
+\end_inset
+
+ that also hash to 
+\begin_inset Formula $h(y)=i$
+\end_inset
+
+ entrance 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ We take the expectation with respect to the random variable which is the
+ hash function 
+\begin_inset Formula $h$
+\end_inset
+
+
+\series bold
+
+\begin_inset Formula 
+\[
+E_{h}[|L[h(x)|]=E_{h}\left[\sum_{y\in S}[h(x)=h(y)]\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the equality holds due to the above argument and 
+\begin_inset Formula $[h(x)=h(y)]$
+\end_inset
+
+ counts exactly the number of times that 
+\begin_inset Formula $h(y)$
+\end_inset
+
+ hashes to the same bucket as 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ and we thereby have a collision.
+ Continuing we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+=\sum_{y\in S}E_{h}\left[[h(x)=h(y)]\right]=\sum_{y\in S}\Pr_{h}\left(\left[h(x)=h(y)\right]\right)\leq\sum_{y\in S}\frac{1}{m}=\frac{n}{m}\leq1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the first inequality holds since we use Iverson bracket notation,
+ and the expectation of an indicator variable is the probability of success.
+\end_layout
+
+\begin_layout Subsubsection
+Signatures
+\end_layout
+
+\begin_layout Subsection
+Strong universality
+\end_layout
+
+\begin_layout Standard
+In 
+\emph on
+strong universality
+\emph default
+ we consider a 
+\emph on
+random 
+\emph default
+hash function 
+\begin_inset Formula $h:U\rightarrow[m]$
+\end_inset
+
+ and pairwise events: given distinct keys 
+\begin_inset Formula $x,y\in U$
+\end_inset
+
+ and two possibly non-distinct values 
+\begin_inset Formula $q,r\in[m]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definition: 
+\series default
+The hash function 
+\series bold
+
+\begin_inset Formula $h:U\rightarrow[m]$
+\end_inset
+
+ 
+\series default
+is said to be strongly universal if the probability for every pairwise event
+ 
+\begin_inset Formula $\Pr_{h}(h(x)=q\land h(y)=r)\leq\frac{1}{m²}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An equivalent definition is that each key is hashed uniformly into 
+\begin_inset Formula $[m]$
+\end_inset
+
+ and buckets, and every two distinct keys are hashed independently.
+\end_layout
+
+\begin_layout Standard
+We note that strongly universal still implies universal hashing.
+ Consider a strongly universal hash function, and let us look at the definition
+ for strong universality
+\begin_inset Formula 
+\[
+\Pr\left[h(x)=h(y)\right]=
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Coordinated sampling
+\end_layout
+
+\begin_layout Standard
+Let us consider sampling from the subset 
+\begin_inset Formula $A\subseteq U$
+\end_inset
+
+.
+ We sample using a strongly universal hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ and a threshold 
+\series bold
+
+\begin_inset Formula $t\in\{0,1,...,m\}$
+\end_inset
+
+ 
+\series default
+such that a sample is picked if 
+\series bold
+
+\begin_inset Formula $h(x)<t$
+\end_inset
+
+
+\series default
+.
+ Since 
+\begin_inset Formula $h(x)$
+\end_inset
+
+ is hashed uniformly at random(
+\begin_inset Formula $h$
+\end_inset
+
+ is strongly universal and we can use the equivalent definition), then when
+ we fix 
+\begin_inset Formula $t$
+\end_inset
+
+, the probability of choosing a sample is 
+\begin_inset Formula $\frac{t}{m}$
+\end_inset
+
+(there is 
+\begin_inset Formula $m$
+\end_inset
+
+ ways of hashing 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\series bold
+
+\begin_inset Formula $t$
+\end_inset
+
+ 
+\series default
+of which we want).
+ Now we consider what we sample from the subset 
+\begin_inset Formula $A$
+\end_inset
+
+ given our hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ and threshold 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $S_{h,t}=\{x\in A|h(x)<t\}$
+\end_inset
+
+ be the samples we take from the subset 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ The expectation of the size of the set is
+\begin_inset Formula 
+\[
+E_{h}\left[|S_{h,t}(A)|\right]=E_{h}\left[\sum_{y\in A}\left[\Pr\left(h(y)<t\right)\right]\right]=\sum_{y\in A}E\left[\left[\Pr\left(h(y)<t\right)\right]\right]=\sum_{y\in A}\frac{t}{m}=|A|\frac{t}{m}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so we can actually estimate the size of 
+\begin_inset Formula $|A|$
+\end_inset
+
+ if we have the sample 
+\begin_inset Formula $S_{h,t}$
+\end_inset
+
+ by 
+\begin_inset Formula $|S_{h,t}|\cdot\frac{m}{t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Universal sampling alone is however not enough.
+ Multiplication-shift-scheme will for instance have that 
+\begin_inset Formula $h(x)=0$
+\end_inset
+
+, and therefore we will always sample 0 in case that 
+\begin_inset Formula $t>0$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The important part is however sampling from different sets 
+\begin_inset Formula $B$
+\end_inset
+
+ and 
+\begin_inset Formula $C$
+\end_inset
+
+ and comparing their similarities by 
+\begin_inset Formula $B\cup C$
+\end_inset
+
+ and 
+\begin_inset Formula $B\cap C$
+\end_inset
+
+.
+ Suppose, we have the samples 
+\begin_inset Formula $S_{h,t}(B)$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{h,t}(C)$
+\end_inset
+
+.
+ We can calculate the sample union and sample intersection as
+\begin_inset Formula 
+\[
+S_{h,t}(B\cup C)=S_{h,t}(B)\cup S_{h,t}(C)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+S_{h,t}(B\cap C)=S_{h,t}(B)\cap S_{h,t}(C)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As was shown earlier, we can then for instance calculate the size 
+\begin_inset Formula $|B\cap C|=\frac{m}{t}\cdot|S_{h,t}(B\cap C)|$
+\end_inset
+
+.
+ This means we can sample from different sets in a distributed setting,
+ as long as each agent shares the same hash function and threshold.
+ For instance, in machine learning, we can sample from a new set to figure
+ out which previously recorded sample set it has most in common with.
+ Another thing to note, is that when we talk about a set 
+\begin_inset Formula $A$
+\end_inset
+
+ now, it could as well be represented as a union or an intersection of sets(mean
+ing we could do it in a coordinated fashion).
+ 
+\end_layout
+
+\begin_layout Standard
+The sampling probability we got when fixing the threshold 
+\begin_inset Formula $t$
+\end_inset
+
+ was 
+\begin_inset Formula $\frac{t}{m}$
+\end_inset
+
+required only that the hash function 
+\begin_inset Formula $h$
+\end_inset
+
+ was uniform.
+ This was also used to show that 
+\begin_inset Formula $E_{h}\left[|S_{h,t}(A)|\right]=|A|\frac{t}{m}$
+\end_inset
+
+ and we can get an unbiased estimate of the size of 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ We could actually say 
+\begin_inset Formula $E_{h}\left[|S_{h,t}(A)|\cdot\frac{m}{t}\right]=\frac{m}{t}\cdot E_{h}\left[|S_{h,t}(A)|\right]=|A|$
+\end_inset
+
+.
+ 
+\series bold
+Lemma 3.2
+\series default
+ requires pairwise independence.
+ It says that given 
+\begin_inset Formula $X=\sum_{a\in A}X_{a}$
+\end_inset
+
+where 
+\begin_inset Formula $X_{a}$
+\end_inset
+
+are pairwise independent(
+\begin_inset Formula $X_{a}$
+\end_inset
+
+is the same as 
+\begin_inset Formula $|S_{h,t}(A)|$
+\end_inset
+
+) with mean 
+\begin_inset Formula $E[X]=\mu$
+\end_inset
+
+ then 
+\begin_inset Formula $Var(X)\leq\mu$
+\end_inset
+
+ and for any 
+\begin_inset Formula $q>0$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Pr\left[|X-\mu|\ge q\sqrt{\mu}\right]\le\frac{1}{q²}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+thereby we can bound how close the estimate is to the mean(how good is 
+\begin_inset Formula $|A|\frac{t}{m}$
+\end_inset
+
+) , and thereby how good our estimate of 
+\begin_inset Formula $|A|$
+\end_inset
+
+is.
+ That is, we can show how concentrated around the mean are estimate is.
+ The closer the tighter the estimate.
+\end_layout
+
+\end_body
+\end_document

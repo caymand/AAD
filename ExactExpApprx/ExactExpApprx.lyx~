@@ -1,0 +1,1304 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Exact exponential algorithms
+\end_layout
+
+\begin_layout Subsection
+Dynamic programming for TSP
+\end_layout
+
+\begin_layout Subsubsection
+The dynamic program
+\end_layout
+
+\begin_layout Standard
+In the traveling salesman problem, we wish for the salesmand to do a full
+ tour of the graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ visiting each city/vertex 
+\begin_inset Formula $v\in V$
+\end_inset
+
+ at a minimal cost.
+ The cost of going from city 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ is given by the function 
+\begin_inset Formula $d(c_{i},c_{j})$
+\end_inset
+
+.
+ The task of constructing the tour can be seen as a permutation 
+\begin_inset Formula $\pi$
+\end_inset
+
+ of the 
+\begin_inset Formula $n$
+\end_inset
+
+ cities to visit, and we then wish to minimize the sum
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{i=1}^{n-1}d(c_{\pi(i)},c_{\pi(i+1)})+d(c_{\pi(n)},c_{\pi(1)})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that is find the 
+\begin_inset Quotes eld
+\end_inset
+
+best
+\begin_inset Quotes erd
+\end_inset
+
+ permutation of vertices.
+ The brute-force way would be to just consider all 
+\begin_inset Formula $n!$
+\end_inset
+
+ ways to visit each city, and this requires at least 
+\begin_inset Formula $n!$
+\end_inset
+
+ steps.
+\end_layout
+
+\begin_layout Standard
+The dynamic programming algorithm considers a pair 
+\begin_inset Formula $(S,c_{i})$
+\end_inset
+
+.
+ Here we have that 
+\begin_inset Formula $S$
+\end_inset
+
+ is a nonempty subset 
+\begin_inset Formula $S\subseteq\{c_{2},c_{3},...,c_{n}\}$
+\end_inset
+
+, and we have that 
+\begin_inset Formula $c_{i}\in S$
+\end_inset
+
+.
+ We then define the value 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+ to be the minimum/optimal length tour starting at city 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+, visiting all cities in 
+\begin_inset Formula $S$
+\end_inset
+
+ and ending in city 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $|S|=1$
+\end_inset
+
+ then it is trivial to compute 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+, since we then know that 
+\begin_inset Formula $S=\{c_{i}\}$
+\end_inset
+
+, so we get that 
+\begin_inset Formula $OPT[S,c_{i}]=d(c_{1},c_{i})$
+\end_inset
+
+.
+ The more interesting case in then when we get that the set has size 
+\begin_inset Formula $|S|>1$
+\end_inset
+
+.
+ Then the value of 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+ can be expressed at the recursion
+\begin_inset Formula 
+\[
+OPT[S,c_{i}]=\min\left\{ OPT[S\setminus\{c_{i}\},c_{j}]+d(c_{j},c_{i}):c_{j}\in S\setminus\{c_{i}\}\right\} 
+\]
+
+\end_inset
+
+ which is the optimal way to visit all cities in 
+\begin_inset Formula $S$
+\end_inset
+
+ and end in 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is to visit each vertex in 
+\begin_inset Formula $S\setminus\{c_{i}\}$
+\end_inset
+
+ and end 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ and then go to vertex 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ for all 
+\begin_inset Formula $c_{j}\in S\setminus\{c_{i}\}$
+\end_inset
+
+.
+ This can be repeated recursively until the base case.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+This can perhaps pre proven like in the lecture
+\end_layout
+
+\end_inset
+
+.
+ Stated in other words, if we have an optimal tour in 
+\begin_inset Formula $S$
+\end_inset
+
+ with city 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+preceeding 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ in the tour, then we have that
+\begin_inset Formula 
+\[
+OPT[S,c_{i}]=OPT[S\setminus\{c_{i}\},c_{j}]+d(c_{j},c_{i})
+\]
+
+\end_inset
+
+ the optimal tour is the tour in 
+\begin_inset Formula $S$
+\end_inset
+
+ without 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ ending in 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ and then taking the edge 
+\begin_inset Formula $(c_{j},c_{i})$
+\end_inset
+
+ (since if we take any other edge to get to 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ it will be at least as long).
+ We however, need to find the minimum edge 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ that gets us to 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ so we take the minimum around it (if we took a random edge it would not
+ be a minimum and the TSP has that the graph is fully connected, so there
+ is always an edge from 
+\begin_inset Formula $c_{j}\rightarrow c_{i}$
+\end_inset
+
+).
+ The final optimal value for ending in city 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ will be 
+\begin_inset Formula $OPT[\{c_{2},c_{3},...,c_{n}\},c_{i}]+d(c_{i},c_{1})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+unit cost ram model.
+ Can we assume operations take constant time
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Running time
+\end_layout
+
+\begin_layout Standard
+For a fixed size set 
+\begin_inset Formula $|S|=k$
+\end_inset
+
+ and all vertices 
+\begin_inset Formula $c_{i}\in S$
+\end_inset
+
+, then the time taken for a single subset is 
+\begin_inset Formula $O(k^{2})$
+\end_inset
+
+, since there are 
+\begin_inset Formula $k$
+\end_inset
+
+ vertices, and for each of them we calculate the cost of getting to each
+ of the other vertices (this is just a lookup in 
+\begin_inset Formula $OPT$
+\end_inset
+
+).
+ There are however 
+\begin_inset Formula ${n \choose k}$
+\end_inset
+
+ of such subsets of size 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The algorithm wants to consider subsets of size 
+\begin_inset Formula $2,3,...,n-1$
+\end_inset
+
+ since the case of 
+\begin_inset Formula $1$
+\end_inset
+
+ is trivial as explained earlier, and 
+\begin_inset Formula $n-1$
+\end_inset
+
+ since we from the optimal tour in the subset of size 
+\begin_inset Formula $n-1$
+\end_inset
+
+ take the minimum edge to the last vertex.
+ There are 
+\begin_inset Formula ${n \choose k}$
+\end_inset
+
+ of such subsets of size 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Furthermore, when we have a given set of size 
+\begin_inset Formula $k$
+\end_inset
+
+, we make 
+\begin_inset Formula $k-1$
+\end_inset
+
+ lookups into 
+\begin_inset Formula $OPT$
+\end_inset
+
+ to calculate the optimal path to the other vertices in the subset for each
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ vertex.
+ This gives us the sum
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}(j-1) & \leq\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}n\\
+\leq & \sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{n}n\\
+= & \sum_{k=2}^{n-1}{n-1 \choose k}n^{2}\\
+= & n^{2}\cdot\sum_{k=2}^{n-1}{n-1 \choose k}\\
+\leq & n^{2}\cdot\sum_{k=1}^{n}{n \choose k}\\
+= & O(n^{2}\cdot2^{n})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+this is much better than the brute force 
+\begin_inset Formula $O(n!)$
+\end_inset
+
+ approach.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Why does dynamic programming work here?
+\end_layout
+
+\begin_layout Standard
+When we for a subset of size 
+\begin_inset Formula $k$
+\end_inset
+
+ have an optimal tour 
+\begin_inset Formula $OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k-1)}}}\},c_{\pi(k)}]$
+\end_inset
+
+ then we will have that the optimal tour for subsets of size 
+\begin_inset Formula $k+1$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k)}}}\},c_{\pi(k+1)}]=OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k-1)}}}\},c_{\pi(k)}]+d(c_{\pi(k)},c_{\pi(k+1)})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So we have optimal substructure, and the solution to the smaller problems
+ are part of the solution to the larger problem.
+ The only drawback is that we have to allocate space for 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+ for all sets and thereby the space is 
+\begin_inset Formula $\Omega(2^{n})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Independence set
+\end_layout
+
+\begin_layout Standard
+A maximal independence is the largest set of vertices 
+\begin_inset Formula $I\subseteq V$
+\end_inset
+
+ such that each pair of vertices in 
+\begin_inset Formula $I$
+\end_inset
+
+ are non-adjacent.
+ This is the opposite of a clique.
+ The naive approach is to check every subset if which takes 
+\begin_inset Formula $\Omega(2^{n})$
+\end_inset
+
+.
+ The algorithm works under the following observartion:
+\end_layout
+
+\begin_layout Standard
+If a vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ is in a independent set 
+\begin_inset Formula $I$
+\end_inset
+
+ then none if its neighbors can by definition be 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ If we assume that 
+\begin_inset Formula $I$
+\end_inset
+
+ is a maximum independent set, and 
+\begin_inset Formula $v$
+\end_inset
+
+ is not in 
+\begin_inset Formula $I$
+\end_inset
+
+ then a neighbor of 
+\begin_inset Formula $v$
+\end_inset
+
+ must be in 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ This can be seen by the fact that if a neighbor of 
+\begin_inset Formula $v$
+\end_inset
+
+ is not in 
+\begin_inset Formula $I$
+\end_inset
+
+ then we can extend 
+\begin_inset Formula $I=I\cup\{v\}$
+\end_inset
+
+ and we would get an even larger independence set, ruining our assumption
+ that 
+\begin_inset Formula $I$
+\end_inset
+
+ was a maximum independent set.
+ This means, that for every independence set 
+\begin_inset Formula $I$
+\end_inset
+
+ and every vertex 
+\begin_inset Formula $v$
+\end_inset
+
+, there must be a vertex 
+\begin_inset Formula $y$
+\end_inset
+
+ in the closed neighborhood 
+\begin_inset Formula $N[v]$
+\end_inset
+
+(vertices adjacent to 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ itself), such that 
+\begin_inset Formula $y$
+\end_inset
+
+is in 
+\begin_inset Formula $I$
+\end_inset
+
+ and no other 
+\begin_inset Formula $N[y]$
+\end_inset
+
+ is in 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ We use this observation to solve the problem on reduced instances and pick
+ the best amongst the reduced instances.
+ 
+\end_layout
+
+\begin_layout Standard
+The algorithm thus works by picking a vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ with least cardinality(least incident edges).
+ Then it considers the subproblem of finding a maximum independence set
+ of for each subset 
+\begin_inset Formula $G\setminus N[y]:y\in N[v]$
+\end_inset
+
+, and picks the best solution amongst these.
+ The branching happens after we pick 
+\begin_inset Formula $v$
+\end_inset
+
+ - we can find a solution for 
+\begin_inset Formula $G\setminus N[v]$
+\end_inset
+
+ and for 
+\begin_inset Formula $G\setminus N[v']$
+\end_inset
+
+ where 
+\begin_inset Formula $v'$
+\end_inset
+
+ is a adjacent vertex.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Running time:
+\end_layout
+
+\begin_layout Standard
+Each time we branch in the algorithm, we reduce the problem to two subproblems
+ proportional to 
+\begin_inset Formula $G\setminus N[v]$
+\end_inset
+
+ and 
+\begin_inset Formula $G\setminus N[v']$
+\end_inset
+
+.
+ We can see the algorithm as a search tree 
+\begin_inset Formula $T$
+\end_inset
+
+ where each node corresponds to the subproblem of finding the maximum independen
+t set.
+ The root of the tree is the problem of finding independence set in 
+\begin_inset Formula $G$
+\end_inset
+
+ and the one child node will then be the subproblem of finding the MIS in
+ 
+\begin_inset Formula $G\setminus N[v]$
+\end_inset
+
+ and this keeps recursing.
+ We get the solution to a subproblem in a node by solving the subproblems
+ of the child nodes.
+ Therefore, we can analyze the running time be looking at the size of the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+search tree
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $T$
+\end_inset
+
+ and the time spent in each node.
+ We will therefore look at the size of the search tree 
+\begin_inset Formula $T(n)$
+\end_inset
+
+ when give a graph 
+\begin_inset Formula $G$
+\end_inset
+
+ of 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices.
+\end_layout
+
+\begin_layout Standard
+Let say the algorithm picks a vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ with minimum degree 
+\begin_inset Formula $d(v)$
+\end_inset
+
+ and we have input graph 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ Then to solve the subproblem of finding independent set of 
+\begin_inset Formula $G$
+\end_inset
+
+ boils down to solving it for the subgraphs 
+\begin_inset Formula $G\setminus N[v],G\setminus N[v1],...,G\setminus N[v_{d(v)}]$
+\end_inset
+
+.
+ The reason for this is in part since 
+\begin_inset Formula $v,v_{1},v_{2},...,v_{d(v)}$
+\end_inset
+
+ is the closed neighborhood of 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ Furthermore, due to the observation of maximum independence set, then if
+ 
+\begin_inset Formula $v$
+\end_inset
+
+ is in 
+\begin_inset Formula $I$
+\end_inset
+
+, then none of its neighbors can be in it.
+ Furthermore if a neighbor 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ is in 
+\begin_inset Formula $I$
+\end_inset
+
+ , then none of its neighbors 
+\begin_inset Formula $N[v_{i}]$
+\end_inset
+
+ can be in 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ Therefore we have to solve 
+\begin_inset Formula $G\setminus N[v],G\setminus N[v1],...,G\setminus N[v_{d(v)}]$
+\end_inset
+
+ and pick the best solution among them.
+ This gives us the total work performed is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T(n)\leq1+T(n-d(v)-1)+\sum_{i=1}^{d(v)}T(n-d(v_{i})-1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+we add 1 for the addition.
+ We get the 
+\begin_inset Formula $T(n-d(v)-1)$
+\end_inset
+
+ since, there are now 
+\begin_inset Formula $d(v)-1$
+\end_inset
+
+ vertices less (neighbors plus the node itself).
+ We always choose a vertex of least degree in the algorithm, then the degree
+ of 
+\begin_inset Formula $v$
+\end_inset
+
+ must be less than its neighbors
+\begin_inset Formula 
+\begin{align*}
+d(v) & \leq d(v_{i})\\
+\implies & n-d(v_{i})-1\leq n-d(v)-1\text{ subtract less}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+since 
+\begin_inset Formula $T(n)$
+\end_inset
+
+ is monotonically increasing 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+why?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+T(n-d(v_{i})-1)\leq T(n-d(v)-1)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It can be assumed that 
+\begin_inset Formula $T(0)=1$
+\end_inset
+
+, since it takes constant time to see there is no tree.
+ We thus get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+T(n) & \leq1+T(n-d(v)-1)+\sum_{i=1}^{d(v)}T(n-d(v)-1)\\
+\leq & 1+(d(v)+1)\cdot T(n-d(v)-1)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\emph on
+now the authors make a mistake by setting 
+\begin_inset Formula $s=d(v)+1$
+\end_inset
+
+, since the degree depends on 
+\begin_inset Formula $v$
+\end_inset
+
+ which is different at each level of the recursion (the minimum degree edge
+ will be different at each recursive call)
+\begin_inset Formula 
+\[
+T(n)\leq1+s\cdot T(n-s)\leq1+s+s^{2}+...+s^{n/s}=\frac{1-s^{n/s+1}}{1-s}=O^{*}(s^{n/s})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The for 
+\begin_inset Formula $s>0$
+\end_inset
+
+ the function 
+\begin_inset Formula $f(s)=s^{1/s}$
+\end_inset
+
+ has maximum value for some 
+\begin_inset Formula $s=3$
+\end_inset
+
+.
+ Thereby we get that
+\begin_inset Formula 
+\[
+T(n)\leq O^{*}(s^{n/s})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Parameterized algorithms
+\end_layout
+
+\begin_layout Subsection
+Bar fight prevention problem
+\end_layout
+
+\begin_layout Standard
+The premise of the problem is a bouncer that wants to avoid fights.
+ It assumed he/she knows all the attendants and which of them will fight.
+ The bouncer would likek to rejct all the guests that will cause a fight,
+ but management will only let the bouncer reject 
+\begin_inset Formula $k$
+\end_inset
+
+ guests.
+ We have an optimization problem of letting as many people in as possible
+ without rejecting more than 
+\begin_inset Formula $k$
+\end_inset
+
+guests.
+ This is known as the vertex cover problem where we would like to cover
+ a graph of size 
+\begin_inset Formula $k$
+\end_inset
+
+, and this is NPC.
+ If we can cover the graph we can never solve the bar fight prevention problem.
+\end_layout
+
+\begin_layout Subsubsection
+Brute force algorithm
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $n=1000$
+\end_inset
+
+ we can always try to brute force it with 
+\begin_inset Formula $2^{1000}$
+\end_inset
+
+ guesses and pick a permutation of guests that causes no guests, but this
+ is so slow (
+\begin_inset Formula $10^{301})$
+\end_inset
+
+ it will never terminate.
+ We are however informed that we can bounce 
+\begin_inset Formula $k=10$
+\end_inset
+
+ guests, so instead we need to try the 
+\begin_inset Formula ${1000 \choose 10}$
+\end_inset
+
+ permutations of bouncing people and pick one if any set of the 
+\begin_inset Formula $k$
+\end_inset
+
+ people to reject that does not cause a fight.
+ This is still very large of around 
+\begin_inset Formula $10^{23}$
+\end_inset
+
+ possibilities.
+\end_layout
+
+\begin_layout Subsubsection
+Using kernelization
+\end_layout
+
+\begin_layout Enumerate
+Anyone with no conflicts (equivalent to 
+\begin_inset Formula $d(v)=0$
+\end_inset
+
+ in vertex cover problem) can safely bet let in, since they will have no
+ conflicts
+\end_layout
+
+\begin_layout Enumerate
+Reject anyone with 
+\begin_inset Formula $k+1$
+\end_inset
+
+ conflicts, and decrease 
+\begin_inset Formula $k$
+\end_inset
+
+ by one.
+ The only way to prevent fight with this one would be to reject 
+\begin_inset Formula $k+1$
+\end_inset
+
+ more guests, and this is not allowed.
+ This is equivalent to having to cover 
+\begin_inset Formula $k+1$
+\end_inset
+
+ more vertices if selecting this one
+\end_layout
+
+\begin_layout Enumerate
+Note: If there are no more people with the above two characteristics, then
+ we know that each guest has at most 
+\begin_inset Formula $k$
+\end_inset
+
+ potential conflicts (
+\begin_inset Formula $d(v)\leq k,\forall v\in V$
+\end_inset
+
+).
+ Note, there can now be around 
+\begin_inset Formula $O(n\cdot k)$
+\end_inset
+
+ fights and this can be larger than 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+.
+ The problem is that if we have more than 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+fights at this points, there is no way to prevent fights.
+ The reason is that solving a potential conflict solves at most 
+\begin_inset Formula $k$
+\end_inset
+
+ fights, and if we do this 
+\begin_inset Formula $k$
+\end_inset
+
+ times, we resolve 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+fights.
+ However we now there are more than 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+ and fights and we can never solve it.
+ This is equivalent to having 
+\begin_inset Formula $|E|>k^{2}$
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: explain more how this works in the vertex cover
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Now assuming we have finished step 1 and 2, we know that each guest has
+ at most 
+\begin_inset Formula $k$
+\end_inset
+
+ and at least 1 fight (we have accepted the ones with 0 fights and rejected
+ those with more than 
+\begin_inset Formula $k+1$
+\end_inset
+
+).
+ If we look at this as a graph with 
+\begin_inset Formula $|V|$
+\end_inset
+
+ guests with undecided fate, and edges representing conflicts then we know
+\begin_inset Formula 
+\[
+|V|=\sum_{v\in V}1\leq\sum_{v\in V}d(v)=2|E|\leq2k^{2}
+\]
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The first inequality holds since each gust has at least one conflict.
+ The second equality holds since when we count each edge twice when calculating
+ the degree over each edge (every edge is incident on two vertices and gets
+ counted twice).
+ The second inequality holds since we know from step 3 that there would
+ be no solution if 
+\begin_inset Formula $|E|>k^{2}$
+\end_inset
+
+ and we would already have terminated.
+ Thereby we can now check the 
+\begin_inset Formula ${2k^{2} \choose k}$
+\end_inset
+
+ choices to see if any results in fights.
+\end_layout
+
+\begin_layout Enumerate
+For the guests with only 1 conflict we can also safely accept them.
+ Since all guests in the 
+\begin_inset Quotes eld
+\end_inset
+
+conflict
+\begin_inset Quotes erd
+\end_inset
+
+ graph have a degree of at least 1 (one possible fight), then accepting
+ those with exactly 1 conflict cannot be worse than accepting anyone else.
+ Assume Alice has a single conflict with Bob.
+ Accepting Bob would resolve in rejecting Alice, and possibly more guests
+ (We do not know anything about the number of conflicts Bob has) so in this
+ way it is no worse to accept Alice than anyone else.
+ Therefore, accept those with 1 conflict and decrease 
+\begin_inset Formula $k$
+\end_inset
+
+ by 1.
+ Now all the remaining have at least 2 and at most 
+\begin_inset Formula $k$
+\end_inset
+
+ fights.
+ This gives us
+\begin_inset Formula 
+\[
+|V|=\sum_{v\in V}1=\frac{1}{2}\sum_{v\in V}2\leq\frac{1}{2}\sum_{v\in V}d(v)=\frac{1}{2}\cdot2|E|\leq k^{2}
+\]
+
+\end_inset
+
+ where the first inequality holds since each guest has at least 2 fights.
+ The third inequality holds again since each edge is counted twice in the
+ degree.
+ This gives us time 
+\begin_inset Formula ${k^{2} \choose k}=1.73\cdot10^{13}$
+\end_inset
+
+ and can easily be computed.
+\end_layout
+
+\begin_layout Standard
+Using reduction rules to reduce the problem instance is known as kernelization.
+\end_layout
+
+\begin_layout Subsubsection
+Bounded search tree
+\end_layout
+
+\begin_layout Standard
+We only have success if we resolve every conflict be rejecting at most 
+\begin_inset Formula $k$
+\end_inset
+
+ people.
+ Furthermore, a conflict between two guests is resolved by rejecting one
+ of them.
+ This leads us to the following algorithm.
+ Say there is a conflict between Alice and Bob.
+ We first reject Bob, check if the remaining conflicts can be resolved by
+ recursively rejecting at most 
+\begin_inset Formula $k-1$
+\end_inset
+
+ guests.
+ In case is fails, we try to reject Alice, and recursively check if we can
+ resolve all conflicts by rejecting at most 
+\begin_inset Formula $k-1$
+\end_inset
+
+ additional guests.
+ If this fails, we can never solve all conflicts.
+\end_layout
+
+\begin_layout Standard
+The running time of this algorithm can be analyzed in terms of the number
+ of recursive calls.
+ The idea of the algorithm was to pick an arbitrary conflict - an edge,
+ 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+, in the graph over potential conflicts between two guests.
+ Then we try to reject 
+\begin_inset Formula $u$
+\end_inset
+
+ decrease 
+\begin_inset Formula $k$
+\end_inset
+
+ by 1, and see if we can solve all conflicts by rejecting additional 
+\begin_inset Formula $k-1$
+\end_inset
+
+ guests.
+ The same is done by rejecting 
+\begin_inset Formula $v$
+\end_inset
+
+ and see if we have success by rejecting an additional 
+\begin_inset Formula $k-1$
+\end_inset
+
+ guests.
+ Each recursive call does this again, and we thus try to solve 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+different subproblems (
+\begin_inset Formula $2^{k}$
+\end_inset
+
+different combinations of rejecting 
+\begin_inset Formula $k$
+\end_inset
+
+ guests).
+ Each path from root to leaf of the search tree is considered the set of
+ rejected guests and is thereby a subproblem and the number of leaves in
+ balanced binary search tree is 
+\begin_inset Formula $2^{k}$
+\end_inset
+
+ - twice as many nodes as previously and we stop at depth 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We can assume we have already done some kernelization so that the guests
+ have at most 
+\begin_inset Formula $k$
+\end_inset
+
+conflicts (step 1 and 2 of kernelization).
+ The number of edges in the conflict graph is
+\begin_inset Formula 
+\[
+2|E|=\sum_{v\in V}d(v)\leq n\cdot k
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the inequality holds since each remaining guest has at most 
+\begin_inset Formula $k$
+\end_inset
+
+conflicts.
+ This gives us 
+\begin_inset Formula $|E|\leq\frac{1}{2}n\cdot k$
+\end_inset
+
+.
+ So we approximately 
+\begin_inset Formula $\frac{1}{2}n\cdot k$
+\end_inset
+
+ conflicts before we try the bounded search tree approach
+\end_layout
+
+\end_body
+\end_document

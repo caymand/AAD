@@ -1,0 +1,2739 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "cmss" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Section
+Definitions
+\end_layout
+
+\begin_layout Subsection
+Flow network
+\end_layout
+
+\begin_layout Enumerate
+A flow network 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ is a graph where each edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ has non-negative capacity 
+\begin_inset Formula $c(u,v)\geq0$
+\end_inset
+
+.
+ It is further required that
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ then we have 
+\begin_inset Formula $(v,u)\notin E$
+\end_inset
+
+ (so there are no reverse edges)
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $(u,v)\notin E$
+\end_inset
+
+ then we set 
+\begin_inset Formula $c(u,v)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+No self loops
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+We have two special vertices in a flow network
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Source 
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Sink 
+\begin_inset Formula $t$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+We assume that in a flow network there is a path from the source to any
+ vertex and then to the sink, 
+\begin_inset Formula $\forall v\in V,s\rightsquigarrow v\rightsquigarrow t$
+\end_inset
+
+.
+ So we have a connected graph
+\end_layout
+
+\begin_layout Enumerate
+Since each vertex has at least one entering edege(the above assumption)
+ except the source, 
+\begin_inset Formula $s$
+\end_inset
+
+, then we will have that 
+\begin_inset Formula $|E|\ge|V|-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Capacity constraint
+\end_layout
+
+\begin_layout Standard
+For all 
+\begin_inset Formula $u,v\in V$
+\end_inset
+
+ we require 
+\begin_inset Formula $0\le f(u,v)\leq c(u,v)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That is we have non-negative flow that is bounded by the capacity of an
+ edge.
+ For edges not in the flow network this still hold since point 1.b states
+ we set flow 0 in this case.
+\end_layout
+
+\begin_layout Subsection
+Flow conservation
+\end_layout
+
+\begin_layout Standard
+For all 
+\begin_inset Formula $u\in V\setminus\{s,t\}$
+\end_inset
+
+ we require that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{v\in V}f(u,v)=\sum_{v\in V}f(v,u)
+\]
+
+\end_inset
+
+ And as stated by 1.b, when 
+\begin_inset Formula $(u,v)\notin E$
+\end_inset
+
+ we set 
+\begin_inset Formula $f(u,v)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Value of a flow
+\end_layout
+
+\begin_layout Standard
+We defined the value of flow 
+\begin_inset Formula $f$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+|f|=\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Often the second sum is 0 and there is no flow going into 
+\begin_inset Formula $s$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Antiparallel edges
+\end_layout
+
+\begin_layout Standard
+Two edges 
+\begin_inset Formula $(v1,v2)$
+\end_inset
+
+ and 
+\begin_inset Formula $(v2,v1)$
+\end_inset
+
+ are called antiparallel and are not allowed as stated earlier.We can remove
+ antiparallel edges by splitting edge 
+\begin_inset Formula $(v1,v2)$
+\end_inset
+
+ into 
+\begin_inset Formula $(v1,v')$
+\end_inset
+
+and 
+\begin_inset Formula $(v',v2)$
+\end_inset
+
+.
+ We simply set 
+\begin_inset Formula $c(v1,v')=c(v',v2)=c(v1,v2)$
+\end_inset
+
+.
+ This procedures ensure there is no reverse of an edge.
+\end_layout
+
+\begin_layout Subsection
+Multiple source and sink
+\end_layout
+
+\begin_layout Enumerate
+Add a supersource 
+\begin_inset Formula $s$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Make edges from 
+\begin_inset Formula $(s,s_{i})$
+\end_inset
+
+ for each of the source
+\end_layout
+
+\begin_layout Enumerate
+Set their capacity 
+\begin_inset Formula $c(s,s_{i})=\infty$
+\end_inset
+
+ such that the original flow from 
+\begin_inset Formula $s_{i}$
+\end_inset
+
+can flow.
+\end_layout
+
+\begin_layout Standard
+We can do the same for a supersink 
+\begin_inset Formula $t$
+\end_inset
+
+ that consumes whatever is required for each 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Residual networks
+\end_layout
+
+\begin_layout Standard
+Edges of 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ represent how much we can change the flow along each edge in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ It is made in the following way
+\end_layout
+
+\begin_layout Enumerate
+We place an edge into 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+if it has positive 
+\begin_inset Quotes eld
+\end_inset
+
+residual capacity
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $c_{f}(u,v)=c(u,v)-f(u,v)>0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Flows of edges with residual capacity 
+\begin_inset Formula $c_{f}(u,v)=0$
+\end_inset
+
+ are not in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to increase flow on a particular edge it might be needed to decrease
+ flow along another edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+.
+ We decrease flow by adding 
+\begin_inset Quotes eld
+\end_inset
+
+reverse edges
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Therefore we also add edge with residual capacity 
+\begin_inset Formula $c_{f}(v,u)=f(u,v)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Thus we see that 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ can at most cancel out the flow of 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Sending flow back from edge (sending some flow along 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+and then send some of it back along 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ is equivalent to 
+\emph on
+decreasing flow
+\emph default
+.
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Residual capacity
+\end_layout
+
+\begin_layout Standard
+Due to the need to decrease flow, we define formally the residual capcity
+ of 
+\begin_inset Formula $G$
+\end_inset
+
+ with flow 
+\begin_inset Formula $f$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+c_{f}(u,v)=\left\{ \begin{array}{cc}
+c(u,v)-f(u,v) & \text{ if }(u,v)\in E\\
+f(v,u) & \text{ if }(v,u)\in E\\
+0 & \text{otherwise}
+\end{array}\right.
+\]
+
+\end_inset
+
+Note each case is exclusive and that one case will apply to all pairs of
+ vertices.
+\end_layout
+
+\begin_layout Standard
+The first case holds for regular edges in 
+\begin_inset Formula $E$
+\end_inset
+
+, and then the second case will not hold since we require that 
+\begin_inset Formula $(u,v)\in E\implies(v,u)\notin E$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The second case holds since an edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ in the residual network is the reverse of an edge in the original network
+ 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $(u,v)\notin E$
+\end_inset
+
+ then it might be that 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ is in 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ This is just the reverse of case 1.
+\end_layout
+
+\begin_layout Standard
+The third case is just for edges not in 
+\begin_inset Formula $G$
+\end_inset
+
+, these will neither have reverse edges in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+so case two does neither hold, and we do not draw these edges in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Residual network formal
+\end_layout
+
+\begin_layout Standard
+Using the formal definition of residual capacity we define the residual
+ network 
+\begin_inset Formula $G_{f}=(V,E_{f})$
+\end_inset
+
+ where we define 
+\begin_inset Formula 
+\[
+E_{f}=\{(u,v)\in V\times V:c_{f}(u,v)>0\}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which is all the strictly positive edges.
+\end_layout
+
+\begin_layout Standard
+Now we see that each edge in the residual network only omits flow greater
+ than 0.
+ Since each edge is either an edge in 
+\begin_inset Formula $G$
+\end_inset
+
+ or their reversals, then we have
+\begin_inset Formula 
+\[
+|E_{f}|\leq2|E|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ is almost a flow network with capcity function 
+\begin_inset Formula $c_{f}$
+\end_inset
+
+.
+ It does not follow the definition since we low reversals of an edge.
+\end_layout
+
+\begin_layout Subsection
+Flow Augmentation
+\end_layout
+
+\begin_layout Standard
+We can thing of 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ as a map of how much flow can be added to each edge in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ If we have a flow 
+\begin_inset Formula $f'$
+\end_inset
+
+ in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ we define the augmentation of a flow as
+\begin_inset Formula 
+\[
+(f\shortuparrow f')(u,v)=\left\{ \begin{array}{cc}
+f(u,v)+f'(u,v)-f'(v,u) & if(u,v)\in E\\
+0 & otherwises
+\end{array}\right.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+note how the subtraction of the reversal of an edge in this definition shows
+ how it is equivalent to just having less flow along 
+\begin_inset Formula $(u,v)\in E_{f}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Augmenting Path
+\end_layout
+
+\begin_layout Standard
+A simple path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+ in the residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ Sine the path is made up of edges in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+which denote how much more we can increase flow in 
+\begin_inset Formula $G$
+\end_inset
+
+, we can increase the flow on an edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ on the path 
+\begin_inset Formula $p$
+\end_inset
+
+ by up to 
+\begin_inset Formula $c_{f}(u,v)$
+\end_inset
+
+ without we violate the capacity constraint of 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ in the original network.
+ That is, we for edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ on path 
+\begin_inset Formula $p$
+\end_inset
+
+ update the flow on edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ or 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ (subtract flow) by 
+\begin_inset Formula $c_{f}(u,v)$
+\end_inset
+
+ then we do not violate the capacity constraint 
+\begin_inset Formula $c(u,v)$
+\end_inset
+
+ in the original network.
+\end_layout
+
+\begin_layout Subsection
+Residual capacity formal
+\end_layout
+
+\begin_layout Standard
+The maximum amount of flow we can increase on each edge along an augmenting
+ path 
+\begin_inset Formula $p$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+c_{f}(p)=\min(c_{f}(u,v):(u,v)\,is\,on\,p)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Cut of a flow
+\end_layout
+
+\begin_layout Standard
+A cut 
+\begin_inset Formula $(S,T)$
+\end_inset
+
+ of a flow network 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ is a partitioning of vertices into the sets 
+\begin_inset Formula $s\in S$
+\end_inset
+
+ and 
+\begin_inset Formula $t\in T=V-S$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Net flow
+\end_layout
+
+\begin_layout Standard
+The flow across the cut is defined as 
+\begin_inset Formula 
+\[
+f(S,T)=\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}f(v,u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Capacity of a cut
+\end_layout
+
+\begin_layout Standard
+Capacity of a cut 
+\begin_inset Formula $(S,T)$
+\end_inset
+
+ is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+cS,T)=\sum_{u\in S}\sum_{v\in T}c(u,v)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is intentional that we only count capacity going from 
+\begin_inset Formula $S$
+\end_inset
+
+ to 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ This is unlike the net-flow definition.
+\end_layout
+
+\begin_layout Subsection
+Minimum cut
+\end_layout
+
+\begin_layout Standard
+A cut of a flow network, is a cut 
+\begin_inset Formula $(S,T)$
+\end_inset
+
+ with minimum capacity.
+ 
+\end_layout
+
+\begin_layout Section
+Ford fulkerson method
+\end_layout
+
+\begin_layout Enumerate
+Start with 
+\begin_inset Formula $f(u,v)=0$
+\end_inset
+
+ for all 
+\begin_inset Formula $u,v\in V$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+while there exists an augmenting path 
+\begin_inset Formula $p$
+\end_inset
+
+ in residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Augment flow 
+\begin_inset Formula $f$
+\end_inset
+
+ along 
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+return 
+\begin_inset Formula $f$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Section
+Proofs
+\end_layout
+
+\begin_layout Subsection
+Leamma 26.1
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be a flow in 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $f'$
+\end_inset
+
+ be a flow in 
+\begin_inset Formula $G_{f}.$
+\end_inset
+
+ The function 
+\begin_inset Formula $f\shortuparrow f'$
+\end_inset
+
+ is a flow in 
+\begin_inset Formula $G$
+\end_inset
+
+ with value 
+\begin_inset Formula $|f\shortuparrow f'|=|f|+|f'|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Capacity constraint proof
+\end_layout
+
+\begin_layout Standard
+Here we must prove 
+\begin_inset Formula $0\le f'\le c_{f}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+First we prove that the capacity is non-negative
+\series default
+.
+ If we have an edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ in the original flow network, and we use the formal definition of residual
+ capacity, the 
+\begin_inset Formula $c_{f}(v,u)=f(u,v)$
+\end_inset
+
+ using the second case(
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ cannot be in 
+\begin_inset Formula $E$
+\end_inset
+
+ but 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ is).
+ Since the flow is never larger than the capacity we have 
+\begin_inset Formula $f'(v,u)\le c_{f}(v,u)=f(u,v)$
+\end_inset
+
+.
+ Inserting this into flow augmentation gives us 
+\begin_inset Formula 
+\begin{align*}
+(f & \shortuparrow f')(u,v)=f(u,v)+f'(u,v)-f'(v,u)\\
+ & \geq f(u,v)+f'(u,v)-f(u,v)\text{(using the aboe note)}\\
+ & =f'(u,v)\\
+ & \geq0
+\end{align*}
+
+\end_inset
+
+ where the last inequality holds since the lemma assume we have a flow 
+\begin_inset Formula $f'$
+\end_inset
+
+ in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Next we show that the 
+\series bold
+flow is bounded by the capacity.
+\series default
+
+\begin_inset Formula 
+\begin{align*}
+(f & \shortuparrow f')(u,v)=f(u,v)+f'(u,v)-f'(v,u)\\
+\leq & f(u,v)+f'(u,v)\text{(f' is a flow and hence nonnegative)}\\
+\leq & f(u,v)+c_{f}(u,v)\text{(f' is a flow so capacity constraint holds)}\\
+= & f(u,v)+c(u,v)-f(u,v)\text{ by definition }\\
+ & c(u,v)
+\end{align*}
+
+\end_inset
+
+ so the resuling flow is also bound be the capacity.
+ This holds for all edges, since we picked any edge.
+ 
+\series bold
+\emph on
+The capacity constraint therefore holds-
+\end_layout
+
+\begin_layout Standard
+Next we show 
+\series bold
+flow conservation holds
+\series default
+ for all 
+\begin_inset Formula $u\in V-\{s,t\}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\sum_{v\in V}(f & \shortuparrow f')(u,v)=\sum_{v\in V}f(u,v)+f'(u,v)-f'(v,u)\\
+= & \sum_{v\in V}f(u,v)+\sum_{v\in V}f'(u,v)-\sum_{v\in V}f'(v,u)\\
+= & \sum_{v\in V}f(v,u)+\sum_{v\in V}f'(v,u)-\sum_{v\in V}f'(u,v)\\
+= & \sum_{v\in V}f(v,u)+f'(v,u)-f'(u,v)\\
+= & \sum_{v\in V}(f\shortuparrow f')(u,v)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the third line holds since we now each flow has conservation so the
+ flow into 
+\begin_inset Formula $v$
+\end_inset
+
+ equals the flow out of 
+\begin_inset Formula $v$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Next we must compute the 
+\series bold
+value of the flow
+\series default
+.
+ Since antiparallel edges are disallowed then we know that either 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ or 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ can be amongst the edges of 
+\begin_inset Formula $G$
+\end_inset
+
+ but never both.
+ This is not the case for 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+, however.
+ 
+\end_layout
+
+\begin_layout Standard
+We define, for a fixed vertex 
+\begin_inset Formula $u$
+\end_inset
+
+ the set 
+\begin_inset Formula $V_{1}(u)=\{v:(u,v)\in E\}$
+\end_inset
+
+ to be the set of vertices with an edge from 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Likewise we define 
+\begin_inset Formula $V_{2}(u)=\{v:(v,u)\in E\}$
+\end_inset
+
+ to be the set of vertices with an edge going into 
+\begin_inset Formula $u$
+\end_inset
+
+.Using the knowledge that only one of 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ or 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ can be in 
+\begin_inset Formula $E$
+\end_inset
+
+, then we know that 
+\begin_inset Formula $V_{1}(u)\cup V_{2}(u)\subseteq V$
+\end_inset
+
+ and that 
+\begin_inset Formula $V_{1}(u)\cap V_{2}(u)=\emptyset$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+By the definition of flow augmentation (
+\begin_inset Formula $f(u,v)+f'(u,v)-f'(v,u)\,if\,(u,v)\in E\,0\,otherwise)$
+\end_inset
+
+ we know that only vertices from 
+\begin_inset Formula $V_{1}(u)$
+\end_inset
+
+ can have positive flow augmentation by 
+\begin_inset Formula $(f\shortuparrow f')(u,v)$
+\end_inset
+
+, since these are the only vertices with an edge from 
+\begin_inset Formula $u$
+\end_inset
+
+ and therefore all other edges will have 
+\begin_inset Formula $(u,v')$
+\end_inset
+
+ will have augmented flow 0.
+ Likewise only vertices in 
+\begin_inset Formula $V_{2}(u)$
+\end_inset
+
+ can have positive values for 
+\begin_inset Formula $f\shortuparrow f')(v,u)$
+\end_inset
+
+ since these are the only vertices that have an edge into 
+\begin_inset Formula $u$
+\end_inset
+
+ (making 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ an edge in 
+\begin_inset Formula $E$
+\end_inset
+
+) and all others will have 0 flow augmentation.
+ Using this we get
+\begin_inset Formula 
+\begin{align*}
+\sum_{v\in V}(f & \shortuparrow f')(s,v)-\sum_{v\in V}(f\shortuparrow f')(v,s)\\
+ & =\sum_{v\in V_{1}(u)}(f\shortuparrow f')(u,v)-\sum_{v\in V_{2}(u)}(f\shortuparrow f')(v,u)
+\end{align*}
+
+\end_inset
+
+Now we can use the fact that for all 
+\begin_inset Formula $v\in V_{1}(u)$
+\end_inset
+
+ then 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+.
+ Likewise for all 
+\begin_inset Formula $v\in V_{2}(u)$
+\end_inset
+
+ then 
+\begin_inset Formula $(v,u)\in E$
+\end_inset
+
+, and we can therefore use the definition of flow augmentation.
+ 
+\begin_inset Formula 
+\begin{align*}
+ & \sum_{v\in V}(f\shortuparrow f')(u,v)-\sum_{v\in V}(f\shortuparrow f')(v,u)\\
+ & =\sum_{v\in V_{1}(u)}(f(u,v)+f'(u,v)-f'(v,u))-\sum_{v\in V_{2}(u)}(f(v,u)+f'(v,u)-f'(u,v))\\
+ & =\sum_{v\in V_{1}(u)}f(u,v)+\sum_{v\in V_{1}(u)}f'(u,v)-\sum_{v\in V_{1}(u)}f'(v,u)\\
+ & -\sum_{v\in V_{2}(u)}f(v,u)-\sum_{v\in V_{2}(u)}f'(v,u)+\sum_{v\in V_{2}(u)}f'(u,v)\\
+ & =\sum_{v\in V_{1}}f(u,v)-\sum_{v\in V_{2}}f(v,u)-\sum_{v\in V_{1}\cup V_{2}}f'(v,u)+\sum_{v\in V_{1}\cup V_{2}}f'(u,v)
+\end{align*}
+
+\end_inset
+
+ where we can pull the 
+\begin_inset Formula $f'$
+\end_inset
+
+ sums together since 
+\begin_inset Formula $V_{1}(u)$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{2}(u)$
+\end_inset
+
+ are disjoint as argued, so we do end up summing over each set.
+ The way we partitioned 
+\begin_inset Formula $V_{1}(u)$
+\end_inset
+
+and 
+\begin_inset Formula $V_{2}(u)$
+\end_inset
+
+ ensured that we only look at edges going out of 
+\begin_inset Formula $u$
+\end_inset
+
+ and into 
+\begin_inset Formula $u$
+\end_inset
+
+ respectively.
+ This means, that if we instead just sum over the entire 
+\begin_inset Formula $V$
+\end_inset
+
+, then we loop over edges that are not in 
+\begin_inset Formula $G$
+\end_inset
+
+ so the flow is zero.
+ The same goes for 
+\begin_inset Formula $V_{1}(u)\cup V_{2}(u)$
+\end_inset
+
+.
+ These are the only vertices with an edge that has endpoint in 
+\begin_inset Formula $s$
+\end_inset
+
+ in the residual network.
+ So all other terms in the sum is 0.
+\begin_inset Formula 
+\begin{align*}
+ & \sum_{v\in V}(f\shortuparrow f')(u,v)-\sum_{v\in V}(f\shortuparrow f')(v,u)\\
+ & =\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)-\sum_{v\in V}f'(v,s)+\sum_{v\in V}f'(s,v)
+\end{align*}
+
+\end_inset
+
+Using the definition of the
+\series bold
+ value of a flow
+\series default
+ we can now show that value of the flow to be
+\begin_inset Formula 
+\begin{align*}
+|f & \shortuparrow f'|=\sum_{v\in V}(f\shortuparrow f')(u,v)-\sum_{v\in V}(f\shortuparrow f')(v,u)\\
+ & =\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)-\sum_{v\in V}f'(v,s)+\sum_{v\in V}f'(s,v)\\
+ & =|f|+|f'|
+\end{align*}
+
+\end_inset
+
+ For 
+\series bold
+flow conservation 
+\series default
+we first now that the definition can be rewritten
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\sum_{v\in V\setminus\{s,t\}}f(u,v)=\sum_{v\in V\setminus\{s,t\}}f(v,u)\iff\sum_{v\in V\setminus\{s,t\}}f(u,v)-\sum_{v\in V\setminus\{s,t\}}f(v,u)=0
+\]
+
+\end_inset
+
+then using the definition and using the difference we used in calculating
+ the value of the flow
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\sum_{v\in V}(f & \shortuparrow f')(u,v)-\sum_{v\in V}(f\shortuparrow f')(v,u)\\
+ & =\left(\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)\right)-\sum_{v\in V}f'(v,s)+\sum_{v\in V}f'(s,v)\\
+\end{align*}
+
+\end_inset
+
+ then we know the part within parenthesis is 0 for 
+\begin_inset Formula $v\in V\setminus\{s,t\}$
+\end_inset
+
+, since 
+\begin_inset Formula $f$
+\end_inset
+
+ is a flow and since flow conservation holds for 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ For the part outside the parenthesis then 
+\begin_inset Formula $f'$
+\end_inset
+
+ is also a flow and flow conservation holds.
+ 
+\begin_inset Formula 
+\begin{align*}
+\sum_{v\in V\setminus\{s,t\},}(f & \shortuparrow f')(u,v)-\sum_{v\in V\setminus\{s,t\},}(f\shortuparrow f')(v,u)\\
+ & =\sum_{v\in V\setminus\{s,t\},}f(s,v)-\sum_{v\in V\setminus\{s,t\},}f(v,s)-\sum_{v\in V\setminus\{s,t\},}f'(v,s)+\sum_{v\in V\setminus\{s,t\},}f'(s,v)\\
+ & =0
+\end{align*}
+
+\end_inset
+
+thereby we have shown flow conservation.
+\end_layout
+
+\begin_layout Subsection
+Lemma 26.2
+\end_layout
+
+\begin_layout Standard
+The following is a flow in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+with value 
+\begin_inset Formula $|f_{p}|=f_{f}(p)>0$
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+f_{p}(u,v)=\left\{ \begin{array}{cc}
+c_{f}(p) & if\,(u,v)\,is\,on\,p\\
+0 & otherwise
+\end{array}\right.
+\]
+
+\end_inset
+
+ remember that 
+\begin_inset Formula $c_{f}(p)=\min(c_{f}(u,v):(u,v)\,is\,on\,p)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Corollary 26.3
+\end_layout
+
+\begin_layout Standard
+If we have a flow network 
+\begin_inset Formula $G$
+\end_inset
+
+ and an augmenting path 
+\begin_inset Formula $p$
+\end_inset
+
+ in the residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ and define 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+ as in lemma 26.2, then augmenting 
+\begin_inset Formula $f\shortuparrow f_{p}$
+\end_inset
+
+is a flow in 
+\begin_inset Formula $G$
+\end_inset
+
+ with value
+\begin_inset Formula 
+\[
+|f\shortuparrow f_{p}|=|f|+|f_{p}|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+By lemma 26.2 we know that 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+is a flow in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ Lemma 26.1 tells us if we have a flow in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ and a flow in 
+\begin_inset Formula $G$
+\end_inset
+
+, then augmenting the flow 
+\begin_inset Formula $f\shortuparrow f'$
+\end_inset
+
+ has the value 
+\begin_inset Formula $|f\shortuparrow f'|=|f|+|f'|$
+\end_inset
+
+.
+ We can just use 
+\begin_inset Formula $f_{p}=f'$
+\end_inset
+
+ as the flow in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ and we are done.
+\end_layout
+
+\begin_layout Subsection
+Lemma 26.4
+\end_layout
+
+\begin_layout Standard
+The net flow across a cut 
+\begin_inset Formula $(S,T)$
+\end_inset
+
+ in a flow network 
+\begin_inset Formula $G$
+\end_inset
+
+ is 
+\begin_inset Formula $f(S,T)=|f|$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+Using the definition of the flow conservation we can write
+\begin_inset Formula 
+\[
+0=\sum_{v\in V}f(u,v)-\sum_{v\in V}f(v,u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and using this in part of the definition of value of a flow gives
+\begin_inset Formula 
+\begin{align*}
+|f| & =\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)+\sum_{u\in S\setminus\{s\}}0\\
+ & \sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)+\sum_{u\in S\setminus\{s\}}\sum_{v\in V}f(u,v)-\sum_{v\in V}f(v,u)
+\end{align*}
+
+\end_inset
+
+we can expand the outer sum 
+\begin_inset Formula 
+\begin{align*}
+|f| & =\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)+\sum_{u\in S\setminus\{s\}}\sum_{v\in V}f(u,v)-\sum_{u\in S\setminus\{s\}}\sum_{v\in V}f(v,u)\\
+\end{align*}
+
+\end_inset
+
+ and changing the order of the sums(commutativity) gives us
+\begin_inset Formula 
+\begin{align*}
+|f| & =\sum_{v\in V}f(s,v)-\sum_{v\in V}f(v,s)+\sum_{v\in V}\sum_{u\in S\setminus\{s\}}f(u,v)-\sum_{v\in V}\sum_{u\in S\setminus\{s\}}f(v,u)\\
+ & =\sum_{v\in V}\left(f(s,v)+\sum_{u\in S\setminus\{s\}}f(u,v)\right)-\sum_{v\in V}\left(f(v,s)+\sum_{u\in S\setminus\{s\}}f(v,u)\right)\\
+ & =\sum_{v\in V}\sum_{u\in S}f(u,v)-\sum_{v\in V}\sum_{u\in S}f(v,u)
+\end{align*}
+
+\end_inset
+
+where the last equality holds because the sum of 
+\begin_inset Formula $f(s,v)$
+\end_inset
+
+ and 
+\begin_inset Formula $\sum_{u\in S\setminus\{s\}}f(u,v)$
+\end_inset
+
+ is essentially just saying the flow from 
+\begin_inset Formula $s$
+\end_inset
+
+ to vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ plus all other flows along a single edge to 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ This is the same as having the inner sum include 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ The same goes for the flow going into 
+\begin_inset Formula $s$
+\end_inset
+
+ - the flow from 
+\begin_inset Formula $v$
+\end_inset
+
+ to 
+\begin_inset Formula $s$
+\end_inset
+
+ plus the flow from 
+\begin_inset Formula $v$
+\end_inset
+
+ into all other vertices than 
+\begin_inset Formula $s$
+\end_inset
+
+ is just the flow from 
+\begin_inset Formula $v$
+\end_inset
+
+ into all vertices.
+ By all other vetices in mean all vertices in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+We have that 
+\begin_inset Formula $V=S\cup T$
+\end_inset
+
+ and that 
+\begin_inset Formula $S\cap T=\emptyset$
+\end_inset
+
+ due to the way we defined the cut.
+ Therefore, we can split the sum over 
+\begin_inset Formula $V$
+\end_inset
+
+ into two sums.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+|f| & =\sum_{v\in S}\sum_{u\in S}f(u,v)+\sum_{v\in T}\sum_{u\in S}f(u,v)-\sum_{v\in S}\sum_{u\in S}f(v,u)-\sum_{v\in T}\sum_{u\in S}f(v,u)\\
+ & =\left(\sum_{v\in S}\sum_{u\in S}f(u,v)-\sum_{v\in S}\sum_{u\in S}f(v,u)\right)+\sum_{v\in T}\sum_{u\in S}f(u,v)-\sum_{v\in T}\sum_{u\in S}f(v,u)\\
+\end{align*}
+
+\end_inset
+
+within the parenthesis the doubly nested sum will loop over all combinations
+ of pairs of vertices.
+ This means that it will look at all combinations of flows between pairs
+ of vertices, so it does not matter if you take 
+\begin_inset Formula $f(v,u)$
+\end_inset
+
+ or 
+\begin_inset Formula $f(u,v)$
+\end_inset
+
+ inside the sum, since each 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $u$
+\end_inset
+
+ will at some point have had all values vertices in 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ Hence this sum cancels out and we get 
+\begin_inset Formula 
+\begin{align*}
+|f| & =\sum_{v\in T}\sum_{u\in S}f(u,v)-\sum_{v\in T}\sum_{u\in S}f(v,u)\\
+ & =\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}f(v,u)\\
+ & =f(S,T)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Corollary 26.5
+\end_layout
+
+\begin_layout Standard
+The value of any flow 
+\begin_inset Formula $f$
+\end_inset
+
+ in 
+\begin_inset Formula $G$
+\end_inset
+
+ is upper bounded by the capacity of any cut in 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ That is 
+\begin_inset Formula $|f|\leq c(S,T)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+|f| & =f(S,T)\\
+ & =\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}f(v,u)\\
+ & \leq\sum_{u\in S}\sum_{v\in T}f(u,v)\\
+ & \leq\sum_{u\in S}\sum_{v\in T}c(u,v)\\
+ & =c(S,T)
+\end{align*}
+
+\end_inset
+
+ where the first inequality holds by nonnegativity of flows and the second
+ holds by definition.
+\end_layout
+
+\begin_layout Subsection
+Theorem 26.6
+\end_layout
+
+\begin_layout Standard
+For a flow network then the following are equivalent
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $f$
+\end_inset
+
+ is a maximum flow in 
+\begin_inset Formula $G$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+contains no augmenting paths
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $|f|=c(S,T)$
+\end_inset
+
+ for some cut 
+\begin_inset Formula $(S,T)$
+\end_inset
+
+ of 
+\begin_inset Formula $G$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Proving 1=>2
+\end_layout
+
+\begin_layout Standard
+We suppose for contradiction we have a max flow 
+\begin_inset Formula $f$
+\end_inset
+
+ while there still is an augmenting path 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Recall that 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+ is a flow in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ consisting of the residual capacities of the edges along 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Therefore, we can use corollary 26.3 to create and even better flow with
+ value 
+\begin_inset Formula $|f\shortuparrow f_{p}|=|f|+|f_{p}|>|f|$
+\end_inset
+
+.
+ This is a contradiction to 
+\begin_inset Formula $f$
+\end_inset
+
+ being a max flow, so it must be a max flow.
+\end_layout
+
+\begin_layout Subsubsection*
+Proving 2=>3
+\end_layout
+
+\begin_layout Standard
+Suppose there is no augmenting path in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+, that is, no simple path from 
+\begin_inset Formula $s$
+\end_inset
+
+to 
+\begin_inset Formula $t$
+\end_inset
+
+ in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ Next we define a cut where we select 
+\begin_inset Formula $S=\{v\in V:there\,exists\,a\,path\,from\,s\,to\,v\,in\,G_{f}\}$
+\end_inset
+
+ and 
+\begin_inset Formula $T=V-S$
+\end_inset
+
+.
+ This is a cut, since 
+\begin_inset Formula $S$
+\end_inset
+
+ contains 
+\begin_inset Formula $s$
+\end_inset
+
+(the path consists of no edges) and 
+\begin_inset Formula $t\notin S$
+\end_inset
+
+ since there is no path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Likewise 
+\begin_inset Formula $t\in T$
+\end_inset
+
+ since it is in 
+\begin_inset Formula $V$
+\end_inset
+
+ and not in 
+\begin_inset Formula $S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We now pick a pair of vertices 
+\begin_inset Formula $u\in S$
+\end_inset
+
+ and 
+\begin_inset Formula $v\in T$
+\end_inset
+
+.
+ If the edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ then since 
+\begin_inset Formula $u,v$
+\end_inset
+
+ are on different sides of the cut, there is no path from 
+\begin_inset Formula $u$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+ and thereby no edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ in the residual network, 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ Additionally we defined 
+\begin_inset Formula $c_{f}(u,v)=c(u,v)-f(u,v)$
+\end_inset
+
+, and since there is no edge this is 
+\begin_inset Formula $0$
+\end_inset
+
+ causing 
+\begin_inset Formula $f(u,v)=c(u,v)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+On the other hand if 
+\begin_inset Formula $(v,u)\in E$
+\end_inset
+
+, then we must have 
+\begin_inset Formula $f(v,u)=0$
+\end_inset
+
+.
+ Using the second case of residual capacity, we would otherwise have that
+ 
+\begin_inset Formula $c_{f}(u,v)=f(v,u)$
+\end_inset
+
+, which would place an edge from 
+\begin_inset Formula $(u,v)\in E_{f}$
+\end_inset
+
+.
+ This cannot be possible since 
+\begin_inset Formula $u,v$
+\end_inset
+
+ are on different sides of the cut, and there is therefore no path or edge
+ from 
+\begin_inset Formula $u$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ There is an edge case in which 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ and 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ are not in 
+\begin_inset Formula $E$
+\end_inset
+
+ in which case we also have 
+\begin_inset Formula $f(u,v)=f(v,u)=0$
+\end_inset
+
+.
+ Writing the flow of the cut 
+\begin_inset Formula 
+\begin{align*}
+f(S,T) & =\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}(f(v,u)\\
+= & \sum_{u\in S}\sum_{v\in T}f(u,v)-0\\
+= & c(S,T)
+\end{align*}
+
+\end_inset
+
+ where we used 
+\begin_inset Formula $f(u,v)=c(u,v)$
+\end_inset
+
+ as argued and that 
+\begin_inset Formula $f(v,u)=0$
+\end_inset
+
+ as argued.
+ Hence we have shown no augmenting path means the net-flow is the capacity
+ of a cut.
+\end_layout
+
+\begin_layout Subsubsection*
+Proving 3=>1
+\end_layout
+
+\begin_layout Standard
+Corollary 26.5 states that 
+\begin_inset Formula $|f|\leq c(S,T)$
+\end_inset
+
+.
+ Therefore, if we have that 
+\begin_inset Formula $|f|=c(S,t)$
+\end_inset
+
+ then we have a maximum flow 
+\begin_inset Formula $f$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Lemma 26.7
+\end_layout
+
+\begin_layout Standard
+For all vertices 
+\begin_inset Formula $v\in V\setminus\{s,t\}$
+\end_inset
+
+ the shortest path distance 
+\begin_inset Formula $\delta_{f}(s,v)$
+\end_inset
+
+ in the residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ increase monotonically with each flow augmentation.
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+The proof is based on contradiction that the shortests bath distance decreases
+ and the we arrive at a contradiction.
+ 
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $f$
+\end_inset
+
+ be the flow just before the first augmentation that decreased some shortest
+ path distance in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+, and let 
+\begin_inset Formula $f'$
+\end_inset
+
+ be the flow after the augmentation.
+ Let 
+\begin_inset Formula $v$
+\end_inset
+
+ be the vertex with minimum 
+\begin_inset Formula $\delta_{f'}(s,v)$
+\end_inset
+
+ whose distance was decreased by the augmentation (amongst all the vertices
+ that had their distance shortened by the augmentation, we pick the one
+ that has the shortest path from 
+\begin_inset Formula $s$
+\end_inset
+
+).
+ Since the distance was decreased, we know that 
+\begin_inset Formula $\delta_{f'}(s,v)<\delta_{f}(s,v)$
+\end_inset
+
+.
+ We now let the path 
+\begin_inset Formula $p=s\rightsquigarrow u\rightarrow v$
+\end_inset
+
+ be a shortest path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+ in 
+\begin_inset Formula $G_{f'}$
+\end_inset
+
+ containing edge 
+\begin_inset Formula $(u,v)\in E_{f'}$
+\end_inset
+
+ and with 
+\begin_inset Formula 
+\[
+\delta_{f'}(s,u)=\delta_{f'}(s,v)-1
+\]
+
+\end_inset
+
+meaning the shortest path in 
+\begin_inset Formula $G_{f'}$
+\end_inset
+
+ to 
+\begin_inset Formula $v$
+\end_inset
+
+ visits 
+\begin_inset Formula $u$
+\end_inset
+
+ first.
+ We chose 
+\begin_inset Formula $v$
+\end_inset
+
+ as the vertex whose shortest path was decreased by the augmentation with
+ the minimum unit-distance after augmentation.
+ We see that 
+\begin_inset Formula $u$
+\end_inset
+
+ has shorter distance than 
+\begin_inset Formula $v$
+\end_inset
+
+, so it must not have decreased its shortest path
+\begin_inset Formula 
+\[
+\delta_{f'}(s,u)\ge\delta_{f}(s,u)
+\]
+
+\end_inset
+
+ We must have that 
+\begin_inset Formula $(u,v)\notin E_{f}$
+\end_inset
+
+(that is we actually introduced the edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ when augmenting flow) since otherwise if we did have 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ we would get
+\begin_inset Formula 
+\begin{align*}
+\delta_{f}(s,v) & \le\delta_{f}(s,u)+1\\
+\leq & \delta_{f'}(s,u)+1\text{ due to the way we picked u. see above}\\
+= & \delta_{f'}(s,v)
+\end{align*}
+
+\end_inset
+
+which contradicts that 
+\begin_inset Formula $v$
+\end_inset
+
+ had its shortest distance decreased 
+\begin_inset Formula $\delta_{f'}(s,v)<\delta_{f}(s,v)$
+\end_inset
+
+.
+ So we have argued that 
+\begin_inset Formula $(u,v)\notin E_{f}$
+\end_inset
+
+ and 
+\begin_inset Formula $(u,v)\in E_{f'}$
+\end_inset
+
+.
+ This means the algorithm has augmented flow along 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ and the edge appears by the flow augmentation.
+ Edmonds karp always chooses 
+\begin_inset Formula $p=s\rightsquigarrow t$
+\end_inset
+
+ as the shortest distance, so the augmentation augmented flow along the
+ shortest path in 
+\begin_inset Formula $E_{f}$
+\end_inset
+
+.Since the residual network 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+ does not have have 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ it will instead have 
+\begin_inset Formula $(v,u)\in E_{f}$
+\end_inset
+
+.
+ This tells us
+\begin_inset Formula 
+\begin{align*}
+\delta_{f}(s,v) & =\delta_{f}(s,u)-1\text{ since there is an edge (v,u)}\\
+ & \leq\delta_{f'}(s,u)-1\\
+ & =\delta_{f'}(s,v)-1-1\text{ use prev eq}
+\end{align*}
+
+\end_inset
+
+the first inequality holds since we have a shorts path to 
+\begin_inset Formula $v$
+\end_inset
+
+, and there is an edge 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+, So the shortest distance 
+\begin_inset Formula $\delta_{f}(s,u)=\delta_{f}(s,v)+1$
+\end_inset
+
+.
+ The first inequality holds since 
+\begin_inset Formula $u$
+\end_inset
+
+ did not get a smaller shortest path by the augmentation.
+ The second equality holds because of 
+\begin_inset Formula $\delta_{f'}(s,u)=\delta_{f'}(s,v)-1$
+\end_inset
+
+ from previous.
+ The above however contradicts the original assumption 
+\begin_inset Formula $\delta_{f'}(s,v)<\delta_{f}(s,v)$
+\end_inset
+
+.
+ We have shown the opposite is true, and the shortest path monotonically
+ increase with each flow augmentation.
+\end_layout
+
+\begin_layout Subsection
+Theorem 26.8
+\end_layout
+
+\begin_layout Standard
+If Edmonds-karp algorithm is run on a flow network, then the total number
+ of flow augmentations will be 
+\begin_inset Formula $O(VE)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+We say an edge on an augmenting path is critical when 
+\begin_inset Formula $c_{f}(p)=c_{f}(u,v)$
+\end_inset
+
+.
+ That is when the residual capacity of 
+\begin_inset Formula $p$
+\end_inset
+
+ is the capacity of 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+.
+ Critical edges disappear from the residual network after flow augmentation.
+ Why? Since 
+\begin_inset Formula $f(u,v)=c(u,v)$
+\end_inset
+
+ which means that 
+\begin_inset Formula $c_{f}(u,v)=c(u,v)-f(u,v)=0$
+\end_inset
+
+.
+ There will always be at least one critical edge.
+ Why? This is how we choose the flow 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+.
+ We choose the flow to be the minimum of all 
+\begin_inset Formula $c_{f}(u,v)$
+\end_inset
+
+ for the edges 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ in 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Therefore, at least the edge we took the minimum of will be critical.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $u,v$
+\end_inset
+
+ be vertices in 
+\begin_inset Formula $V$
+\end_inset
+
+ that are connected by an edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+.
+ Edmonds-karp chooses shortest paths as augmenting paths, so when 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ becomes critical for the first time (it will at some point become critical
+ since it will have augmented flow at some point otherwise the flow would
+ always be 0), then we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\delta_{f}(s,v)=\delta_{f}(s,u)+1
+\]
+
+\end_inset
+
+After 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ is critical and flow is augmented along it, the edge disappears from 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ It will only come back if we need to remove flow from its reversal 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+.
+ This happens when 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ appears on a (shortest) augmenting path.
+ Let say this happens when the flow in 
+\begin_inset Formula $G$
+\end_inset
+
+ is 
+\begin_inset Formula $f'$
+\end_inset
+
+ then we have 
+\begin_inset Formula 
+\[
+\delta_{f'}(s,u)=\delta_{f'}(s,v)+1\text{ we take (v,u) on the SP}
+\]
+
+\end_inset
+
+Since the shortest paths are monotonically increasing by lemma 26.7 we get
+ 
+\begin_inset Formula $\delta_{f}(s,v)\le\delta_{f'}(s,v)$
+\end_inset
+
+.
+ Using this gives us 
+\begin_inset Formula 
+\begin{align*}
+\delta_{f'}(s,u) & =\delta_{f'}(s,v)+1\\
+ & \geq\delta_{f}(s,v)+1\\
+ & =\delta_{f}(s,u)+1+1
+\end{align*}
+
+\end_inset
+
+showing us that by the time an edge becomes critical to the next time it
+ can become critical, the shortest distance has increased by at least 2.
+ The distance from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $u$
+\end_inset
+
+ is initially at least 0.
+ Intermediate vertices on a shortest path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $u$
+\end_inset
+
+ cannot contain 
+\begin_inset Formula $s,u,t$
+\end_inset
+
+ (it is implied that 
+\begin_inset Formula $u\neq t$
+\end_inset
+
+ since it is on an augmenting path and otherwise we cannot have 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+).
+ Until 
+\begin_inset Formula $u$
+\end_inset
+
+, if ever, becomes unreachable its distance from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $u$
+\end_inset
+
+ is at most 
+\begin_inset Formula $|V|-2$
+\end_inset
+
+ (it cannot be 
+\begin_inset Formula $s$
+\end_inset
+
+ or 
+\begin_inset Formula $t$
+\end_inset
+
+ and so a shortest path can at most visit all vertices except these).
+ After the first time it has become critical, it can at most become critical
+ 
+\begin_inset Formula $(|V|-2)/2=|V|/2-1$
+\end_inset
+
+ times This gives a total of 
+\begin_inset Formula $|V|$
+\end_inset
+
+ times an edge can become critical.
+ Why? Its distance is at most 
+\begin_inset Formula $|V|-2$
+\end_inset
+
+ and each augmentation increases the distance by 
+\begin_inset Formula $2$
+\end_inset
+
+.
+ So the fraction gives how many times we can increase the distance by 
+\begin_inset Formula $2$
+\end_inset
+
+ until we hit the max distance of 
+\begin_inset Formula $|V|-2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are 
+\begin_inset Formula $O(E)$
+\end_inset
+
+ (remember upper bound of 
+\begin_inset Formula $2E$
+\end_inset
+
+) pairs of vertices that can have an edge between them in the residual network,
+ The total number of critical edges is 
+\begin_inset Formula $O(VE)$
+\end_inset
+
+ since 
+\begin_inset Formula $O(V)$
+\end_inset
+
+ times can an edge become critical and this can happen for each of the 
+\begin_inset Formula $O(E)$
+\end_inset
+
+ edges.
+ 
+\end_layout
+
+\begin_layout Standard
+If we continue to use a breath first search in 
+\begin_inset Formula $O(E)$
+\end_inset
+
+ time to find the shortest path, then we know Edmonds-Karp will only run
+ the while loop 
+\begin_inset Formula $O(VE)$
+\end_inset
+
+ times making the total running time 
+\begin_inset Formula $O(VE^{2})$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Section
+Ford Fulkerson algorithm
+\end_layout
+
+\begin_layout Standard
+The algorithm keeps finding augmenting paths 
+\begin_inset Formula $p$
+\end_inset
+
+, and then it updates the flow by the augmentation 
+\begin_inset Formula $f\uparrow f_{p}$
+\end_inset
+
+, where we find 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+ using lemma 26.2.
+ Corollary 26.3 then tells us this gives us a flow with higher value.
+ Theorem 26.6 now also gives us a stopping criteria when there are no more
+ augmenting paths.
+\end_layout
+
+\begin_layout Standard
+The actual algorithm looks as follows
+\end_layout
+
+\begin_layout Enumerate
+for each edge 
+\begin_inset Formula $(u,v)\in G.E$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $(u,v).f=0$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+while there exists a path 
+\begin_inset Formula $p$
+\end_inset
+
+ from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+ in 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $c_{f}(p)=\min(c_{f}(u,v):(u,v)\,is\,in\,p)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+for each 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+in 
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $(u,v).f=(u,v).f+c_{f}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $(u,v).f=(u,v).f-c_{f}(p)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+when 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ is also an edge in 
+\begin_inset Formula $E$
+\end_inset
+
+(2.b.i) then we augment more flow along this path.
+ If the edge along 
+\begin_inset Formula $p$
+\end_inset
+
+ is not in 
+\begin_inset Formula $E$
+\end_inset
+
+ then it is a reversal of an edge.
+ This was equivalent to removing flow, so this is done.
+\end_layout
+
+\begin_layout Subsection
+Running time
+\end_layout
+
+\begin_layout Standard
+It is assumed that all edges have integer capacities.
+ Let us say the value of the maximum flow is 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+.
+ We always increase the flow along an edge in the original network.
+ Since we work with integral, we increase with at least 1, so in worst case
+ we run the while loop 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+iterations.
+\end_layout
+
+\begin_layout Standard
+We keep a graph 
+\begin_inset Formula $G'=(V,E')$
+\end_inset
+
+where 
+\begin_inset Formula $E'=\{(u,v):(u,v)\in E\,or\,(v,u)\in E\}$
+\end_inset
+
+.
+ G' will contain all edges of 
+\begin_inset Formula $G$
+\end_inset
+
+, so we can keep capacities and flows in 
+\begin_inset Formula $G'$
+\end_inset
+
+.
+ Given flow 
+\begin_inset Formula $f$
+\end_inset
+
+ in 
+\begin_inset Formula $G$
+\end_inset
+
+, then the residual network consists of the edges in 
+\begin_inset Formula $G'$
+\end_inset
+
+ where 
+\begin_inset Formula $c_{f}(u,v)>0$
+\end_inset
+
+ (
+\begin_inset Formula $c_{f}$
+\end_inset
+
+min of capacities on 
+\begin_inset Formula $p$
+\end_inset
+
+).
+ Using breadth first search in 
+\begin_inset Formula $O(V+E)=O(E)$
+\end_inset
+
+ time rooted at 
+\begin_inset Formula $s$
+\end_inset
+
+ we can find a path to 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ This makes the total running time 
+\begin_inset Formula $O(E\cdot|f^{*}|)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are however problems if 
+\begin_inset Formula $f^{*}$
+\end_inset
+
+ is large and we each time only augments flow by 
+\begin_inset Formula $1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Edmonds-Karp algorithm
+\end_layout
+
+\begin_layout Standard
+It is basically ford fulkersons algorithm but we choose the augmenting path
+ as the shortest path from 
+\begin_inset Formula $s$
+\end_inset
+
+ to 
+\begin_inset Formula $t$
+\end_inset
+
+ where the weights of edges is unit-distance, i.e 1.
+\end_layout
+
+\end_body
+\end_document

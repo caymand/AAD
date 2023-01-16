@@ -1,0 +1,824 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Art Gallery problem
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Introduction to the problem
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Definitions
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+A simple polygon 
+\begin_inset Formula $\mathbf{P}$
+\end_inset
+
+ 
+\series default
+is a region enclosed by a 
+\emph on
+single 
+\emph default
+polygonal chain that does not intersect itself.
+ By this definition, we cannot have holes in a simple polygon.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Diagonal 
+\series default
+in a polygon 
+\begin_inset Formula $P$
+\end_inset
+
+ is a line segment that connects two vertices of the polygon 
+\begin_inset Formula $P$
+\end_inset
+
+.
+ The line segments must lie on the interior of 
+\begin_inset Formula $P$
+\end_inset
+
+, and the diagonals can therefore not 
+\begin_inset Quotes eld
+\end_inset
+
+cross corners
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Triangulation 
+\series default
+is a decomposition of 
+\begin_inset Formula $P$
+\end_inset
+
+ into triangles by a maximum set of non-overlapping 
+\emph on
+diagonals
+\emph default
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why do we require maximum set?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Dual graph 
+\series default
+of a triangulated polygon places a node in each triangle, and an edge between
+ each node if the triangles share a diagonal.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Comp shaped polygon 
+\series default
+always 
+\begin_inset Formula $\lfloor n/3\rfloor$
+\end_inset
+
+ cameras - one for each peak.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Monotone polygon
+\series default
+: A polygon is monotone to line 
+\begin_inset Formula $l$
+\end_inset
+
+ if there fore every line 
+\begin_inset Formula $l'$
+\end_inset
+
+ perpendicular to 
+\begin_inset Formula $l$
+\end_inset
+
+, the intersection of 
+\begin_inset Formula $l'$
+\end_inset
+
+ and the polygon is connected.
+ This means all intersections with 
+\begin_inset Formula $l'$
+\end_inset
+
+ should form a line segment, be empty or only contain a point.
+ 
+\begin_inset Formula $\mathbf{y}$
+\end_inset
+
+-
+\series bold
+monotone 
+\series default
+simply means we have 
+\begin_inset Formula $l=y$
+\end_inset
+
+, and thus the name 
+\begin_inset Formula $y$
+\end_inset
+
+-monotone polygon.
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Below: 
+\begin_inset Formula $p$
+\end_inset
+
+ 
+\series default
+is below 
+\begin_inset Formula $q$
+\end_inset
+
+ if 
+\begin_inset Formula $p_{y}<q_{y}$
+\end_inset
+
+ or if 
+\begin_inset Formula $p_{y}=q_{y}\land p_{x}>q_{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Above: 
+\begin_inset Formula $p$
+\end_inset
+
+ 
+\series default
+is below 
+\begin_inset Formula $q$
+\end_inset
+
+ if 
+\begin_inset Formula $p_{y}>q_{y}$
+\end_inset
+
+ or if 
+\begin_inset Formula $p_{y}=q_{y}\land p_{x}<q_{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Start vertex
+\series default
+ 
+\begin_inset Formula $v$
+\end_inset
+
+: If the two neighbors are below and interior angle at 
+\begin_inset Formula $v$
+\end_inset
+
+ is less than 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Split vertex 
+\begin_inset Formula $v$
+\end_inset
+
+: 
+\series default
+if the interior angle is greater than 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+End vertex 
+\begin_inset Formula $v$
+\end_inset
+
+
+\series default
+: if the two neighbors lie above an the interior angle is below 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Merge vertex 
+\begin_inset Formula $v$
+\end_inset
+
+
+\series default
+: if the angle is greater than 
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Regular vertex
+\series default
+: one neighbor above the other below
+\end_layout
+
+\begin_layout Subsection
+Solution to the problem
+\end_layout
+
+\begin_layout Standard
+We can solve the art gallery problem by placing a camera in each of the
+ triangles of in a triangulated polygon.
+ Why? The camera can the points in the interior of the polygon for which
+ there is an open line segment on the interior (not crossing corners) of
+ the polygon connecting the points to the camera.
+ Since there is an open line segment between all points in a triangle and
+ the camera, then this solves the 
+\emph on
+art gallery problem.
+\end_layout
+
+\begin_layout Subsection
+Does a triangulation always exist?
+\end_layout
+
+\begin_layout Subsubsection*
+
+\series bold
+\emph on
+Theorem 3.1
+\end_layout
+
+\begin_layout Standard
+Every simple polygon admits a triangulation, and any triangulation of a
+ simple polygon with n vertices consists of exactly n−2 triangles.
+\end_layout
+
+\begin_layout Subsubsection*
+
+\emph on
+Proof
+\end_layout
+
+\begin_layout Standard
+The proof is on induction on 
+\begin_inset Formula $n$
+\end_inset
+
+, the number of vertices in the polygon.
+ The base case is for 
+\begin_inset Formula $n=3$
+\end_inset
+
+, and this trivially holds since this is a triangle, which is triangulated
+ by 
+\begin_inset Formula $n-2=1$
+\end_inset
+
+ triangle.
+\end_layout
+
+\begin_layout Standard
+Next, assume 
+\begin_inset Formula $n>3$
+\end_inset
+
+ and the induction hypothesis holds for all 
+\begin_inset Formula $m<n$
+\end_inset
+
+.
+ Since a triangulation consists of a maximum set of non-overlapping diagonals,
+ let us first prove the existence of a diagonal.
+ Let 
+\begin_inset Formula $P$
+\end_inset
+
+ be a polygon of 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices.
+ Let us pick the vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ that is furthest to the left in 
+\begin_inset Formula $P$
+\end_inset
+
+, and break ties by choosing the lowest vertex.
+ Let the vertices 
+\begin_inset Formula $u,w$
+\end_inset
+
+ be the neighbors of 
+\begin_inset Formula $v$
+\end_inset
+
+ on the border of 
+\begin_inset Formula $P$
+\end_inset
+
+ (we know there are two neighbors since 
+\begin_inset Formula $n>3$
+\end_inset
+
+).
+ If the line segment 
+\begin_inset Formula $\overline{uw}$
+\end_inset
+
+ is on the interior of 
+\begin_inset Formula $P$
+\end_inset
+
+ then we have a diagonal (this is by definition a diagonal by the definition).
+ However, if 
+\begin_inset Formula $\overline{uw}$
+\end_inset
+
+ is not on the interior of the line segment, then let 
+\begin_inset Formula $v'$
+\end_inset
+
+ be the vertex the furthest from the left from the line segment and let
+ 
+\begin_inset Formula $v'\neq v$
+\end_inset
+
+.
+ The line segment 
+\begin_inset Formula $\overline{vv'}$
+\end_inset
+
+ cannot intersect another edge, since this contradicts choosing 
+\begin_inset Formula $v'$
+\end_inset
+
+ as the vertex furthest to the left of 
+\begin_inset Formula $\overline{uw}$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $v'$
+\end_inset
+
+ is the line segment furthest to the left the segment must also be inside
+ the polygon, so 
+\begin_inset Formula $\overline{vv'}$
+\end_inset
+
+ is a diagonal.
+\end_layout
+
+\begin_layout Standard
+We have shown that a diagonal exists.
+ For the first case, the polygon is simply split into the triangle 
+\begin_inset Formula $\Delta vuw$
+\end_inset
+
+ and the simple polygon of one vertex less (we essentially cut off 
+\begin_inset Formula $v$
+\end_inset
+
+).
+ Thereby, by induction the smaller polygon can now be triangulated since
+ we assumed it holds for all 
+\begin_inset Formula $m<n$
+\end_inset
+
+ and 
+\begin_inset Formula $n-1<n$
+\end_inset
+
+.
+ For the second case, the diagonal splits the simple polygon into two simple
+ polygons 
+\begin_inset Formula $P_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ of size 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $n-m_{1}+2$
+\end_inset
+
+ respectively.
+ We get that 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ has size 
+\begin_inset Formula $n-m_{1}+2$
+\end_inset
+
+ since, 
+\begin_inset Formula $P$
+\end_inset
+
+ originally had 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices and we cut away 
+\begin_inset Formula $P_{1}$
+\end_inset
+
+with 
+\begin_inset Formula $m$
+\end_inset
+
+ vertices, but the diagonal still shares 
+\begin_inset Formula $2$
+\end_inset
+
+ vertices.
+ Since we have that 
+\begin_inset Formula $3\leq m_{1}$
+\end_inset
+
+ (otherwise it would not be a triangulation) then 
+\begin_inset Formula $n-m+2\leq n-1<n$
+\end_inset
+
+ and so we can again use induction to show each subpolygon can be triangulated.
+\end_layout
+
+\begin_layout Standard
+In either case however, the diagonal we choose, splits the two polygons
+ into two smaller simple polygons 
+\begin_inset Formula $P_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $P_{2}$
+\end_inset
+
+ of size 
+\begin_inset Formula $m_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $m_{2}$
+\end_inset
+
+ respectively.
+ All vertices of 
+\begin_inset Formula $P$
+\end_inset
+
+ are in either of the two vertices.
+ But the two polygons also share two vertices at the diagonal, and these
+ vertices are counted twice.
+ Hence we get 
+\begin_inset Formula $m_{1}+m_{2}=n+2$
+\end_inset
+
+ and we have proved that each polygon have 
+\begin_inset Formula $m_{i}<n$
+\end_inset
+
+.
+ Each simple polygon can by the induction hypothesis be triangulated by
+ 
+\begin_inset Formula $m_{i}-2$
+\end_inset
+
+ vertices.
+ Using this we get 
+\begin_inset Formula 
+\begin{align*}
+m_{1}+m_{2}-4 & =n+2-4\\
+(m_{1}-2)+ & (m_{2}-2)=n-2
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+3-coloring
+\end_layout
+
+\begin_layout Standard
+A three coloring always exists.
+ Can be seen by looking at the dual graph and that is in fact a tree.
+ This shows the art gallery theorem, since we can place all cameras at a
+ particular color.
+ There are 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices and 
+\begin_inset Formula $3$
+\end_inset
+
+ colors.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem 3.2 (Art Gallery Theorem) 
+\series default
+For a simple polygon with 
+\begin_inset Formula $n$
+\end_inset
+
+ vertices, 
+\begin_inset Formula $\lfloor n/3\rfloor$
+\end_inset
+
+ cameras are occasionally necessary and always sufficient to have every
+ point in the polygon visible from at least one of the cameras.
+\end_layout
+
+\begin_layout Subsection
+Two-ears theorem and algorithm
+\end_layout
+
+\begin_layout Standard
+Based on the proof that a triangulation always exists for a simple polygon,
+ we can just find diagonals, solve the problem recursively and cut of triangles.
+ Takes time 
+\begin_inset Formula $O(n^{2})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Y-monotone partitioning
+\end_layout
+
+\begin_layout Subsubsection*
+Ideas
+\end_layout
+
+\begin_layout Standard
+We can use top down plane sweep to split a non y-monotone polygon into pieces
+ that are y monotone.
+ Each iteration goes one vertex down.
+ Then we will triangulate each y-monotone piece.
+ The question is how should we determine at each iteration whether the current
+ part of the polygon is y-monotone or we break the invariant? We remove
+ split-and merge vertices as this theorem shows
+\end_layout
+
+\begin_layout Quote
+
+\series bold
+Lemma 3.4:
+\series default
+\emph on
+ A polygon is y-monotone if it has no split vertices or merge vertices.
+\end_layout
+
+\begin_layout Itemize
+The theorem implies we have y-monotone polygons after removing split and
+ merge vertices
+\end_layout
+
+\begin_layout Itemize
+We create the y-monotone pieces by creating up-diagonals from split vertices
+ and downward diagonals of merge vertices
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Each diagonal creates a new polygon
+\end_layout
+
+\begin_layout Itemize
+Once all are removed we have y-monotone polygons
+\end_layout
+
+\end_deeper
+\begin_layout Subsubsection*
+The algorithm
+\end_layout
+
+\begin_layout Standard
+We let the vertices 
+\begin_inset Formula $v_{1},v_{2},...,v_{n}$
+\end_inset
+
+ be the vertices of the polygons taken by a counterclockwise enumeration
+ along the border.
+ We define an edge to be 
+\begin_inset Formula $e_{i}=\overline{v_{i}v_{i+1}}$
+\end_inset
+
+.
+ The algorithm is a sweeping algorithm, using a top-down sweep line halting
+ for certain events at vertices.
+ We store the vertices in a priority 
+\begin_inset Formula $Q$
+\end_inset
+
+ stored with priority by 
+\begin_inset Formula $y$
+\end_inset
+
+ coordinate and breaking ties with the leftmost point on the 
+\begin_inset Formula $x$
+\end_inset
+
+-axis.
+ We can now get event points is 
+\begin_inset Formula $O(\lg n)$
+\end_inset
+
+ time, or presort and get them in 
+\begin_inset Formula $O(n\cdot\lg n)$
+\end_inset
+
+ time.
+\end_layout
+
+\begin_layout Standard
+Based on the above ideas, we want to add diagonals from a split vertex to
+ get y-monotone pieces.
+ Let us say the sweep-line is at the vertex 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ and the edge to the left of 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ is called 
+\begin_inset Formula $e_{j}$
+\end_inset
+
+(note the edges intersects the sweep line) and the edge immediately to the
+ right is called 
+\begin_inset Formula $e_{k}$
+\end_inset
+
+.
+ Now we can connect 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ to the lowest vertex that is between the edges 
+\begin_inset Formula $e_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{k}$
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

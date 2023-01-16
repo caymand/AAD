@@ -1,0 +1,36 @@
+There cannot be an edge intersecting the diagonal vt since t is the edge furtherst from uw
+Diagonal vt seperates u and w. Therefore we can say u is not in the bottom and w not in the top
+	Hence both upper and lower has at most n-1 vertices
+Remove triangle of a leaf and add it back - where we add it back the edges will have two colors, so the third edge of the added triangle can always have a ny color
+
+Since each triangle has a distinct color, we can put a camera on any color
+	- just pick the smallest number of same color
+	- n = nr + ng + nb
+	- so if we pick floor(n/3) we have enough
+	
+Two-ears theorem - triangulation is represented by dual-graph which is a tree
+	- A tree always has two leaves
+	
+y-monotone - horizontal line intersects in connected set or not at all
+	- 1-monotone would mean 1 intersection
+
+Start-vertex, when sweeping to down we intersect new part of polygon
+split - one intersection is split into 2
+end - intersection with polygon dissapears
+merge - intersections is merged
+Seen from below merge vertices become split and the other way around
+	- two seeps
+
+Below our sweep line
+	- this is a contradiction since we handle the vertices top down in the sweep line(so we would break the assumption of top down sweeping)
+
+The helper - the vertex we want to connect to when we create a new diagonal
+Ex 1: d
+Ex 2: c
+
+
+
+
+
+
+

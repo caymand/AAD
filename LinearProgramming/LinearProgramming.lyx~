@@ -1,0 +1,1563 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Definitions
+\end_layout
+
+\begin_layout Standard
+In linear programming problem we wish to optimize(minimize/maximize) a linear
+ function given a set of linear inequalities
+\end_layout
+
+\begin_layout Subsection
+Linear function
+\end_layout
+
+\begin_layout Standard
+The linear function to optimize is written in terms of 
+\begin_inset Formula $n$
+\end_inset
+
+ numbers 
+\begin_inset Formula $a_{1},a_{2},...,a_{n}$
+\end_inset
+
+ and variables 
+\begin_inset Formula $x_{1},x_{2},...,x_{n}$
+\end_inset
+
+ and is written as 
+\begin_inset Formula 
+\[
+f(x_{1},x_{2},...,x_{n})=a_{1}x_{1}+a_{2}x_{2}+...+a_{n}x_{n}=\sum_{j=1}^{n}a_{j}x_{j}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Linear equality and inequality
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $b$
+\end_inset
+
+ is a real number, and 
+\begin_inset Formula $f$
+\end_inset
+
+ is a linear function as defined above, then 
+\begin_inset Formula 
+\[
+f(x_{1},x_{2},...,x_{n})=b
+\]
+
+\end_inset
+
+is a 
+\series bold
+linear equality.
+
+\series default
+ The following are linear inequalities
+\begin_inset Formula 
+\begin{align*}
+f(x_{1},x_{2},...,x_{n}) & \leq b\\
+f(x_{1},x_{2},...,x_{n}) & \geq b
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Linear constraints
+\end_layout
+
+\begin_layout Standard
+These are either linear equalities or linear inequalities.
+ We do not however allow strict inequalities.
+\end_layout
+
+\begin_layout Subsection
+Linear-programming problem
+\end_layout
+
+\begin_layout Standard
+Is the problem of optimizing a linear function subset to a set of linear
+ constraints.
+ The optimization can be minimization or maximization and the problem to
+ be solved is respectively called a minimization/maximization linear program.
+\end_layout
+
+\begin_layout Subsection
+Standard form
+\end_layout
+
+\begin_layout Standard
+Informally it is maximization of a linear function subject to a set of linear
+ 
+\emph on
+inequalities
+\emph default
+.
+ Formally, we are given 
+\begin_inset Formula $n$
+\end_inset
+
+ real numbers 
+\begin_inset Formula $c_{1},c_{2},...,c_{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+ real numbers 
+\begin_inset Formula $b_{1},b_{2},...,b_{m}$
+\end_inset
+
+.
+ This gives a total of 
+\begin_inset Formula $m\cdot n$
+\end_inset
+
+ real numbers 
+\begin_inset Formula $a_{ij}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2,...,m$
+\end_inset
+
+ and 
+\begin_inset Formula $j=1,2,...,n$
+\end_inset
+
+.
+ The the linear program is to find 
+\begin_inset Formula $n$
+\end_inset
+
+ real number 
+\begin_inset Formula $x_{1},x_{2},...,x_{n}$
+\end_inset
+
+ that satisfies
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+\text{maximize} & \sum_{j=1}^{n}c_{j}x_{j}\\
+\text{s.t} & \sum_{j=1}^{n}a_{ij}x_{j} & \leq & b_{i} & \text{for }\,i=1,2,...,m\\
+ & x_{j} & \ge & 0 & \text{for  }j=1,2,...,n
+\end{array}
+\]
+
+\end_inset
+
+The function to maximize is the 
+\series bold
+objective function 
+\series default
+and the 
+\begin_inset Formula $n+m$
+\end_inset
+
+ inequalites are the 
+\series bold
+constraints
+\series default
+.
+ The last constraint is called 
+\series bold
+nonnegativity constraint
+\series default
+.
+ Standard form requires nonnegativity constraint.
+ It can also be written in terms of matrices.
+\end_layout
+
+\begin_layout Standard
+The setting of variables that satisfies the 
+\emph on
+constrains
+\emph default
+ is called 
+\emph on
+feasible
+\emph default
+ and a setting that of variables that fails to satisfy at least 1 is called
+ 
+\series bold
+\emph on
+infeasible.
+\series default
+\emph default
+A feasible solution with maximal value is called an 
+\end_layout
+
+\begin_layout Subsection
+Optimal solution
+\end_layout
+
+\begin_layout Standard
+Feasible solution that is the maximum over all feasible solutions.
+\end_layout
+
+\begin_layout Subsection
+Slack form
+\end_layout
+
+\begin_layout Standard
+Informally it is maximization of a linear function subject to a set of linear
+ 
+\emph on
+equalities
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Basically standard form but where the only inequality constraints are the
+ nonnegative constraints, and the other inequalities are converted into
+ equality constraint.
+\end_layout
+
+\begin_layout Subsection
+Feasible solution
+\end_layout
+
+\begin_layout Standard
+A linear program consists of 
+\begin_inset Formula $n$
+\end_inset
+
+ variables and 
+\begin_inset Formula $m$
+\end_inset
+
+ constraints.
+ Any setting of the 
+\begin_inset Formula $n$
+\end_inset
+
+ variables that satisfies the 
+\begin_inset Formula $m$
+\end_inset
+
+ constraints is a 
+\emph on
+feasible solution
+\emph default
+.
+\end_layout
+
+\begin_layout Subsection
+Convex region
+\end_layout
+
+\begin_layout Standard
+The points of a line segment between any two points in the region will also
+ be in the region.
+\end_layout
+
+\begin_layout Subsection
+Objective function
+\end_layout
+
+\begin_layout Standard
+The function we wish to maximize.
+ Remember for both slack and standard form, we wish to maximize.
+\end_layout
+
+\begin_layout Subsection
+Feasible region
+\end_layout
+
+\begin_layout Standard
+The setting of feasible solutions form an 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional convex region.
+ 
+\end_layout
+
+\begin_layout Subsection
+Objective value
+\end_layout
+
+\begin_layout Standard
+The value of the objective function in the feasible region.
+ We can search for the best objective value in the feasible region.
+ This is however problematic when the feasible region consists of infinite
+ number of points.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+It is the value of a feasible solution.
+\end_layout
+
+\begin_layout Subsection
+Basic variables
+\end_layout
+
+\begin_layout Standard
+The variables on the left hand side of a LP in slack form
+\end_layout
+
+\begin_layout Subsection
+Nonbasic variables
+\end_layout
+
+\begin_layout Standard
+The variables on the right hand side of a LP in slack form.
+\end_layout
+
+\begin_layout Subsection
+Basic solution
+\end_layout
+
+\begin_layout Standard
+This is computed for each basic variable in slack form.
+ It is achieved by setting each nonbasic variable to 0 and computing the
+ equality constraint.
+\end_layout
+
+\begin_layout Subsection
+Tight
+\end_layout
+
+\begin_layout Standard
+Setting of nonbasic variables that causes the basic variable to become 0
+\end_layout
+
+\begin_layout Subsection
+Violates
+\end_layout
+
+\begin_layout Standard
+Setting of nonbasic variables that causes the basic varaible to become negative.
+\end_layout
+
+\begin_layout Subsection
+Basic solution
+\end_layout
+
+\begin_layout Standard
+Set all nonbasic variables to 0 and compute basic variable on the LHS
+\end_layout
+
+\begin_layout Subsection
+Basic feasible solution
+\end_layout
+
+\begin_layout Standard
+If the basic solution is also feasible.
+\end_layout
+
+\begin_layout Subsection
+Pivot
+\end_layout
+
+\begin_layout Standard
+Choose a nonbasic variable, 
+\begin_inset Formula $x_{e}$
+\end_inset
+
+, called the entering variable and a basic variable 
+\begin_inset Formula $x_{l}$
+\end_inset
+
+, the leaving variable, and exchange their role after increasing 
+\begin_inset Formula $x_{e}$
+\end_inset
+
+ as much as possible.
+\end_layout
+
+\begin_layout Section
+Simple linear program in 2D
+\end_layout
+
+\begin_layout Standard
+Consider the linear program on page 846 of CLRS.
+ The set of feasible solutions to the linear program for which we have
+\begin_inset Formula $x_{1}+x_{2}=z$
+\end_inset
+
+ that the sum is a particular value 
+\begin_inset Formula $z$
+\end_inset
+
+ are those that lie on a line with slope 
+\begin_inset Formula $-1$
+\end_inset
+
+.
+ Intuitively, if we draw the 
+\begin_inset Formula $x_{1},x_{2}$
+\end_inset
+
+ coordinate system, then if either increases, the other must decrease by
+ the same amount.
+ For instance, 
+\begin_inset Formula $x_{1}+x_{2}=0$
+\end_inset
+
+ is a line that only touches the feasible region in 
+\begin_inset Formula $(x_{1},x_{2})=(0,0)$
+\end_inset
+
+.
+ Generally, for any 
+\begin_inset Formula $z$
+\end_inset
+
+, the line 
+\begin_inset Formula $x_{1}+x_{2}=z$
+\end_inset
+
+ in the 
+\begin_inset Formula $x_{1}-x_{2}$
+\end_inset
+
+ coordinate system, and the intersection with the feasible region is a set
+ of feasible solutions.
+ Since the feasible region is bounded, there must be a 
+\begin_inset Formula $z$
+\end_inset
+
+, for which 
+\begin_inset Formula $x_{1}+x_{2}$
+\end_inset
+
+ is the highest.
+ That is we want a line 
+\begin_inset Formula $x_{1}+x_{2}=z$
+\end_inset
+
+ with maximal 
+\begin_inset Formula $z$
+\end_inset
+
+ that is within the feasible region.
+ Any point in this line must be optimal, because this line has maximal value
+ 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The line 
+\begin_inset Formula $x_{1}+x_{2}=z$
+\end_inset
+
+ with maximum value 
+\begin_inset Formula $z$
+\end_inset
+
+ will be on the border of the feasible region, since this will be the absolute
+ highest values of 
+\begin_inset Formula $x_{1},x_{2}$
+\end_inset
+
+.
+ The line can then intersect the feasible region in a single vertex, or
+ a line segment.
+ In case of a line segment, then either endpoint of the line segments are
+ optimal solutions.
+ 
+\end_layout
+
+\begin_layout Section
+Informal simplex
+\end_layout
+
+\begin_layout Enumerate
+Write the linear program from standard form to slack form
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The linear equalities form 
+\emph on
+basic variables
+\end_layout
+
+\begin_layout Enumerate
+Basic variables are expresses in terms of 
+\emph on
+nonbasic variables
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+We move from one vertex to another in the feasible region by making nonbasic
+ variables basic and basic variables nonbasic.
+ This is called a 
+\emph on
+pivot
+\end_layout
+
+\begin_layout Section
+Converting linear programs to standard form
+\end_layout
+
+\begin_layout Standard
+It is always possible to convert a minimization/maximization linear program
+ with inequalities into standard form linear program.
+ There are the following reasons for the linear program not being in standard
+ form
+\end_layout
+
+\begin_layout Enumerate
+It is a minimaztion problem
+\end_layout
+
+\begin_layout Enumerate
+No nonnegativity constraint
+\end_layout
+
+\begin_layout Enumerate
+Equality constraint
+\end_layout
+
+\begin_layout Enumerate
+Greater than equal inequalities
+\end_layout
+
+\begin_layout Standard
+We convert a linear program 
+\begin_inset Formula $L$
+\end_inset
+
+ into an 
+\emph on
+equivalent
+\emph default
+ linear program 
+\begin_inset Formula $L'$
+\end_inset
+
+ in standard form.
+ By equivalent, the following is meant
+\end_layout
+
+\begin_layout Enumerate
+For a maximization linear program 
+\begin_inset Formula $L$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If there exists a feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ in 
+\begin_inset Formula $L$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+, then there exists a feasible solution 
+\begin_inset Formula $\bar{x'}$
+\end_inset
+
+in 
+\begin_inset Formula $L'$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For each feasible solution 
+\begin_inset Formula $\bar{x'}$
+\end_inset
+
+ in 
+\begin_inset Formula $L'$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+ there is an feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+in 
+\begin_inset Formula $L$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+For a minimization linear program 
+\begin_inset Formula $L$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If there exists a feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ in 
+\begin_inset Formula $L$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+, then there exists a feasible solution 
+\begin_inset Formula $\bar{x'}$
+\end_inset
+
+in 
+\begin_inset Formula $L'$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+For each feasible solution 
+\begin_inset Formula $\bar{x'}$
+\end_inset
+
+ in 
+\begin_inset Formula $L'$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $-z$
+\end_inset
+
+ there is an feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+in 
+\begin_inset Formula $L$
+\end_inset
+
+ with objective value 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+The equivalence of the maximization linear program is easy to see why holds
+ - they share optimal solutions.
+ For the minimization, the smallest value 
+\begin_inset Formula $z$
+\end_inset
+
+ will be the largest value amongst 
+\begin_inset Formula $-z$
+\end_inset
+
+.
+ And the largest value of negative number 
+\begin_inset Formula $-z$
+\end_inset
+
+ will be the one with smallest 
+\begin_inset Formula $z$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+How to convert
+\end_layout
+
+\begin_layout Standard
+Overcoming each of the 4 violations to standard form has to show the objective
+ value can be converted, and that the feasible solution can be converted.
+\end_layout
+
+\begin_layout Enumerate
+To convert a minimization program - negate coefficients of the objective
+ function 
+\begin_inset Newline newline
+\end_inset
+
+Why does this work? 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We find an objective value 
+\begin_inset Formula $-z$
+\end_inset
+
+, so we can covert it to 
+\begin_inset Formula $z$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+We want to minimize an objective function of the form 
+\begin_inset Formula $\sum_{j=1}^{n}c_{j}x_{j}=c_{1}x_{1}+c_{2}x_{2}+...+c_{n}x_{n}$
+\end_inset
+
+.
+ If we negate each coefficient 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ we get 
+\begin_inset Formula $-c_{1}x_{1}-c_{2}x_{2}-...-c_{n}x_{n}$
+\end_inset
+
+.
+ Maximizing this will give us the smallest negative number 
+\begin_inset Formula $-z$
+\end_inset
+
+.
+ This is just be a minus in front of minimizing the objective function and
+ getting 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+We have that 
+\begin_inset Formula $\bar{x}=\bar{x'}$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The variables for the feasible solution in 
+\begin_inset Formula $L'$
+\end_inset
+
+ must be the same as 
+\begin_inset Formula $L$
+\end_inset
+
+, since we get 
+\begin_inset Formula $-z$
+\end_inset
+
+, and we negated the coefficients of the objective function.
+ Instead of minimizing 
+\begin_inset Formula $x_{1}+x_{2}$
+\end_inset
+
+, we maximize 
+\begin_inset Formula $-x_{1}-x_{2}$
+\end_inset
+
+ and find 
+\begin_inset Formula $-z$
+\end_inset
+
+.
+ We only get 
+\begin_inset Formula $-z$
+\end_inset
+
+ since we negated coefficients.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Missing nonnegativity constraint - Replace every occurrence of 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ with 
+\begin_inset Formula $x_{j}'-x_{j}''$
+\end_inset
+
+.
+ In the objective function we transform 
+\begin_inset Formula $c_{j}x_{j}\mapsto c_{j}x_{j}'-c_{j}x_{j}''$
+\end_inset
+
+ , and replace constraints 
+\begin_inset Formula $a_{ij}x_{j}\mapsto a_{ij}x_{j}'-a_{ij}x_{j}''$
+\end_inset
+
+ and add the nonnegative constraint 
+\begin_inset Formula $x_{j}',x_{j}''\ge0$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+How are the feasible solutions equivalent? 
+\begin_inset Newline newline
+\end_inset
+
+The feasible solution 
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+ corresponds to a feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ by simply setting 
+\begin_inset Formula $\bar{x_{j}}=\hat{x_{j}'}-\hat{x}_{j}''$
+\end_inset
+
+.
+ Now the other way, any feasible solution 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ corresponds to the feasible solution 
+\begin_inset Formula $\hat{x}$
+\end_inset
+
+by setting 
+\begin_inset Formula $\hat{x}_{j}'=\bar{x}_{j}$
+\end_inset
+
+and 
+\begin_inset Formula $\hat{x}_{j}''=0$
+\end_inset
+
+ if 
+\begin_inset Formula $\bar{x_{j}}\geq0$
+\end_inset
+
+.
+ Otherwise when 
+\begin_inset Formula $\bar{x_{j}}<0$
+\end_inset
+
+ we can set 
+\begin_inset Formula $\hat{x}_{j}''=-\bar{x}_{j}$
+\end_inset
+
+and 
+\begin_inset Formula $\hat{x}_{j}'=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+How are the objective values equivalent?
+\begin_inset Newline newline
+\end_inset
+
+For the case where 
+\begin_inset Formula $\bar{x_{j}}\geq0$
+\end_inset
+
+ then 
+\begin_inset Formula $\bar{x_{j}}=\hat{x_{j}'}-\hat{x}_{j}''$
+\end_inset
+
+ is the exact same expression.
+ And when 
+\begin_inset Formula $\bar{x_{j}}<0$
+\end_inset
+
+ then 
+\begin_inset Formula $\bar{x}_{j}=\hat{x_{j}'}-\hat{x}_{j}'=-\hat{x}_{j}'=\bar{x}_{j}$
+\end_inset
+
+ so we maximize the same objective function and an objective value in 
+\begin_inset Formula $L'$
+\end_inset
+
+ must be an objective value in 
+\begin_inset Formula $L$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Dealing with equality constraint - Replace all functions 
+\begin_inset Formula $g(x_{1},...,x_{n})=b$
+\end_inset
+
+ with two inequalities 
+\begin_inset Formula $g(x_{1},x_{2},...,x_{n})\ge b$
+\end_inset
+
+ and 
+\begin_inset Formula $g(x_{1},x_{2},...,x_{n})\le b$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The feasible solutions must be equivalent since we do not change the variables
+ and the double inequality ensures we only get a solution when 
+\begin_inset Formula $g(x_{1},...,x_{n})=b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The objective value is also the same since the double inequality ensures
+ we only have a solution when 
+\begin_inset Formula $g(x_{1},...,x_{n})=b$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Dealing with greater than equal - multiply these constraints through with
+ 
+\begin_inset Formula $-1$
+\end_inset
+
+.
+ This flips the inequality and negates coefficients on both sides (this
+ fixes all greater than equal from 3).
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+This is an equivalent inequality and we do not change the variables so we
+ have an equivalent feasible solution
+\end_layout
+
+\begin_layout Enumerate
+Again, the constraint is equivalent so we must get the same objective value
+ in both solutions
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Converting LP to slack form
+\end_layout
+
+\begin_layout Standard
+We replace all inequalities that are not nonnegative constraints with a
+ 
+\series bold
+slack variable 
+\series default
+
+\begin_inset Formula $s$
+\end_inset
+
+ and a new nonnegative constraint
+\begin_inset Formula 
+\begin{align}
+s & =b_{i}-\sum_{j=1}^{n}a_{ij}x_{j}\\
+s & \ge0
+\end{align}
+
+\end_inset
+
+The variable is called slack since it measures the difference between 
+\begin_inset Formula $b_{i}$
+\end_inset
+
+and the sum.
+ Remember the constraint was normally of the form 
+\begin_inset Formula 
+\begin{equation}
+\sum_{j=1}^{n}a_{ij}x_{j}\le b_{i}
+\end{equation}
+
+\end_inset
+
+so the slack captures how much the sum is off from the constraint.
+ Why are these equivalent? Well if (1) and (2) holds, then 
+\begin_inset Formula $b_{i}-\sum_{j=1}^{n}a_{ij}x_{j}\ge0$
+\end_inset
+
+ which implies (3).
+ Likewise we can write 3 as 
+\begin_inset Formula $b_{i}-\sum_{j=1}^{n}a_{ij}x_{j}\ge0$
+\end_inset
+
+ and the split it into (1) and (2).
+ This means we get an equivalent 
+\begin_inset Formula $L'$
+\end_inset
+
+ by the rewrite.
+ We will usally write the slack variable as 
+\begin_inset Formula $x_{n+1}=b_{i}-\sum_{j=1}^{n}a_{ij}x_{j}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Common problems as LP
+\end_layout
+
+\begin_layout Subsection
+Single pair shortest path
+\end_layout
+
+\begin_layout Standard
+The problem gives us a graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ and a weight function 
+\begin_inset Formula $w$
+\end_inset
+
+ mapping edges to real values.
+ We wish to find the shortest path from source vertex 
+\begin_inset Formula $s$
+\end_inset
+
+ to destination vertex 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ The value of the shortest path is called 
+\begin_inset Formula $d_{t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Bellman-Ford will at termination find the value 
+\begin_inset Formula $d_{v}$
+\end_inset
+
+for each each vertex such that 
+\begin_inset Formula $d_{v}\le d_{u}+w(u,v)$
+\end_inset
+
+ (remember, the shortest path either skips 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ so strict inequality holds or it consists of a path 
+\begin_inset Formula $s\rightsquigarrow u\rightarrow v\rightsquigarrow t$
+\end_inset
+
+.
+ This becomes the linear program
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+\text{maximize} & d_{t}\\
+s.t & d_{v} & \le & d_{u}+w(u,v) & \text{for each edge }(u,v)\in E\\
+ & d_{s} & = & 0
+\end{array}
+\]
+
+\end_inset
+
+Note that this is a maximization problem instead of minimization.
+ The reason is that minimizing would give a solution where each 
+\begin_inset Formula $d_{u}=0$
+\end_inset
+
+, since this satisfies each constraint.
+ However, due to the inequality constraint, the algorithm will find the
+ maximum 
+\begin_inset Formula $d_{v}$
+\end_inset
+
+ for which the inequality constraint holds for each vertex.
+ So this does find the shortest path.
+ There are 
+\begin_inset Formula $|V|$
+\end_inset
+
+ variables and 
+\begin_inset Formula $|E|+1$
+\end_inset
+
+ constraints.
+\end_layout
+
+\begin_layout Subsection
+Maximum flow
+\end_layout
+
+\begin_layout Standard
+A flow is a real valued function 
+\begin_inset Formula $f:V\times V\mapsto\mathbb{R}$
+\end_inset
+
+ that satisfies capacity constraint and flow conservation.
+ A max flow is a flow that maximizes the value of a flow.
+ We can use this to write a linear program.
+ We assume the 
+\begin_inset Formula $c(u,v)=0$
+\end_inset
+
+ if 
+\begin_inset Formula $(u,v)\notin E$
+\end_inset
+
+ and we also assume there are no antiparallel edges
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+\text{maximize} & \sum_{v\in V}f_{sv} & - & \sum_{v\in V}f_{vs}\\
+s.t & f_{uv} & \le & c(u,v) & \text{for each }u,v\in V\\
+ & \sum_{v\in V}f_{vu} & = & \sum_{v\in V}f_{vu} & \text{for each }u\in V\setminus\{s,t\}\\
+ & f_{uv} & \ge & + & \text{for each }u,v\in V
+\end{array}
+\]
+
+\end_inset
+
+We see this simply states the rules of the flow.
+ The flow has for each pair of vertices a variable 
+\begin_inset Formula $uv$
+\end_inset
+
+ so we have 
+\begin_inset Formula $V^{2}$
+\end_inset
+
+variables.
+ From constraint line 1 and 3 we have 
+\begin_inset Formula $2|V|^{2}$
+\end_inset
+
+ constrains.
+ The second line only loops over 
+\begin_inset Formula $u$
+\end_inset
+
+ so it has 
+\begin_inset Formula $|V|-2$
+\end_inset
+
+ constraints making the total constraints 
+\begin_inset Formula $2|V|^{2}+|V|-2$
+\end_inset
+
+ constraints.
+\end_layout
+
+\begin_layout Section
+Simplex algorithm
+\end_layout
+
+\begin_layout Standard
+Each iteration converts one slack form into an equivalent slack form.
+ How it does that is described later.
+ Thereafter the objective value of the associated feasible solution is no
+ less than the previous iteration.
+ We achieve this as follows
+\end_layout
+
+\begin_layout Enumerate
+Chose a nonbasic variable such that if we increase it from 0 then the objective
+ value will increase too.
+ How much we can increase the nonbasic variable can be limited by other
+ constraints.
+\end_layout
+
+\begin_layout Enumerate
+Raise the chosen nonbasic variable until a basic variable becomes 0
+\end_layout
+
+\begin_layout Enumerate
+Rewrite by exchanging roles of the basic variable that became 0 and the
+ nonbasic variable
+\end_layout
+
+\begin_layout Standard
+when the solution becomes obvious it stops.
+\end_layout
+
+\begin_layout Section
+Duality
+\end_layout
+
+\begin_layout Standard
+Instead of solving the original linear program, called the 
+\series bold
+primal
+\series default
+, it turns out we can formulate a 
+\series bold
+dual
+\series default
+ problem whose objective we minimize and get an identical solution
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+\text{minimize} & \sum_{i=1}^{m}b_{i}y_{i}\\
+s.t & \sum_{i=1}^{m}a_{ij}y_{i} & \geq & c_{j} & \text{for }j=1,2,...,n\\
+ & y_{i} & \geq & 0 & \text{for }i=1,2,...,m
+\end{array}
+\]
+
+\end_inset
+
+Compare this to the 
+\emph on
+primal
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{array}{ccccc}
+\text{maximize} & \sum_{j=1}^{n}c_{j}x_{j}\\
+\text{s.t} & \sum_{j=1}^{n}a_{ij}x_{j} & \leq & b_{i} & \text{for }\,i=1,2,...,m\\
+ & x_{j} & \ge & 0 & \text{for  }j=1,2,...,n
+\end{array}
+\]
+
+\end_inset
+
+then we have done the following
+\end_layout
+
+\begin_layout Enumerate
+Change maximization to minimization
+\end_layout
+
+\begin_layout Enumerate
+Exchange roles of coefficients on the RHS - instead of having 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ in the objective function, it is a constraint, and each constraint 
+\begin_inset Formula $b_{i}$
+\end_inset
+
+ is in the objective function.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\ge$
+\end_inset
+
+ are changed to 
+\begin_inset Formula $\le$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Each 
+\begin_inset Formula $m$
+\end_inset
+
+ constraints in the primal has an associated 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ in the dual
+\end_layout
+
+\begin_layout Enumerate
+Each of the 
+\begin_inset Formula $n$
+\end_inset
+
+ constraints in the dual has an associated 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+in the primal
+\end_layout
+
+\begin_layout Subsection
+Lemma: Weak Duality
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ be a feasible solution in the primal and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+a feasible solution in the dual.
+ Then it holds that
+\begin_inset Formula 
+\[
+\sum_{j=1}^{n}c_{j}\bar{x_{j}}\leq\sum_{i=1}^{m}b_{i}\bar{y}_{i}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+We have that 
+\begin_inset Formula $\sum_{i=1}^{m}a_{ij}y_{i}\geq c_{j}\text{for }j=1,2,...,n$
+\end_inset
+
+ and we can insert this into the above
+\begin_inset Formula 
+\begin{align*}
+\sum_{j=1}^{n}c_{j}\bar{x_{j}} & \le\sum_{j=1}^{n}\left(\sum_{i=1}^{m}a_{ij}\bar{y}_{i}\right)\bar{x_{j}}\\
+ & =\sum_{j=1}^{n}\left(\sum_{i=1}^{m}a_{ij}\bar{y}_{i}\cdot\bar{x_{j}}\right)\\
+ & =\sum_{i=1}^{m}\left(\sum_{j=1}^{n}a_{ij}\bar{y}_{i}\cdot x_{j}\right)\\
+ & =\sum_{i=1}^{m}\bar{y}_{i}\left(\sum_{j=1}^{n}a_{ij}\cdot x_{j}\right)\\
+ & \leq\sum_{i=1}^{m}\bar{y}_{i}\cdot b_{j}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Corollary
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ be a feasible solution to the primal and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+to the corresponding dual.
+ Then if
+\begin_inset Formula 
+\[
+\sum_{j=1}^{n}c_{j}\bar{x_{j}}=\sum_{i=1}^{m}b_{i}\bar{x_{i}}
+\]
+
+\end_inset
+
+then 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+ are optimal solutions to the primal and dual respectively.
+\end_layout
+
+\begin_layout Subsection*
+Proof
+\end_layout
+
+\begin_layout Standard
+The previous lemma showed us that 
+\begin_inset Formula $\sum_{j=1}^{n}c_{j}\bar{x_{j}}\leq\sum_{i=1}^{m}b_{i}\bar{y}_{i}$
+\end_inset
+
+ and thereby the objective value of the primal cannot exceed the objective
+ value of the dual.
+ Likewise the dual can never be less than the primal.
+ Since the dual is a minimization and the primal is a maximization problem,
+ then if 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+ have the same objective value then this says neither can be improved -
+ the dual has reached it minimum, so the primal cannot be better.
+ Or the dual has reached is max so the dual cannot be less.
+ So when they are equal for the feasible solutions 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+ , they have both reached a minimum or maximum.
+\end_layout
+
+\begin_layout Subsection
+Theorem
+\end_layout
+
+\begin_layout Standard
+Suppose simplex returns the values 
+\begin_inset Formula $\bar{x}=(\bar{x}_{1},...,\bar{x}_{n})$
+\end_inset
+
+ for the primal linear program with nonbasic and basic variables returned
+ to be N, B respectively.
+ Let 
+\begin_inset Formula $c'$
+\end_inset
+
+ denote the coefficients in the final slack form and 
+\begin_inset Formula $\bar{x}=(\bar{x}_{1},...,\bar{x}_{n})$
+\end_inset
+
+ defined by
+\begin_inset Formula 
+\[
+\bar{y}_{i}=\begin{cases}
+-c'_{n+1} & \text{if }(n+1)\in N\\
+0 & \text{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,2793 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "cmss" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family sfdefault
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Summary
+\begin_inset Note Note
+status open
+
+\begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Itemize
+vEB tree and operations
+\end_layout
+
+\begin_layout Itemize
+Direct addressing with superimposed tree of constant height
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Summary
+\end_layout
+
+\begin_layout Itemize
+Cluster
+\end_layout
+
+\begin_layout Itemize
+Successor and Predecessor direct addressing
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Proto van Emde Boas tree
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Recursive structure
+\end_layout
+
+\begin_layout Itemize
+Successor operation 
+\end_layout
+
+\begin_layout Itemize
+Successor recurrence and running time
+\end_layout
+
+\begin_layout Itemize
+Problems with the successor operation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+van Emde Boas Tree
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Recursive structure difference from proto vEB
+\end_layout
+
+\begin_layout Itemize
+Successor operation
+\end_layout
+
+\begin_layout Itemize
+Recurrence and running time
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Reflection between proto vEB and vEB
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+We get 
+\begin_inset Formula $O(\lg\lg n)$
+\end_inset
+
+since we use 
+\begin_inset Formula $\lg n$
+\end_inset
+
+ bits to store a number, and we split the number at most 
+\begin_inset Formula $\lg$
+\end_inset
+
+ times
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Detailed summary
+\end_layout
+
+\begin_layout Plain Layout
+The van Embde Boas trees is tree structure that supports the dynamic set
+ operations: 
+\emph on
+search, insert, delete, minimum, maximum, predecessor and successor.
+ 
+\emph default
+I will assume that duplicate keys are not allowed so instead of the 
+\emph on
+search
+\emph default
+ operation a simplified 
+\emph on
+member 
+\emph default
+operation that simply returns a boolean value will be used.
+ Each operation runs in 
+\begin_inset Formula $O(\lg\lg u$
+\end_inset
+
+) time where 
+\begin_inset Formula $u$
+\end_inset
+
+ is the size of the universe.
+\end_layout
+
+\begin_layout Plain Layout
+Like in the book, i will go over some preliminary tree structures until
+ I arrive at the van Embde Boas tree, and assume that that the universe
+ size in an exact power of 
+\begin_inset Formula $2$
+\end_inset
+
+.
+ That is, 
+\begin_inset Formula $u=2^{k}$
+\end_inset
+
+for some integer 
+\begin_inset Formula $k\ge1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Direct addressing
+\end_layout
+
+\begin_layout Plain Layout
+In plain direct addressing we store the dynamic set as a bit vector of length
+ 
+\begin_inset Formula $u$
+\end_inset
+
+, where bit 
+\begin_inset Formula $u[i]=1$
+\end_inset
+
+ if key 
+\begin_inset Formula $i$
+\end_inset
+
+ is in the set and 0 otherwise.
+ If we assume we have a universe of size 
+\begin_inset Formula $u=2^{2k}$
+\end_inset
+
+for some integer 
+\begin_inset Formula $k$
+\end_inset
+
+, then we will always have that 
+\begin_inset Formula $\text{\ensuremath{\sqrt{u}=\sqrt{2^{2k}}=2\sqrt{k}} is still an integer}$
+\end_inset
+
+.
+ A tree of degree 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ is then superimposed over the direct addressing scheme with height 2.
+ Each internal node of this tree stores the logical 
+\series bold
+or 
+\series default
+of its children.
+ Hence the root is only 
+\begin_inset Formula $1$
+\end_inset
+
+if any of the children have any members.
+ The leaves of the tree is the original direct addressing bit-array.
+ 
+\color red
+TODO: why does this always have depth 2?
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename directAddressing.png
+	lyxscale 50
+	width 100line%
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Since the 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ internal nodes are the logical or of their children, we can think of of
+ each internal node as holding a summary of their 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+children.
+ Therefore, we can think of the internal nodes as a summary bit-array of
+ length 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+bits, 
+\begin_inset Formula $summary[0,...,\sqrt{u}-1]$
+\end_inset
+
+.
+ This means that 
+\begin_inset Formula $summary[i]=1$
+\end_inset
+
+ if the sub-array 
+\begin_inset Formula $A[i\sqrt{u},...,(i+1)\sqrt{u}$
+\end_inset
+
+ contains any elements.
+ This sub array will be referred to as a cluster.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Understand insert,delete, minimum, maximum
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+Successor(x) and predecessor: 
+\series default
+Assuming that 
+\begin_inset Formula $x$
+\end_inset
+
+ is in the tree.
+ Search to the right of 
+\begin_inset Formula $x$
+\end_inset
+
+in the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+ until a 
+\begin_inset Formula $1$
+\end_inset
+
+is found(the position is the successor).
+ In case there is nothing, then calculate 
+\begin_inset Formula $i=\lfloor\nicefrac{x}{\text{\ensuremath{\sqrt{u}}}}\rfloor$
+\end_inset
+
+(which is the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+).
+ Then search for a 
+\begin_inset Formula $1$
+\end_inset
+
+ to the right of 
+\begin_inset Formula $i$
+\end_inset
+
+ in the summary buffer until a 
+\begin_inset Formula $1$
+\end_inset
+
+ is found.
+ This gives the index of the cluster.
+ Search through the cluster to find the first 1.
+ The predecessor is almost the same.
+ 
+\end_layout
+
+\begin_layout Plain Layout
+In the worst case, we search through two clusters of size 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+and the summary buffer of size 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+.
+ Therefore, successor and predecessor take 
+\series bold
+
+\begin_inset Formula $O(\sqrt{u})$
+\end_inset
+
+ 
+\series default
+.
+ 
+\end_layout
+
+\begin_layout Subsection
+Proto van Embde Boas
+\end_layout
+
+\begin_layout Plain Layout
+For this tree structure we assume that the universe size 
+\begin_inset Formula $u=2²^{k}$
+\end_inset
+
+ for some integer 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ We expand the previous tree structure further by making it recursive.
+ We start by making a (summary) structure of size 
+\begin_inset Formula $\sqrt{u}=u^{\nicefrac{1}{2}}$
+\end_inset
+
+where each item holds 
+\begin_inset Formula $u^{\nicefrac{1}{4}}$
+\end_inset
+
+items.
+ Each of the 
+\begin_inset Formula $u^{\nicefrac{1}{4}}$
+\end_inset
+
+items holds structures of 
+\begin_inset Formula $u^{\nicefrac{1}{8}}$
+\end_inset
+
+items and so on until we reach a structure of 
+\begin_inset Formula $2$
+\end_inset
+
+ items.
+\end_layout
+
+\begin_layout Plain Layout
+Let us say our universe is 64-bit numbers.
+ Then we have 
+\begin_inset Formula $u=2^{64}$
+\end_inset
+
+ and a 
+\series bold
+
+\begin_inset Formula $\log u=\log2^{64}=64$
+\end_inset
+
+
+\series default
+-bit key 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ From the simple direct addressing with a 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ -degree superimposed tree, we got the cluster number by
+\begin_inset Formula 
+\[
+cluster=\lfloor\nicefrac{x}{\sqrt{u}\rfloor}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+and if 
+\begin_inset Formula $x$
+\end_inset
+
+ is a 
+\begin_inset Formula $\lg u$
+\end_inset
+
+-bit number, then we by get the cluster number by the 
+\begin_inset Formula $\nicefrac{\lg u}{2}$
+\end_inset
+
+ most important bits.
+ Within the cluster, 
+\begin_inset Formula $x$
+\end_inset
+
+ appear as the index given by the lower 
+\begin_inset Formula $\lg u/2$
+\end_inset
+
+ bits.
+ These are calculated by 
+\begin_inset Formula $x\mod\sqrt{u}$
+\end_inset
+
+.
+ We index the different bits by
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\[
+high(x)=\lfloor\nicefrac{x}{\sqrt{u}\rfloor}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+low(x)=x\mod\sqrt{u}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+index(x,y)=x\sqrt{u}+y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Where the 
+\begin_inset Formula $index$
+\end_inset
+
+ function builds a number, treating 
+\begin_inset Formula $x$
+\end_inset
+
+ as the upper half bits and 
+\begin_inset Formula $y$
+\end_inset
+
+ as the lower half numbers.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Why is this the case? In general, why can we access the bits in this way?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+vEB trees
+\end_layout
+
+\begin_layout Subsection
+Universe size
+\end_layout
+
+\begin_layout Standard
+The vEB tree structure is used to store keys in a universe 
+\begin_inset Formula $U$
+\end_inset
+
+ of possible keys with size 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ The size of the universe can be any exact power of 2.
+ When 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ is not an integer, then 
+\begin_inset Formula $u$
+\end_inset
+
+ is an odd power of 
+\begin_inset Formula $2$
+\end_inset
+
+ say 
+\begin_inset Formula $u=2^{2k+1}$
+\end_inset
+
+for some 
+\begin_inset Formula $k>0$
+\end_inset
+
+, and we will divide the 
+\begin_inset Formula $\text{lg}u$
+\end_inset
+
+ bits needed to store a universe key into two components - 
+\begin_inset Formula $\lceil(\lg u)/2\rceil$
+\end_inset
+
+ number of most significant bits and 
+\begin_inset Formula $\lfloor(\lg u)/2\rfloor$
+\end_inset
+
+ number of least significant bits.
+\end_layout
+
+\begin_layout Standard
+For some notation, we define 
+\begin_inset Formula $2^{\lceil(\lg u)/2\rceil}$
+\end_inset
+
+ as the upper square root of 
+\begin_inset Formula $u$
+\end_inset
+
+ by 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+.
+ Then we define
+\begin_inset Formula $2^{\lfloor(\lg u)/2\rfloor}$
+\end_inset
+
+ , the lower square root of 
+\begin_inset Formula $u$
+\end_inset
+
+ by the notation 
+\begin_inset Formula $\sqrt[\downarrow]{u}$
+\end_inset
+
+.
+ This has the effect that 
+\begin_inset Formula 
+\[
+\sqrt[\uparrow]{u}\cdot\sqrt[\downarrow]{u}=2^{\lceil(\lg u)/2\rceil}\cdot2^{\lfloor(\lg u)/2\rfloor}=2^{\lceil(\lg u)/2\rceil+\lfloor(\lg u)/2\rfloor}=2^{\lg u}=u
+\]
+
+\end_inset
+
+and when 
+\begin_inset Formula $u$
+\end_inset
+
+ is an even power of 
+\begin_inset Formula $u$
+\end_inset
+
+ the we have 
+\begin_inset Formula $\sqrt[\uparrow]{u}\cdot\sqrt[\downarrow]{u}=\sqrt{u}$
+\end_inset
+
+ since taking the floor and ceil does nothing.
+\end_layout
+
+\begin_layout Standard
+The point in vEB trees is to quickly perform operations on the universe
+ keys by considering the bits that make up the keys in the universe.
+ This is why we need to both combine the upper and lower half bits to a
+ new number as well as extract the upper an lower half bits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: required space for an empty tree and non-full tree
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Helper functions
+\end_layout
+
+\begin_layout Standard
+We define the following helper functions
+\begin_inset Formula 
+\begin{align*}
+high(x) & =\lfloor x/\sqrt[\downarrow]{u}\rfloor\\
+low(x) & =x\mod\sqrt[\downarrow]{u}\\
+index(x,y) & =x\sqrt[\downarrow]{u}+y
+\end{align*}
+
+\end_inset
+
+The function 
+\begin_inset Formula $high(x)$
+\end_inset
+
+ gives us the number of the upper half bits.
+ More precisely we need 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits to represent a key, so we get the upper half 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits.
+ Why? Bit-shifting right once is the same as dividing by 
+\begin_inset Formula $2$
+\end_inset
+
+ and removes the least significant bits.
+ We want to remove about 
+\begin_inset Formula $(\lg u)/2$
+\end_inset
+
+ bits.
+ So how many times do we need to divide by 2? Exactly 
+\begin_inset Formula $\lceil(\lg u)/2\rceil$
+\end_inset
+
+ times.
+ So we need to divide by 
+\begin_inset Formula $\sqrt[\downarrow]{u}=2^{\lfloor(\lg u)/2\rfloor}$
+\end_inset
+
+ and floor the number to get the integer number.
+ 
+\end_layout
+
+\begin_layout Standard
+The function 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ gives us the lower half 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits.
+ How? When we take 
+\begin_inset Formula $\mod k$
+\end_inset
+
+ of a number we get the remainder left after dividing by 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The function 
+\begin_inset Formula $index(x,y)$
+\end_inset
+
+ works by treating 
+\begin_inset Formula $x$
+\end_inset
+
+ as the upper half bits, by bit-shifting(multiplying by 2) left about 
+\begin_inset Formula $(\log u)/2$
+\end_inset
+
+times and 
+\begin_inset Formula $y$
+\end_inset
+
+ as the lower half bits and returns a new number.
+ We actually have that 
+\begin_inset Formula $index(high(x),low(x))=x$
+\end_inset
+
+ since it combines the lower half and upper half bits.
+\end_layout
+
+\begin_layout Subsection
+The tree structure
+\end_layout
+
+\begin_layout Standard
+The vEB tree is a recursive tree structure and vEB(u) denotes a (sub)tree
+ of universe size 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $u>2$
+\end_inset
+
+ the tree has the following attributes
+\end_layout
+
+\begin_layout Enumerate
+Summary pointer
+\begin_inset Newline newline
+\end_inset
+
+This is a pointer to another tree of size vEB(
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+Universe size 
+\begin_inset Formula $u$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $min$
+\end_inset
+
+ that stores the minimum element in the tree
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $max$
+\end_inset
+
+ that stores the maximum element in the stree
+\end_layout
+
+\begin_layout Enumerate
+cluster array of 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+ pointers to vEB(
+\begin_inset Formula $\sqrt[\downarrow]{u}$
+\end_inset
+
+) trees.
+ Note the following
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We have about 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ trees each with about 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ keys for a total of 
+\begin_inset Formula $u$
+\end_inset
+
+ keys stored.
+\end_layout
+
+\begin_layout Enumerate
+We can determine cluster index of a universe key by 
+\begin_inset Formula $high(x)$
+\end_inset
+
+ - this gives us the upper half bits
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Important to note is that the element in 
+\emph on
+min
+\emph default
+ does not appear in any of the trees in the cluster.
+ The keys stored by the tree is therefore
+\emph on
+ 
+\begin_inset Formula $V.min$
+\end_inset
+
+
+\emph default
+ plus the 
+\emph on
+min 
+\emph default
+of each the recursive 
+\begin_inset Formula $cluster[0,1,...,vEB(\sqrt[\downarrow]{u})-1]$
+\end_inset
+
+ trees.
+ The 
+\emph on
+max
+\emph default
+ attribute can appear in a cluster, but if the tree size is 1 then 
+\emph on
+min=max
+\emph default
+ then 
+\emph on
+max 
+\emph default
+will not appear in the tree.
+\end_layout
+
+\begin_layout Standard
+For a base tree of size vEB(2) does not need the cluster array, since we
+ can use 
+\emph on
+min 
+\emph default
+and 
+\emph on
+max
+\emph default
+ to determine the elements of the tree.
+\end_layout
+
+\begin_layout Standard
+Note about figure 20.6 in CLRS.
+ The tree vEB(16).min=2, and vEB(16).cluster[0].min=3.
+ Furthermore vEB[16].cluser[0] contains two cluster points to two vEB(2)
+ tree that both have nil points for the 
+\emph on
+min 
+\emph default
+and 
+\emph on
+max
+\emph default
+.
+ This means that the tree vEB(16).cluster[0] which is a vEB(4) tree only
+ contain keys 2 and 3, since the 
+\emph on
+min 
+\emph default
+is never stored in the tree\SpecialChar endofsentence
+
+\end_layout
+
+\begin_layout Subsubsection
+Clusters
+\end_layout
+
+\begin_layout Standard
+To explain clusters, we have to understand the idea behind keys in a vEB
+ tree.
+ As we have confirmed, a universe size of 
+\begin_inset Formula $u$
+\end_inset
+
+ keys requires us to use 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits to store the keys.
+ We can the split the bits of the keys into an upper and lower half with
+ the 
+\begin_inset Formula $high,low$
+\end_inset
+
+ utility functions.
+ Using the upper half bits of keys gives us 
+\begin_inset Formula $(\lg u)/2$
+\end_inset
+
+ bits we can use for clusters.
+ How many numbers can we make with this many bits 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+2^{(\lg u)2}=(2^{\lg u})^{1/2}=u^{1/2}=\sqrt{u}
+\]
+
+\end_inset
+
+so we can for a universe size 
+\begin_inset Formula $u$
+\end_inset
+
+, we have 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ different clusters.
+ So each key 
+\begin_inset Formula $x\in u$
+\end_inset
+
+ is given a cluster by its upper half bits.
+ We can now use the lower half bits, given by 
+\begin_inset Formula $low(x)$
+\end_inset
+
+, to differentiate between all the keys within a cluster, and we can store
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ in the cluster using the lower half bits of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ We can call these lower half bits the offset of 
+\begin_inset Formula $x$
+\end_inset
+
+ into its cluster.
+ There must also be 
+\begin_inset Formula $\sqrt{u}$
+\end_inset
+
+ lower offsets into a cluster.
+ Additionally, we can reconstruct any number 
+\begin_inset Formula $x$
+\end_inset
+
+ given its cluster number and the offset into the cluster using the 
+\begin_inset Formula $index$
+\end_inset
+
+ function - it just merges the upper bits of the cluster number with the
+ lower half bits of the offset.
+\end_layout
+
+\begin_layout Standard
+Note however, that for universe sizes that are not an exact power of two,
+ 
+\begin_inset Formula $u=2^{2k+1}$
+\end_inset
+
+they will be split into an upper square root number of clusters, and then
+ we user lower square root bits as offsets into the clusters.
+\end_layout
+
+\begin_layout Standard
+In short, clusters are vEB-tree that share the same upper half bits.
+ Since they are vEB tree, they themselves have recursive vEB tree using
+ the upper and lower half of its bits all the way down to a base case of
+ 1 bits - this can only store two keys.
+\end_layout
+
+\begin_layout Subsubsection
+Summary
+\end_layout
+
+\begin_layout Standard
+While the clusters are just vEB trees that share the same upper-half bits,
+ using the lower half bits as keys/offset in the cluster, the summary is
+ a vEB tree using the upper half bits.
+\end_layout
+
+\begin_layout Standard
+A summary pointer is an attribute in a vEB tree of size 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Following the summary pointer gives us a tree of size 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+.
+ We have also 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+ pointers in the cluster, so the summary in a tree of size 
+\begin_inset Formula $u$
+\end_inset
+
+ actually stores a summary of each cluster tree.
+ But what is the summary? The 
+\begin_inset Formula $min$
+\end_inset
+
+ attribute is the minimum cluster num that is not empty, and 
+\begin_inset Formula $max$
+\end_inset
+
+ is similar for maximum.
+ This structure is then recursive.
+ 
+\end_layout
+
+\begin_layout Standard
+Lets say we have a vEB tree of size 
+\begin_inset Formula $16$
+\end_inset
+
+.
+ Then we have 
+\begin_inset Formula $\sqrt{1}6=4$
+\end_inset
+
+ clusters and thus 
+\begin_inset Formula $V.summary.u=4$
+\end_inset
+
+.
+ This is a summary over the four clusters of the 
+\begin_inset Formula $V.u=16$
+\end_inset
+
+ vEB tree.
+ The summary then has two base-case tree of size 
+\begin_inset Formula $2$
+\end_inset
+
+.
+ The first of which might have min=1, max=1 saying that cluster 0 is empty.
+ It might however still have a min attribute, since we do not store min
+ elements.
+\end_layout
+
+\begin_layout Subsection
+vEB recurrence
+\end_layout
+
+\begin_layout Standard
+The recurrence describing each of the recursive tree operations can be described
+ by the recurrence
+\begin_inset Formula 
+\[
+T(u)\leq T(\sqrt[\uparrow]{u})+O(1)
+\]
+
+\end_inset
+
+This can be solved in the following way.
+ Let 
+\begin_inset Formula $m=\lg u$
+\end_inset
+
+.
+ Then we can write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+T(u)=T(2^{m}) & \leq T(\sqrt[\uparrow]{u})+O(1)=T(u)\leq T(2^{\lceil(\lg u)/2\rceil})+O(1)\\
+ & =T(2^{\lceil m/2\rceil})+O(1)
+\end{align*}
+
+\end_inset
+
+and since 
+\begin_inset Formula $\lceil m/2\rceil\leq2m/3$
+\end_inset
+
+ for all 
+\begin_inset Formula $m\ge2$
+\end_inset
+
+ we get
+\begin_inset Formula 
+\[
+T(2^{m})\le T(2^{2m/3})+O(1)
+\]
+
+\end_inset
+
+and if we let 
+\begin_inset Formula $S(m)=T(2^{m})$
+\end_inset
+
+ then we get
+\begin_inset Formula 
+\[
+S(m)\le S(2m/3)+O(1)
+\]
+
+\end_inset
+
+and using part 2 of the mater theorem 
+\begin_inset Formula $T(n)=aT(n/b)+f(n)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\text{if}f(n)=\Theta(n^{\log_{b}a})\text{ then }T(n)=\Theta(n^{\text{\ensuremath{\log_{b}a}}}\text{\ensuremath{\lg n)}}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $b=\frac{3}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $a=1$
+\end_inset
+
+ we get that 
+\begin_inset Formula $n^{\log_{3/2}1}=n^{0}=1$
+\end_inset
+
+ so we do have 
+\begin_inset Formula $f(n)=O(1)=\Theta(1)$
+\end_inset
+
+ which gives us solution
+\begin_inset Formula 
+\[
+S(m)=\Theta(\lg m)
+\]
+
+\end_inset
+
+ and substituting back 
+\begin_inset Formula $T(u)=T(2^{m})=S(m)$
+\end_inset
+
+ and 
+\begin_inset Formula $m=\lg u$
+\end_inset
+
+ we get
+\begin_inset Formula 
+\[
+T(u)=\lg\lg u
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+Maximum and minimum
+\end_layout
+
+\begin_layout Standard
+These run in 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ time and are easy to implement since we just take the tree, 
+\begin_inset Formula $V$
+\end_inset
+
+, and return 
+\begin_inset Formula $V.min$
+\end_inset
+
+ or 
+\begin_inset Formula $V.max$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+vEB membership
+\end_layout
+
+\begin_layout Standard
+The pseudo code looks like this
+\end_layout
+
+\begin_layout Enumerate
+if x == V.min or x ==V.max
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return ture
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+elif V.u==2 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+false
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else return vEB-TREE-MEMBER(V.cluster[high(x), low(x))
+\end_layout
+
+\begin_layout Subsubsection*
+How does it work? 
+\end_layout
+
+\begin_layout Standard
+Well if the key we are looking for is either the minimum or maximum, then
+ we are done.
+ 
+\end_layout
+
+\begin_layout Standard
+If we however have recursed to the base-case of depth 2, then hitting line
+ 2 means they key was neither the 
+\emph on
+min 
+\emph default
+or the 
+\emph on
+max
+\emph default
+, so the key cannot be there.
+\end_layout
+
+\begin_layout Standard
+If we have not yet found the key, the recurse in one of the subtrees.
+ How do we determine the subtree? We use the structural bit-pattern of the
+ universe keys.
+ We take the upper half bits and use these to figure out which of the 
+\begin_inset Formula $\sqrt[\uparrow u]{u}$
+\end_inset
+
+ different subtrees the key might be present in.
+ Then we use the lower half bits to represent they key.
+ This works since if the key is in the tree, then it is stored as 
+\emph on
+min 
+\emph default
+or 
+\emph on
+max
+\emph default
+ and the subtree number of the stored key is found by recursively stripping
+ away the upper bits until we hit the base case, and on the way using the
+ lower half bits as the key value.
+\end_layout
+
+\begin_layout Subsubsection*
+Running time
+\end_layout
+
+\begin_layout Standard
+Each element is stored using 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits,and if we search until we hit the base-case then we half the bits
+ using 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ each time.
+ We can at most half 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ times, so it is 
+\begin_inset Formula $\lg\lg u$
+\end_inset
+
+ running time.
+\end_layout
+
+\begin_layout Subsection
+Tree successor
+\end_layout
+
+\begin_layout Standard
+Recall the successor of 
+\begin_inset Formula $x$
+\end_inset
+
+ is the smallest element larger than 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+if V.u == 2
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if x == 0 and V.max == 0
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return 1
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else return NIL
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+elseif V.min != NIL and x < V.min
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return V.min
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else max-low = vEB-TREE-MAXIMUM(V.cluser[high(x)])
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if max-low != NIL and low(x) < max-low
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+offset = vEB-TREE-SUCCESSOR(v.cluser[high(x)], low(x))
+\end_layout
+
+\begin_layout Enumerate
+return index(high(x), offset)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else succ-cluster = vEB-TREE-SUCCESSOR(V.summary, high(x))
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if succ-cluster == NIL
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return NIL
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else offset = vEB-TREE-Minimum(V.cluster[succ-cluster])
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return index(succ-cluster, offset)
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+The algorithm will now be explained in detail.
+ Each bullet corresponds to a bullet in the algorithm.
+\end_layout
+
+\begin_layout Enumerate
+This line indicates we have the base case
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+When the universe has size 2, we can only have 
+\begin_inset Formula $U=\{0,1\}$
+\end_inset
+
+.
+ So the only element that has a successor is 
+\begin_inset Formula $0$
+\end_inset
+
+ whith successor 
+\begin_inset Formula $1$
+\end_inset
+
+.
+ Therefore this case returns successor 1 if 
+\begin_inset Formula $x=0$
+\end_inset
+
+ and the max element is 1.
+ Remember, if the max was 0, then 
+\begin_inset Formula $min=max=0$
+\end_inset
+
+ and so there is no successor.
+\end_layout
+
+\begin_layout Enumerate
+Otherwise there can be no successor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If we are not in the base case, and the minimum element in the tree 
+\begin_inset Formula $V.min\neq NIL$
+\end_inset
+
+ then we have a non-empty tree.
+ If the minimum element of 
+\begin_inset Formula $V$
+\end_inset
+
+ is larger than 
+\begin_inset Formula $x$
+\end_inset
+
+, then this is the smallest element larger than 
+\begin_inset Formula $x$
+\end_inset
+
+ and is therefore the successor.
+\end_layout
+
+\begin_layout Enumerate
+Okay, so the successor is not immediately obvious from the 
+\begin_inset Formula $V.min$
+\end_inset
+
+ attribute in the current tree.
+ Therefore we first get the cluster number of 
+\begin_inset Formula $x$
+\end_inset
+
+ from 
+\begin_inset Formula $high(x)$
+\end_inset
+
+.
+ This is a vEB tree, so we can take the max element in this tree.
+ This gives us the largest element in the cluster where 
+\begin_inset Formula $x$
+\end_inset
+
+ resides.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+First we check if if 
+\begin_inset Formula $max-low$
+\end_inset
+
+ is NIL, in which case the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+ is an empty tree (the successor is not the 
+\begin_inset Formula $x$
+\end_inset
+
+ cluster but another clusterI.
+ The function 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ gives us the bits used to represent 
+\begin_inset Formula $x$
+\end_inset
+
+ in the recursive subtree 
+\begin_inset Formula $V.cluster[high(x)]$
+\end_inset
+
+.
+ 
+\begin_inset Formula $max-low$
+\end_inset
+
+ is represented in as many bits as 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ so we can check whether 
+\begin_inset Formula $low(x)<max-low$
+\end_inset
+
+.
+ In which case we know that the successor of 
+\begin_inset Formula $x$
+\end_inset
+
+ is in its cluster
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Therefore we search for 
+\begin_inset Formula $x$
+\end_inset
+
+ with 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ bits in 
+\begin_inset Formula $x$
+\end_inset
+
+ cluster in this line
+\end_layout
+
+\begin_layout Enumerate
+Since all elements in a cluster share the same upper half bits, we can use
+ 
+\begin_inset Formula $high(x)$
+\end_inset
+
+ as the upper bits for the found number.
+ Offset is the 
+\begin_inset Quotes eld
+\end_inset
+
+representation
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $x$
+\end_inset
+
+ in the lower half bits, so we can combine the upper half bits, 
+\begin_inset Formula $high(x)$
+\end_inset
+
+, that are shared between 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $offset$
+\end_inset
+
+ with the lower half bits given by 
+\begin_inset Formula $offset$
+\end_inset
+
+ to get the successor and we build this new number with 
+\begin_inset Formula $index$
+\end_inset
+
+ and return it
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+This case covers when the successor is not in the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ It must be a higher cluster than 
+\begin_inset Formula $x$
+\end_inset
+
+, so we first have to figure out which cluster the successor is in.
+ The 
+\begin_inset Formula $summary$
+\end_inset
+
+ of the current tree 
+\begin_inset Formula $V$
+\end_inset
+
+ contains information of each 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+ clusters, so we can use this to find next nonempty cluster, since this
+ will contain the successor.
+ Let us strip off the upper half bits of 
+\begin_inset Formula $x$
+\end_inset
+
+ with 
+\begin_inset Formula $high(x)$
+\end_inset
+
+ to find the cluster number of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Now we can just recursively look for the successor to 
+\begin_inset Formula $high(x)$
+\end_inset
+
+, since this gives us the next nonempty cluster.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+One thing to note, when we are in this case, then whatever 
+\begin_inset Quotes eld
+\end_inset
+
+successor
+\begin_inset Quotes erd
+\end_inset
+
+ cluster, that is the next nonempty cluster, we find, the smallest element
+ in this cluster will be the successor.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If 
+\begin_inset Formula $suc-cluster==NIL$
+\end_inset
+
+ then there are either no more clusters after the current cluster or the
+ rest of the clusters are all empty, so we must return NIL.
+\end_layout
+
+\begin_layout Enumerate
+Otherwise, we found the next nonemptu cluster.
+ We can now find the smallest element in this cluster by calling the minimum
+ on 
+\begin_inset Formula $V.cluster[succ-cluster]$
+\end_inset
+
+.
+ This gives us the smallest number represented on 
+\begin_inset Formula $V.u/2$
+\end_inset
+
+ bits.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Since we know the cluster number of the successor and the 
+\begin_inset Quotes eld
+\end_inset
+
+offset
+\begin_inset Quotes erd
+\end_inset
+
+ (the representation of the number using 
+\begin_inset Formula $V.u/2$
+\end_inset
+
+ bits) we have everything to build the successor using the 
+\begin_inset Formula $index$
+\end_inset
+
+ helper function.
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Subsubsection
+Running time
+\end_layout
+
+\begin_layout Standard
+The only recursive calls are those of 3.i.a and 3.b.
+ Each of them are exclusive, so we only do a single recursive call at each
+ iteration.
+ How many recursive calls can we do? Well each time we about half the 
+\begin_inset Formula $\lg u$
+\end_inset
+
+ bits until a single bit remain and we hit the base case.
+ How many times can we half the bits? 
+\begin_inset Formula $\lg$
+\end_inset
+
+ the number of bits times
+\begin_inset Formula 
+\[
+O(\lg\lg u)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+The predecessor
+\end_layout
+
+\begin_layout Standard
+Recall this is the largest element smaller than 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The pseudocode is almost identical to successor
+\end_layout
+
+\begin_layout Enumerate
+if V.u == 2
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if x == 1 and V.min = 0
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return 0
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else return NIL
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+elseif V.max != NIL and x > V.max
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return V.min
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else min-low = vEB-TREE-MINIMUM(V.cluser[high(x)])
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if min-low != NIL and low(x) > min-low
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+offset = vEB-TREE-PREDECESSOR(v.cluster[high(x)], low(x))
+\end_layout
+
+\begin_layout Enumerate
+return index(high(x), offset)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else pred-cluster = vEB-TREE-PREDECESSOR(V.summary, high(x))
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if pred-clust == NIL
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if V.min != NIL and x > V.min then return V.min
+\end_layout
+
+\begin_layout Enumerate
+else return NIL
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else offset = vEB-TREE-MAXIMUM(V.cluster[pred-cluster])
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+return index(pred-cluster, offset)
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Each step of the algorithm is explained below
+\end_layout
+
+\begin_layout Enumerate
+We are in the base case
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We can have two elements in the base case since we only have 
+\begin_inset Formula $\text{(log}V.u)/2=1$
+\end_inset
+
+ bits to represent the number.
+ Therefore, if
+\begin_inset Formula $x=1$
+\end_inset
+
+ in this tree then the predecessor can only be 
+\begin_inset Formula $0$
+\end_inset
+
+, requiring 
+\begin_inset Formula $V.min=0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We return 0 in this case since this can be the only predecessor to 
+\begin_inset Formula $x=1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+In case 
+\begin_inset Formula $x=0$
+\end_inset
+
+ or 
+\begin_inset Formula $V.min!=0$
+\end_inset
+
+ then there can be no predecessor
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+If the tree is not empty and 
+\begin_inset Formula $x$
+\end_inset
+
+ is larger than the max element of the tree then this element must be the
+ largest number smaller than 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Hence we can return 
+\begin_inset Formula $V.max$
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+We hit a case where the predecessor is not obvious from the current tree
+ 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ We start by finding the smallest element, 
+\begin_inset Formula $min-low$
+\end_inset
+
+, in the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+First we do a 
+\begin_inset Formula $NIL$
+\end_inset
+
+ check to ensure the cluster is not empty.
+ In case the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+ is not empty, then this is an obvious place to find the predecessor of
+ 
+\begin_inset Formula $x$
+\end_inset
+
+, since these are all the numbers that have the same upper half bits and
+ differ in their lower half bits.
+ We check with 
+\begin_inset Formula $low(x)$
+\end_inset
+
+ whether 
+\begin_inset Formula $x$
+\end_inset
+
+ represented with 
+\begin_inset Formula $V.u/2$
+\end_inset
+
+ bits (the same bits as is in 
+\begin_inset Formula $min-low$
+\end_inset
+
+) is larger than the smallest number in 
+\begin_inset Formula $x$
+\end_inset
+
+'s cluster by 
+\begin_inset Formula $low(x)>min-low$
+\end_inset
+
+.
+ In case it is, then we know the predecessor of 
+\begin_inset Formula $x$
+\end_inset
+
+ is within its clsuter
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We know the predecessor is in the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+, so we recursively call the predecessor routing on the cluster of 
+\begin_inset Formula $x$
+\end_inset
+
+ using the lower half bits representing 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The results, 
+\begin_inset Formula $offset$
+\end_inset
+
+, we get is the offset into the cluster the element resides - stated in
+ other words it is the lower 
+\begin_inset Formula $V.u/2$
+\end_inset
+
+ half bits of the predecessor.
+ The other upper half bits are the cluster number
+\end_layout
+
+\begin_layout Enumerate
+Therefore we combine the lower and upper half bits and return this
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+This case hits when we detect that the predecessor is not within the cluster,
+ in other words, 
+\begin_inset Formula $x$
+\end_inset
+
+ is already the 
+\begin_inset Formula $min$
+\end_inset
+
+ in its vEB tree.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We use the summary tree to find the first previous non-empty tree 
+\begin_inset Formula $pred-cluster$
+\end_inset
+
+.
+ This is where the predecessor must lie
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We check if there is no predecessor cluster by the 
+\begin_inset Formula $NIL$
+\end_inset
+
+check
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Since we do not represent the 
+\begin_inset Formula $min$
+\end_inset
+
+ in a tree, then if the predecessor is 
+\begin_inset Formula $V.min$
+\end_inset
+
+ then it will not be in any tree, so the the cluster is 
+\begin_inset Formula $NIL$
+\end_inset
+
+.
+ We check this by ensuring 
+\begin_inset Formula $x>V.min$
+\end_inset
+
+ and return 
+\begin_inset Formula $V.min$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Otherwise there is no predecessor.
+\end_layout
+
+\begin_layout Enumerate
+Okay so there were a nonempty smaller numbered cluster.
+ We can find the predecessor as the maximum in this cluster and assign it
+ to 
+\begin_inset Formula $offset$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Now we use the upper half bits of the cluster number again and the lower
+ half offset to get the actual predecessor.
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Subsubsection
+Running time
+\end_layout
+
+\begin_layout Standard
+Symmetric to the successor analysis
+\end_layout
+
+\begin_layout Subsection
+Insert
+\end_layout
+
+\begin_layout Standard
+Inserting into an empty tree is trivial since we just set the 
+\begin_inset Formula $V.min=V.max=x$
+\end_inset
+
+ and the rest are 
+\begin_inset Formula $NIL$
+\end_inset
+
+ pointers.
+ This holds because 
+\begin_inset Formula $x$
+\end_inset
+
+ will be the only element in the cluster.
+ Inserting into a nonempty vEB tree is a bit more complicated.
+ For the analysis it is assumed that 
+\begin_inset Formula $x$
+\end_inset
+
+ is not already in the tree.
+ We can without changing the running time break this assumption by calling
+ vEB-TREE-MEMER first in 
+\begin_inset Formula $O(\lg\lg u)$
+\end_inset
+
+ time and if the element is present return the same tree and otherwise do
+ the following routing
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $V.min==NIL$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+vEB-EMPTY-TREE-INSERT(V,X)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $x<V.min$
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+exchange 
+\begin_inset Formula $x$
+\end_inset
+
+ with 
+\begin_inset Formula $V.min$
+\end_inset
+
+ (insert 
+\begin_inset Formula $x$
+\end_inset
+
+ as 
+\begin_inset Formula $V.min$
+\end_inset
+
+ and continue with 
+\begin_inset Formula $x=V.min)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $V.u>2$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if vEB-TREE-MINIMUM(
+\begin_inset Formula $V.clusters[high(x)])==NIL$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+vEB-TREE-INSERT(
+\begin_inset Formula $V.summary,high(x))$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+vEB-EMPTY-TREE-INSERT(
+\begin_inset Formula $V.cluster[high(x)],low(x)$
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else vEB-TREE-INSERT(
+\begin_inset Formula $V.cluster[high(x)],low(x))$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $x>V.max$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V.max=x$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Now the details of the algorithm is explained
+\end_layout
+
+\begin_layout Enumerate
+Inserting into the empty tree is trivial
+\end_layout
+
+\begin_layout Enumerate
+Inserting into a nonempty tree is a bit harder
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+If the element to insert is smaller than the current smallest element, then
+ we need to make 
+\begin_inset Formula $V.min=x$
+\end_inset
+
+ and the old 
+\begin_inset Formula $V.min$
+\end_inset
+
+ needs to be 
+\begin_inset Formula $x$
+\end_inset
+
+ that is to be inserted.
+ We continue the algorithm afterwards
+\end_layout
+
+\begin_layout Enumerate
+This case covers when we are not in the base case
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We want to check whether the cluster to which 
+\begin_inset Formula $x$
+\end_inset
+
+ belongs has a minimum - in other words, whether it is empty.
+ 
+\series bold
+If 
+\series default
+it is empty we need to do two things
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Insert the key into the current trees summary.
+ This can take 
+\begin_inset Formula $O(\lg\lg u)$
+\end_inset
+
+ time.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Do the insert into the empty tree in 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ time.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Okay so the cluster to which 
+\begin_inset Formula $x$
+\end_inset
+
+ belongs is not empty.
+ Therefore we recursively try to insert 
+\begin_inset Formula $x$
+\end_inset
+
+ into the cluster in which it belongs.
+ How? Again, all keys in the cluster share the same upper half bits, so
+ we find the cluster by 
+\begin_inset Formula $high(x)$
+\end_inset
+
+ and use 
+\begin_inset Formula $lower(x)$
+\end_inset
+
+ as an offset into the cluster, or as to represent 
+\begin_inset Formula $x$
+\end_inset
+
+ in the cluster.
+ The recursive call might go on into an empty tree is found in 1 or in 2.b.i
+ or in 2.b.iii
+\end_layout
+
+\begin_layout Enumerate
+This case is hit when we need to update the 
+\begin_inset Formula $max$
+\end_inset
+
+ of a tree.
+ We can also hit this case when we insert the key in a base-case tree.
+ This works even if we insert the new min into the base case tree since
+ line 2.a handles exchanging roles so we can insert the key as the 
+\begin_inset Formula $max$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsubsection
+Running time
+\end_layout
+
+\begin_layout Standard
+We only do constant time operations or 1 recursive call stripping away half
+ the bits to work on.
+ Making the running-time 
+\begin_inset Formula $O(\lg\lg u)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Delete
+\end_layout
+
+\begin_layout Standard
+Here is the delete Algorithm.
+ It assumes 
+\begin_inset Formula $x$
+\end_inset
+
+ is already in the tree.
+ Again, we can overcome this restriction by just using the membership operation
+ and it will not break the asymptotic runtime.
+\end_layout
+
+\begin_layout Enumerate
+If 
+\begin_inset Formula $V.min==V.max$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V.min=NIL$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $V.max=NIL$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+elseif 
+\begin_inset Formula $V.u=2$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $x=0$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V.min=1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else 
+\begin_inset Formula $V.min=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $V.max=V.min$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+else
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+if 
+\begin_inset Formula $x==V.min$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $first-cluster=$
+\end_inset
+
+vEV-TREE-MINIMUM(
+\begin_inset Formula $V.summary$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $x=index(first-cluster,$
+\end_inset
+
+vEB-TREE-MINIMUM(
+\begin_inset Formula $v.cluset[first-cluster])$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $V.min$
+\end_inset
+
+ =x
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+vEB-TREE-DELETE(
+\begin_inset Formula $V.cluster[high(x)],low(x)$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+if vEB-TREE-MINIMUM(
+\begin_inset Formula $V.cluster[high(x)])==NIL$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+vEB-TREE-DELETE(
+\begin_inset Formula $V.summary,high(x)$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $x==V.max$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $summary-max=$
+\end_inset
+
+vEB-TREE-MAXIMUM(
+\begin_inset Formula $V.summary$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Enumerate
+if 
+\begin_inset Formula $summary-max==NIL$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+then 
+\begin_inset Formula $V.max=V.man$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+else 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $V.max=$
+\end_inset
+
+index(
+\begin_inset Formula $summary-max,$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+vEB-TREE-MAXIMUM(
+\begin_inset Formula $v.cluster[summary-max])$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Enumerate
+elseif 
+\begin_inset Formula $x==V.max$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+\begin_inset Formula $V.max$
+\end_inset
+
+= index(
+\begin_inset Formula $high(x)$
+\end_inset
+
+,
+\begin_inset Newline newline
+\end_inset
+
+vEB-TREE-MAXIMUM(
+\begin_inset Formula $V.cluster[high(x)])$
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Standard
+Now each step is explained in detail
+\end_layout
+
+\begin_layout Enumerate
+This tests whether the tree contains only 1 element.
+ This can easily be deleted by replacing the 
+\begin_inset Formula $max$
+\end_inset
+
+ and 
+\begin_inset Formula $min$
+\end_inset
+
+ attributes with 
+\begin_inset Formula $NIL$
+\end_inset
+
+ pointers.
+\end_layout
+
+\begin_layout Enumerate
+Else if we hit a base-case tree then we know, due to the previous case,
+ that it has two different elements.
+ Depending on whether we delete the 
+\begin_inset Formula $min$
+\end_inset
+
+ or 
+\begin_inset Formula $max$
+\end_inset
+
+ we have to update the attributs properly
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Deleting the min
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Do so by setting the min to the max
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Otherwise we delete the max, so we just update 
+\begin_inset Formula $V.min=0$
+\end_inset
+
+ so the next case happens for both cases
+\end_layout
+
+\begin_layout Enumerate
+Update the 
+\begin_inset Formula $V.max$
+\end_inset
+
+ and 
+\begin_inset Formula $V.min$
+\end_inset
+
+ to be equal.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Otherwise we are not in a base case and a tree with a single element.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+We start by testing whether the key to delete is the minimum key of the
+ tree
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+In case it is we find the cluster which belongs to the minimum key, 
+\begin_inset Formula $first-cluster$
+\end_inset
+
+.
+ We can use the summary tree here, since the minimum in the summary cluster
+ gives us the lowest nonempty cluster number.
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_body
+\end_document
