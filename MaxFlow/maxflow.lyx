@@ -82,7 +82,7 @@ Summary
 \end_layout
 
 \begin_layout Enumerate
-Definition of a flow
+Definition of a flow network
 \end_layout
 
 \begin_deeper
@@ -95,6 +95,10 @@ Graph example
 \end_layout
 
 \end_deeper
+\begin_layout Enumerate
+What is a flow?
+\end_layout
+
 \begin_layout Enumerate
 Residual network
 \end_layout
@@ -134,7 +138,7 @@ A flow network
 \begin_inset Formula $G=(V,E)$
 \end_inset
 
- is a graph where each edge 
+ is a directed graph where each edge 
 \begin_inset Formula $(u,v)\in E$
 \end_inset
 
@@ -219,6 +223,22 @@ Since each vertex has at least one entering edege(the above assumption)
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection
+Flow
+\end_layout
+
+\begin_layout Standard
+A real values function 
+\begin_inset Formula 
+\[
+f:V\times V\mapsto\mathbb{R}
+\]
+
+\end_inset
+
+that holds capacity constraint and flow conservation.
 \end_layout
 
 \begin_layout Subsection
@@ -500,16 +520,12 @@ Residual capacity
 \end_layout
 
 \begin_layout Standard
-Due to the need to decrease flow, we define formally the residual capcity
- of 
-\begin_inset Formula $G$
+Due to the need to decrease flow, we define formally the residual capacity
+ as function for all 
+\begin_inset Formula $u,v\in V$
 \end_inset
 
- with flow 
-\begin_inset Formula $f$
-\end_inset
-
- as
+ such that
 \begin_inset Formula 
 \[
 c_{f}(u,v)=\left\{ \begin{array}{cc}
@@ -1774,14 +1790,49 @@ We suppose for contradiction we have a max flow
 \begin_inset Formula $G_{f}$
 \end_inset
 
- consisting of the residual capacities of the edges along 
+given as
+\begin_inset Formula 
+\[
+f_{p}(u,v)=\left\{ \begin{array}{cc}
+c_{f}(p) & if\,(u,v)\,is\,on\,p\\
+0 & otherwise
+\end{array}\right.
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $c_{f}(p)=\min(c_{f}(u,v):(u,v)\,is\,on\,p)$
+\end_inset
+
+, along the edges of 
 \begin_inset Formula $p$
 \end_inset
 
 .
- Therefore, we can use corollary 26.3 to create and even better flow with
- value 
-\begin_inset Formula $|f\shortuparrow f_{p}|=|f|+|f_{p}|>|f|$
+ Corollary 26.3 says that if there is an augmenting path 
+\begin_inset Formula $p$
+\end_inset
+
+ with flow 
+\begin_inset Formula $f_{p}$
+\end_inset
+
+then the flow augmentation 
+\begin_inset Formula $f\uparrow f_{p}$
+\end_inset
+
+ is a flow in 
+\begin_inset Formula $G$
+\end_inset
+
+ with value 
+\begin_inset Formula $|f\shortuparrow f_{p}|=|f|+|f_{p}|>|f|.$
+\end_inset
+
+Therefore, we can construct an even better flow if there is an augmenting
+ path in 
+\begin_inset Formula $G$
 \end_inset
 
 .
@@ -1920,17 +1971,17 @@ On the other hand if
 \end_inset
 
 .
- Using the second case of residual capacity, we would otherwise have that
- 
+ Why? Using the second case of residual capacity, we would otherwise have
+ that 
 \begin_inset Formula $c_{f}(u,v)=f(v,u)$
 \end_inset
 
-, which would place an edge from 
+, which would place an edge 
 \begin_inset Formula $(u,v)\in E_{f}$
 \end_inset
 
 .
- This cannot be possible since 
+ We know such an edge cannot exist in the residual netowrk since 
 \begin_inset Formula $u,v$
 \end_inset
 
@@ -1982,6 +2033,11 @@ f(S,T) & =\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}(f(v,u)\\
  as argued.
  Hence we have shown no augmenting path means the net-flow is the capacity
  of a cut.
+ Lemma 26.4 then says 
+\begin_inset Formula $f(S,T)=|f|$
+\end_inset
+
+ and so we have proven this part.
 \end_layout
 
 \begin_layout Subsubsection*

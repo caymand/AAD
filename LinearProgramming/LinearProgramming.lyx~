@@ -76,6 +76,45 @@
 \begin_body
 
 \begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Enumerate
+Linear program basic concepts - constraints, objective function, objective
+ value
+\end_layout
+
+\begin_layout Enumerate
+Max-flow as a linear programming example
+\end_layout
+
+\begin_layout Enumerate
+Simplex example 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Converting a LP to a LP in standard form
+\end_layout
+
+\begin_layout Enumerate
+Converting from standard form to slack form
+\end_layout
+
+\begin_layout Enumerate
+Solving the LP
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Duality of linear programs
+\end_layout
+
+\begin_layout Enumerate
+Lemma on weak duality
+\end_layout
+
+\begin_layout Section
 Definitions
 \end_layout
 
@@ -232,7 +271,7 @@ inequalities
 \begin{array}{ccccc}
 \text{maximize} & \sum_{j=1}^{n}c_{j}x_{j}\\
 \text{s.t} & \sum_{j=1}^{n}a_{ij}x_{j} & \leq & b_{i} & \text{for }\,i=1,2,...,m\\
- & x_{j} & \ge & 0 & \text{for  }j=1,2,...,n
+ & x_{j} & \ge & 0 & \text{for }j=1,2,...,n
 \end{array}
 \]
 
@@ -1349,7 +1388,7 @@ primal
 \begin{array}{ccccc}
 \text{maximize} & \sum_{j=1}^{n}c_{j}x_{j}\\
 \text{s.t} & \sum_{j=1}^{n}a_{ij}x_{j} & \leq & b_{i} & \text{for }\,i=1,2,...,m\\
- & x_{j} & \ge & 0 & \text{for  }j=1,2,...,n
+ & x_{j} & \ge & 0 & \text{for }j=1,2,...,n
 \end{array}
 \]
 
@@ -1552,6 +1591,22 @@ Suppose simplex returns the values
 -c'_{n+1} & \text{if }(n+1)\in N\\
 0 & \text{otherwise}
 \end{cases}
+\]
+
+\end_inset
+
+then 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+ is an optimal solution to the primal and 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+to the dual and we have 
+\begin_inset Formula 
+\[
+\sum_{j=1}^{n}c_{j}\bar{x_{j}}=\sum_{i=1}^{m}b_{i}\bar{x_{i}}
 \]
 
 \end_inset
