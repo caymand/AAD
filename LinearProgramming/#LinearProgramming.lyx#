@@ -881,15 +881,13 @@ We find an objective value
 
 This works since by definition of a global minima 
 \begin_inset Formula 
-\begin{align*}
-\forall x,f(x_{0}) & \le f(x)\\
-\iff\\
--f(x_{0}) & \ge-f(x)
-\end{align*}
+\[
+\forall x,f(x_{0})\le f(x)
+\]
 
 \end_inset
 
-so we get that minimizing a function is the same as maximizing its negative.
+
 \end_layout
 
 \begin_layout Enumerate

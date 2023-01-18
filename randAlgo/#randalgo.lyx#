@@ -84,29 +84,11 @@ Motivation
 \end_layout
 
 \begin_layout Enumerate
-Randomized Min-Cut
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Multigraph
+Min-cut is NPC
 \end_layout
 
 \begin_layout Enumerate
-Algorithm and correctness
-\end_layout
 
-\begin_layout Enumerate
-Running time
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Monte-Carlo and Las-Vegas algorithms
-\end_layout
-
-\begin_layout Enumerate
-Outline Min-Cut
 \end_layout
 
 \begin_layout Section

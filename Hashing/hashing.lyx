@@ -76,77 +76,39 @@
 \begin_body
 
 \begin_layout Section
-Hashing Summary
+Summary
 \end_layout
 
-\begin_layout Itemize
-Random hash function definition
+\begin_layout Enumerate
+Hash function definition
 \end_layout
 
-\begin_layout Itemize
-Important properties
+\begin_layout Enumerate
+Truly random hash function and the problem
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-Space
-\end_layout
-
-\begin_layout Itemize
-Size
-\end_layout
-
-\begin_layout Itemize
-Properties of r.v 
-\begin_inset Formula $h(x)$
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Truly random hash function
+\begin_layout Enumerate
+Universal hashing
 \end_layout
 
 \begin_deeper
-\begin_layout Itemize
-Problems with this hash function
+\begin_layout Enumerate
+Definition
+\end_layout
+
+\begin_layout Enumerate
+Hash table with chaining
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Universal hashing 
+\begin_layout Enumerate
+Strongly universal hash function
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-definition
+\begin_layout Enumerate
+
 \end_layout
 
-\begin_layout Itemize
-Hashing with chaining
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Strong universality
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-definition
-\end_layout
-
-\begin_layout Itemize
-coordinated sampling
-\end_layout
-
-\begin_layout Itemize
-lemma 3.2 implication
-\end_layout
-
-\end_deeper
 \begin_layout Section
 Hashing Detailed
 \end_layout

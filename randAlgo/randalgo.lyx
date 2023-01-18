@@ -76,6 +76,34 @@
 \begin_body
 
 \begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Enumerate
+Motivation
+\end_layout
+
+\begin_layout Enumerate
+Multigraph
+\end_layout
+
+\begin_layout Enumerate
+Randomized min-cut
+\end_layout
+
+\begin_layout Enumerate
+Prove that the algorithm returns a cut
+\end_layout
+
+\begin_layout Enumerate
+Expected correctness
+\end_layout
+
+\begin_layout Enumerate
+Reflections
+\end_layout
+
+\begin_layout Section
 Definitions
 \end_layout
 
