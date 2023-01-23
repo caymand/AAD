@@ -12,10 +12,10 @@
 \inputencoding auto
 \fontencoding global
 \font_roman "default" "default"
-\font_sans "default" "default"
+\font_sans "cmss" "default"
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
-\font_default_family default
+\font_default_family sfdefault
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
@@ -29,6 +29,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +45,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -76,42 +78,167 @@
 \begin_body
 
 \begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Enumerate
+Motivation related to NPC
+\end_layout
+
+\begin_layout Enumerate
+Vertex cover
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Running time
+\end_layout
+
+\begin_layout Enumerate
+Correctness
+\end_layout
+
+\begin_layout Enumerate
+Approximation ratio
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Randomized approximation algorithms
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Max-3CNF-SAT introduction
+\end_layout
+
+\begin_layout Enumerate
+Expected approximation ratio
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Example vertex cover
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vertex-cover
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Vertex cover
 \end_layout
 
 \begin_layout Standard
+The algorithm works by maintaining a set of 
+\begin_inset Formula $C$
+\end_inset
 
+ vertices cover the graph.
+ While 
+\begin_inset Formula $E$
+\end_inset
+
+ is not empty, we pick an arbitrary edge from 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ and the endpoints to 
+\begin_inset Formula $C=\{u,v\{\cup C$
+\end_inset
+
+ and then remove all edges that have endpoints in 
+\begin_inset Formula $u$
+\end_inset
+
+ or 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ 
 \series bold
+
+\begin_inset Newline newline
+\end_inset
+
 Theorem: 35.1
 \end_layout
 
 \begin_layout Standard
 APPROX-VERTEX-COVER is a polynomial-time 2-approximation algorithm.
  
-\end_layout
-
-\begin_layout Standard
-
 \series bold
+
+\begin_inset Newline newline
+\end_inset
+
 Proof:
 \end_layout
 
 \begin_layout Standard
 We can use an adjacency list to represent the edges 
-\begin_inset Formula $E'$
+\begin_inset Formula $E$
 \end_inset
 
 .
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why O(V+E) running time?
-\end_layout
-
+ Now in constant time we pick an edge from the list, and look at the end-points
+ 
+\begin_inset Formula $(u,v)$
 \end_inset
 
+.
+ Now we need to remove the edges incident on 
+\begin_inset Formula $u,v$
+\end_inset
 
+.
+ Since we can at most pick and remove 
+\begin_inset Formula $E$
+\end_inset
+
+ edges we get some running time related to 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ Additionally, we look at the end-points, so we can at most look at all
+ vertices giving us total 
+\begin_inset Formula $O(V+E)$
+\end_inset
+
+ running time.
+ 
+\emph on
+Note an adjacency list is just a list of tuples, where the first index is
+ a vertex 
+\begin_inset Formula $u$
+\end_inset
+
+, and the next is the list of vertices that is adjacent to 
+\begin_inset Formula $u$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -146,8 +273,8 @@ We let
 \begin_inset Formula $A$
 \end_inset
 
- bet the set of arbitrary edges picked at each edges of the iteration.
- Now we will look at the vertex cover to cover these edges in 
+ bet the set of edges arbitrarily picked at each iteration.
+ Now we will look at the vertex cover to cover 
 \begin_inset Formula $A$
 \end_inset
 
@@ -156,12 +283,12 @@ We let
 \begin_inset Formula $A$
 \end_inset
 
- must include at least on endpoint for each edge to cover all edges in 
+ must include at least one endpoint for each edge in 
 \begin_inset Formula $A$
 \end_inset
 
 .
- After each edge picked 
+ After the algorithm picked 
 \begin_inset Formula $(u,v)\in E'$
 \end_inset
 
@@ -174,20 +301,16 @@ We let
 \end_inset
 
 (the endpoints).
- This means that an optimal cover 
-\begin_inset Formula $C^{*}$
-\end_inset
-
- over 
+ This means there are not two edges in 
 \begin_inset Formula $A$
 \end_inset
 
- cannot have a vertex covering multiple edges (not possible since we removed
- edges that had endpoints in 
-\begin_inset Formula $(u,v)$
+ that share an end-point (we made sure of this by removing all incident
+ edges on 
+\begin_inset Formula $u,v$
 \end_inset
 
-).
+ that otherwise would have made this possible).
  Therefore, we must have the cover is at least as large as the number of
  edges
 \begin_inset Formula 
@@ -279,7 +402,7 @@ Traveling-salesman
 \end_layout
 
 \begin_layout Enumerate
-Preorder tree walk - current node, recursively left subree, recursively
+Preorder tree walk - current node, recursively left subtree, recursively
  right subtree
 \end_layout
 
@@ -648,7 +771,7 @@ We analyze the running time by assigning a cost of
  is covered - then we get this fraction to be
 \begin_inset Formula 
 \[
-c_{x}=\frac{1}{|S_{i}-(S_{1}\cup,...,\cup S_{i-1})}
+c_{x}=\frac{1}{|S_{i}-(S_{1}\cup,...,\cup S_{i-1})|}
 \]
 
 \end_inset
@@ -667,7 +790,7 @@ that is, when
 \end_inset
 
  minus those that might have already been covered before by previous subsets.
- Since we know that the algorithm assigns 1 unit of cast at each iteration
+ Since we know that the algorithm assigns 1 unit of cost at each iteration
  (each time we select a subset), we get the sum
 \end_layout
 
@@ -706,7 +829,7 @@ since the sum of
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\sum_{S\in C^{*}}\sum_{x\in S}c_{x}\ge\sum_{x\in X}c_{x}
+|C^{*}|=\sum_{S\in C^{*}}\sum_{x\in S}c_{x}\ge\sum_{x\in X}c_{x}=|C|
 \]
 
 \end_inset
@@ -965,7 +1088,7 @@ would have covered more elements than
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\sum_{x\in S}c_{x}\leq & \sum(u_{i-1}-u_{i})\cdot\frac{1}{u_{i-1}}\\
+\sum_{x\in S}c_{x}\leq & \sum_{i=1}^{k}(u_{i-1}-u_{i})\cdot\frac{1}{u_{i-1}}\\
 = & \sum_{i=1}^{k}\sum_{j=u_{i}+1}^{u_{i-1}}\frac{1}{u_{i-1}}\text{(since \ensuremath{(u_{i-1}-u_{i})} is the inner sum and sums are inclsv.)}\\
 \leq & \sum_{i=1}^{k}\sum_{j=u_{i}+1}^{u_{i-1}}\frac{1}{j}\text{ (since \ensuremath{j\leq u_{i-1}}making the fraction larger)}\\
 = & \sum_{i=1}^{k}\left(\sum_{j=1}^{u_{i-1}}\frac{1}{j}-\sum_{j=1}^{u_{i}}\frac{1}{j}\right)\text{(all wil cancel out until we get from before)}\\
@@ -1017,6 +1140,1187 @@ then we can just upper bound this to
 \[
 p(n)\leq H(|X|)=\sum_{k=1}^{|X|}\frac{1}{k}\leq\ln|X|+1
 \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Randomization and linear programming
+\end_layout
+
+\begin_layout Standard
+We say that a randomized algorithm has an approximation ratio 
+\begin_inset Formula $p(n)$
+\end_inset
+
+ for some input size 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ The expected cost 
+\begin_inset Formula $C$
+\end_inset
+
+ of the solution produced by the algorithm is within a factor of 
+\begin_inset Formula $p(n)$
+\end_inset
+
+ of the cost 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+ of an optimal solution.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\max\left(\frac{C}{C^{*}},\frac{C^{*}}{C}\right)\leq p(n)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Randomized algorithms that have this ratio are called randomized 
+\begin_inset Formula $p(n)$
+\end_inset
+
+-approximation algorithms.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+MAX-3-CNF satisfiability
+\series default
+ is the problem of finding a set of variables that for which the most clauses
+ evaluate to 1.
+ This is useful in case that not all clauses can evaluate to 1.
+\end_layout
+
+\begin_layout Subsection
+MAX-3-CNF
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem 35.6
+\end_layout
+
+\begin_layout Standard
+Given an instance of MAX-3-CNF satisfiability with n variables 
+\begin_inset Formula $x_{1},x_{2},...,x_{n}$
+\end_inset
+
+ and m clauses, the randomized algorithm that independently sets each variable
+ to 1 with probability 1=2 and to 0 with probability 1=2 is a randomized
+ 8=7-approximation algorithm.
+ 
+\emph on
+Note we assume that a variable and its negation cannot appear in the same
+ clause.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof
+\end_layout
+
+\begin_layout Standard
+We suppose that we have set each variable to 1 with probability 1/2 and
+ to 0 with probability 1/2.
+  There are 
+\begin_inset Formula $m$
+\end_inset
+
+ clauses and we define an indicator variable 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $i=1,2,...,m$
+\end_inset
+
+  to be
+\begin_inset Formula 
+\[
+Y_{i}=[\text{clause }i\text{ is satisfied}]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since each variable is independently set, and there are only distinct literals
+ in each clause with no variable and its negation, we know that the probability
+ that no literals in a clause is 1 will be 
+\begin_inset Formula $\left(\frac{1}{2}\right)^{3}=\frac{1}{8}$
+\end_inset
+
+(since the probability for each being 1 if 1/2 and they are set independently
+ so we can multiply the probabilities for success).
+ The probability that no literal in a clause evaluates to 1 is the same
+ as the probability that clause evaluates to false (a 3-CNF clause is only
+ 0 if all its literals are 0, since it is 3 literals and their logical or).
+ Therefore, the probability that a clause evaluates to 1 will be 
+\begin_inset Formula $1-\frac{1}{8}=\frac{7}{8}$
+\end_inset
+
+.
+ The expectation of 
+\begin_inset Formula $Y_{i}$
+\end_inset
+
+ is therefore 
+\begin_inset Formula $E[Y_{i}]=\frac{7}{8}$
+\end_inset
+
+ since the expectation of a bernouli random variable is the probability
+ of success.
+ Now we let the random variable 
+\begin_inset Formula $Y$
+\end_inset
+
+ count the number of satisfied clauses.
+ That is we have 
+\begin_inset Formula $Y=\sum_{i=1}^{m}Y_{i}$
+\end_inset
+
+.
+ Taking the expectation gives
+\begin_inset Formula 
+\begin{align*}
+E[Y] & =E\left[\sum_{i=1}^{m}Y_{i}\right]\\
+ & \sum_{i=1}^{m}E[Y_{i}]\\
+ & \sum_{i=1}^{m}\frac{7}{8}\\
+ & m\frac{7}{8}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+An upper bound on the maximum number of satisfied clauses is 
+\begin_inset Formula $m$
+\end_inset
+
+.
+ Therefore we get the approximation ratio
+\begin_inset Formula 
+\[
+\frac{m}{(m\frac{7}{8})}=\frac{8}{7}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Approximating weighted vertex cover using linear programming
+\end_layout
+
+\begin_layout Standard
+For this problem we are given an undirected graph 
+\begin_inset Formula $G=(V,E)$
+\end_inset
+
+ where each vertex 
+\begin_inset Formula $v\in V$
+\end_inset
+
+ has an associated weight 
+\begin_inset Formula $w(v)$
+\end_inset
+
+.
+ The weight of a vertex cover 
+\begin_inset Formula $V'\subseteq V$
+\end_inset
+
+ is defined to be 
+\begin_inset Formula $w(V')=\sum_{v\in V'}w(v)$
+\end_inset
+
+, and we wish to find a vertex cover of minimum weight.
+ This is different from the normal vertex cover, so we cannot use that for
+ finding the minimum cover (since it might give un-optimal solution).
+ A randomized algorithm will also give an un-optimal solution.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+The 0-1 integer program
+\series default
+ is defined as follows: We associate a variable 
+\begin_inset Formula $x(v)$
+\end_inset
+
+ with each vertex in 
+\begin_inset Formula $V$
+\end_inset
+
+, and we require that 
+\begin_inset Formula $x=\{0,1\}$
+\end_inset
+
+.
+ Now we put 
+\begin_inset Formula $v$
+\end_inset
+
+ into the cover 
+\begin_inset Formula $C$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $x=1$
+\end_inset
+
+ (meaning if 
+\begin_inset Formula $x$
+\end_inset
+
+ is in the cover it is also 1).
+ This lets us constraint each edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+ and we will have that 
+\begin_inset Formula $x(v)+x(u)\geq1$
+\end_inset
+
+, since either 
+\begin_inset Formula $x(v)$
+\end_inset
+
+or 
+\begin_inset Formula $x(u)$
+\end_inset
+
+ or both will be 1 (We know that either 
+\begin_inset Formula $u$
+\end_inset
+
+ or 
+\begin_inset Formula $v$
+\end_inset
+
+ or both is in the cover, since otherwise not all vertices are covered,
+ and if they are in the cover then 
+\begin_inset Formula $x(v)$
+\end_inset
+
+ is 1, so the sum is at least 1).
+ This gives the linear program 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+see the book
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem with the 
+\series bold
+0-1 integer problem 
+\series default
+is that when all 
+\begin_inset Formula $w(v)=1$
+\end_inset
+
+ then this is equivalent to the original NP-hard vertex cover problem, and
+ so solving this in polynomial time would mean P=NP.
+ Therefore, we relax our assumption on 
+\begin_inset Formula $x(v)$
+\end_inset
+
+ such that we only require 
+\begin_inset Formula $0\leq x(v)\leq1$
+\end_inset
+
+.
+ Then we get the following linear problem called 
+\series bold
+linear-programming relaxation
+\series default
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+see the book
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+We however have that any feasible solution to the 
+\series bold
+0-1 integer problem
+\series default
+ will also be a feasible to the 
+\series bold
+relaxation
+\series default
+ problem, and we can therefore use the 
+\series bold
+0-1 integer problem
+\series default
+ as a lower bound for the weight for an optimal solution.
+ 
+\end_layout
+
+\begin_layout Standard
+The algorithm will work by initializing 
+\begin_inset Formula $C=\emptyset$
+\end_inset
+
+ and the compute 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+to be an optimal solution to the 
+\series bold
+relaxed problem
+\series default
+ and we then for each vertex 
+\begin_inset Formula $v\in V$
+\end_inset
+
+ include it in 
+\begin_inset Formula $C$
+\end_inset
+
+ if 
+\begin_inset Formula $\bar{x}(v)\geq\frac{1}{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem
+\series default
+: Algorithm APPROX-MIN-WEIGHT-VC is a polynomial-time 2-approximation algorithm
+ for the minimum-weight vertex-cover problem.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof:
+\end_layout
+
+\begin_layout Standard
+We first have to prove that the algorithm runs in polynomial time.
+ We can solve a linear program in polynomial time, and thereafter we loop
+ over all vertices and check whether they are in the solution to the linear
+ program in which case we include the vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ in 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ Therefore,  the algorithm runs in polynomial time.
+ 
+\end_layout
+
+\begin_layout Standard
+Next we need to show the solution produced is 2-approximate.
+ We let the set of vertices 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+ be an optimal solution to the minimum weight vertex cover (a vertex cover
+ with minimum weight) and we let 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+be the value of an optimal solution to the 
+\series bold
+linear-relaxation problem
+\series default
+.
+ That is 
+\begin_inset Formula $z^{*}=\sum_{v\in V}w(v)x(v)$
+\end_inset
+
+ for an optimal solution to the linear program.
+ 
+\begin_inset Formula $C^{*}$
+\end_inset
+
+ is an optimal vertex cover, and since it is a vertex cover it must therefore
+ be 
+\emph on
+a feasible solution
+\emph default
+ to the linear program choosing 
+\begin_inset Formula $x(v)=1$
+\end_inset
+
+ if 
+\begin_inset Formula $v\in C^{*}$
+\end_inset
+
+ and 0 otherwise.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Be sure this is right
+\end_layout
+
+\end_inset
+
+ However, it is only a feasible solution, we do not know whether it minimizes
+ the linear program, and we thus have that 
+\begin_inset Formula 
+\[
+z^{*}\leq w(C^{*})
+\]
+
+\end_inset
+
+We still have to show the algorithm even produces a vertex cover.
+ Therefore, we consider any edge 
+\begin_inset Formula $(u,v)\in E$
+\end_inset
+
+.
+ The 
+\series bold
+linear-programming-relaxation 
+\series default
+has the constraint that 
+\begin_inset Formula $x(u)+x(v)\geq1,\forall(u,v)\in E$
+\end_inset
+
+ with part of the solution the variables 
+\begin_inset Formula $\bar{x}$
+\end_inset
+
+.
+ This must then imply that the solution to the linear program will have
+ at least one of the variables 
+\begin_inset Formula $\bar{x}(u)$
+\end_inset
+
+ or 
+\begin_inset Formula $\bar{x}(v)$
+\end_inset
+
+ is at least 
+\begin_inset Formula $1/2$
+\end_inset
+
+ since otherwise the constraint will not hold.
+ Since we took any edge 
+\begin_inset Formula $(u,v)$
+\end_inset
+
+ and we showed that at least one of 
+\begin_inset Formula $u,v$
+\end_inset
+
+ will have weight greater than 
+\begin_inset Formula $1/2$
+\end_inset
+
+, and the algorithm picks vertices 
+\begin_inset Formula $v\in V$
+\end_inset
+
+ for which 
+\begin_inset Formula $\bar{x}(v)\geq1/2$
+\end_inset
+
+, the set 
+\begin_inset Formula $C$
+\end_inset
+
+ will be a cover.
+\end_layout
+
+\begin_layout Standard
+We can bound the value of the optimal solution 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+ for the 
+\series bold
+relaxed
+\series default
+ linear program as
+\begin_inset Formula 
+\begin{align*}
+z^{*}= & \sum_{v\in V}w(v)\bar{x}(v)\\
+\geq & \sum_{\{v\in V:\bar{x}(v)\geq1/2\}}w(v)\bar{x}(v)\text{ (we sum over less)}\\
+\geq & \sum_{\{v\in V:\bar{x}(v)\geq1/2\}}w(v)\frac{1}{2}\text{ (the variable is at least 1/2)}\\
+= & \sum_{v\in C}w(v)\frac{1}{2}\text{ (how we construct c)}\\
+= & \frac{1}{2}\sum_{v\in C}w(v)\\
+ & \frac{1}{2}w(C)\\
+\implies & 2\cdot z^{*}\geq w(C)
+\end{align*}
+
+\end_inset
+
+ With an upper and lower bound on the optimal solution 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+ produced by the 
+\series bold
+relaxed
+\series default
+ linear program we get
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+w(C)\leq2\cdot z^{*} & \le2\cdot w(C^{*})\\
+\implies & w(C)\leq w(C^{*})
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+showing the algorithm indeed gives a 2-approximate solution.
+\end_layout
+
+\begin_layout Section
+Subset-sum problem
+\end_layout
+
+\begin_layout Subsection
+An exponential-time exact algorithm
+\end_layout
+
+\begin_layout Standard
+We let 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+ denote the set of values created by selecting all subsets (including the
+ empty subset) of 
+\begin_inset Formula $\{x_{1}x_{2},...,x_{i}\}\subseteq S$
+\end_inset
+
+ and summing them together (
+\begin_inset Formula $x_{1},x_{1}+x_{2},...,x_{1}+x_{i},...,$
+\end_inset
+
+
+\begin_inset Formula $x_{1}+x_{2}+,...,+x_{i})$
+\end_inset
+
+.
+ We have the identify
+\begin_inset Formula 
+\[
+P_{i}=P_{i-1}\cup(P_{i-1}+x_{i})
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is the 
+\begin_inset Formula $i$
+\end_inset
+
+'th element of 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ This makes sense, since the subsets selected to create 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+ include all of those used to create 
+\begin_inset Formula $P_{i-1}$
+\end_inset
+
+ and the set of all of those used to create 
+\begin_inset Formula $P_{i-1}$
+\end_inset
+
+ and also selecting 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ simultaneously.
+ An exact exponential time algorithm is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Verbatim
+
+ n=|S|
+\end_layout
+
+\begin_layout Verbatim
+
+L0 = <0>
+\end_layout
+
+\begin_layout Verbatim
+
+for i = 1 to n
+\end_layout
+
+\begin_layout Verbatim
+
+	Li = MERGE-LIST(Li-1, Li-1 + xi)
+\end_layout
+
+\begin_layout Verbatim
+
+	remove from Li every element that is greater than t
+\end_layout
+
+\begin_layout Verbatim
+
+return largest element of Ln
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Exact Exponential
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This algorithm works since it iteratively builds the list 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ to represent 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+, and therefore 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ contains the sum of all subsets no larger than 
+\begin_inset Formula $t$
+\end_inset
+
+, and will therefore find the larget sum of a subset that is no larger than
+ t.
+ It is exponential since 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ can have length 
+\begin_inset Formula $2^{i}$
+\end_inset
+
+, and thereby 
+\begin_inset Formula $L_{n}$
+\end_inset
+
+can have length 
+\begin_inset Formula $2^{n}$
+\end_inset
+
+ making it exponential time to scan for elements.
+\end_layout
+
+\begin_layout Subsection
+A fully polynomial-time approximation scheme 
+\end_layout
+
+\begin_layout Standard
+The problem with the exponential time algorithm is the size of each list
+ 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+.
+ To make it faster, we will at each iteration trim 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+.
+ We introduce a trimming parameter 
+\begin_inset Formula $\delta$
+\end_inset
+
+ bounded by 
+\begin_inset Formula $0<\delta<1$
+\end_inset
+
+.
+ Trimming 
+\begin_inset Formula $L$
+\end_inset
+
+ by 
+\begin_inset Formula $\delta$
+\end_inset
+
+ means removing elements 
+\begin_inset Formula $L$
+\end_inset
+
+ to create a new list 
+\begin_inset Formula $L'$
+\end_inset
+
+, such that all elements removed, 
+\begin_inset Formula $y$
+\end_inset
+
+, from 
+\begin_inset Formula $L$
+\end_inset
+
+ are 
+\emph on
+approximated
+\emph default
+ by an element 
+\begin_inset Formula $z$
+\end_inset
+
+ still in 
+\begin_inset Formula $L'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{y}{1+\delta}\le z\le y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and 
+\begin_inset Formula $z$
+\end_inset
+
+ is therefore an element in 
+\begin_inset Formula $L'$
+\end_inset
+
+ that is at most 
+\begin_inset Formula $y$
+\end_inset
+
+ and no smaller than 
+\begin_inset Formula $\frac{1}{1+\delta}$
+\end_inset
+
+ than 
+\begin_inset Formula $y$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Maybe do a trimming example.
+\end_layout
+
+\end_inset
+
+.
+ For instance, if we have 
+\begin_inset Formula $L=[10,11,12]$
+\end_inset
+
+ and pick 
+\begin_inset Formula $\delta=0.1$
+\end_inset
+
+, we get that 
+\begin_inset Formula $\frac{11}{1+0.1}=10\leq10\leq11$
+\end_inset
+
+ and so we pick 
+\begin_inset Formula $z=10$
+\end_inset
+
+ to represent/approximate 
+\begin_inset Formula $y$
+\end_inset
+
+ in 
+\begin_inset Formula $L'$
+\end_inset
+
+.
+ Key idea is to remove elements that are 
+\begin_inset Quotes eld
+\end_inset
+
+close to each other
+\begin_inset Quotes erd
+\end_inset
+
+ since we only try to get an approximate solution and not an exact solution.
+\end_layout
+
+\begin_layout Standard
+The trim procedure takes a sorted list 
+\begin_inset Formula $L=[y_{1},y_{2},...,y_{m,}]$
+\end_inset
+
+ of integer values and a 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ The procedure then loops over 
+\begin_inset Formula $L$
+\end_inset
+
+ and removes duplicates and elements that are not more than 
+\begin_inset Formula $1+\delta$
+\end_inset
+
+ larger than the adjacent elements.
+ 
+\end_layout
+
+\begin_layout Standard
+Now we can create the algorithm APPROX-SUBSET-SUM(
+\begin_inset Formula $S,t,\epsilon$
+\end_inset
+
+).
+ It is just like the previous algorithm except that it trims the list 
+\begin_inset Formula $L_{i}=MERGE-LISTS(L_{i-1},l_{i-1}+x_{i})$
+\end_inset
+
+, and passes the trimming parameter 
+\begin_inset Formula $\delta=\epsilon/2n$
+\end_inset
+
+ to the trim procedure.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem 35.8
+\end_layout
+
+\begin_layout Standard
+APPROX-SUBSET-SUM is a fully polynomial-time approximation scheme for the
+ subset-sum problem.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Proof
+\end_layout
+
+\begin_layout Standard
+First we need to show that the algorithm does return a subset-sum of 
+\begin_inset Formula $S$
+\end_inset
+
+.
+ This can be shown by look at the property that every element of 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ is in 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+.
+ This is due to the fact that after merge, we get exactly the list representing
+ 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+, and trimming only removes elements.
+ Likewise removing elements larger than 
+\begin_inset Formula $t$
+\end_inset
+
+ also only removes elements.
+ Since the value 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+ returned by the algorithm is the largest in 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+, and 
+\begin_inset Formula $L_{i}$
+\end_inset
+
+ contains only elements in 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+, we know that 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+ is the value of some subset sum from 
+\begin_inset Formula $S$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Next, we need to show that result is 
+\begin_inset Formula $1+\epsilon$
+\end_inset
+
+-approximate.
+ For every element 
+\begin_inset Formula $y\in P_{i}$
+\end_inset
+
+ that is at most 
+\begin_inset Formula $t$
+\end_inset
+
+ there exists an element 
+\begin_inset Formula $z\in L_{i}$
+\end_inset
+
+(in the trimmed list) such that
+\begin_inset Formula 
+\[
+\frac{y}{(1+\epsilon/2n)^{i}}\leq z\leq y
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is proved in exercise 35.5-2.
+ Since this holds for every elements in 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+, then it also holds for 
+\begin_inset Formula $y^{*}\in P_{n}$
+\end_inset
+
+(the optimal solution to the subset sum).
+ Therefore, when 
+\begin_inset Formula $i=n$
+\end_inset
+
+, there exists an element 
+\begin_inset Formula $z\in L_{n}$
+\end_inset
+
+ such that 
+\begin_inset Formula 
+\[
+\frac{y^{*}}{(1+\epsilon/2n)^{n}}\leq z\leq y^{*}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+flipping the fractions (and thereby flipping the inequality) and multiplying
+ by 
+\begin_inset Formula $y^{*}$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{align*}
+\left(1+\frac{\epsilon}{2n}\right)^{n} & \ge\frac{y^{*}}{z}\\
+\frac{y^{*}}{z} & \leq\left(1+\frac{\epsilon}{2n}\right)^{n}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Since this holds for som 
+\begin_inset Formula $z$
+\end_inset
+
+ then it must in particularely hold for 
+\begin_inset Formula $z^{*}$
+\end_inset
+
+ since this is the largest 
+\begin_inset Formula $z$
+\end_inset
+
+ and it thereby makes the fraction smaller so the inequality still holds
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{y^{*}}{z^{*}}\leq\left(1+\frac{\epsilon}{2n}\right)^{n}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If we show that 
+\begin_inset Formula $\left(1+\frac{\epsilon}{2n}\right)^{n}\leq1+\epsilon$
+\end_inset
+
+ then we have shown that 
+\begin_inset Formula $\frac{y^{*}}{z^{*}}\leq1+\epsilon$
+\end_inset
+
+ and thereby that it is 
+\begin_inset Formula $1+\epsilon$
+\end_inset
+
+ approximate.
+ Taking the limit at infinity we get 
+\begin_inset Formula $\lim_{n\rightarrow\infty}\left(1+\frac{\epsilon}{2n}\right)^{n}=e^{\epsilon/2}$
+\end_inset
+
+ by equation 3.14 (appendix in book).
+ Then by exercise 35.5-3 we also have that 
+\begin_inset Formula 
+\[
+\frac{d}{dx}\left(1+\frac{\epsilon}{2n}\right)^{n}>0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This means that 
+\begin_inset Formula $\left(1+\frac{\epsilon}{2n}\right)^{n}$
+\end_inset
+
+increases with 
+\begin_inset Formula $n$
+\end_inset
+
+ as the limit of 
+\begin_inset Formula $n$
+\end_inset
+
+ goes to infinity.
+ Since the function reaches a limit of 
+\begin_inset Formula $e^{\epsilon/2}$
+\end_inset
+
+ and it increases with 
+\begin_inset Formula $n$
+\end_inset
+
+ then we must have
+\begin_inset Formula 
+\begin{align*}
+\left(1+\frac{\epsilon}{2n}\right)^{n} & \leq e^{\epsilon/2}\\
+ & \leq1+\epsilon/2+(\epsilon/2)^{2}\\
+ & 1+\epsilon
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+showing the algorithm is 
+\begin_inset Formula $1+\epsilon$
+\end_inset
+
+-approximate.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+TODO: rest of proof
+\end_layout
 
 \end_inset
 

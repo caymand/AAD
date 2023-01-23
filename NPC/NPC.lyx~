@@ -12,10 +12,10 @@
 \inputencoding auto
 \fontencoding global
 \font_roman "default" "default"
-\font_sans "default" "default"
+\font_sans "iwonalc" "default"
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
-\font_default_family default
+\font_default_family sfdefault
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
@@ -29,6 +29,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +45,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -79,60 +81,54 @@
 Summary
 \end_layout
 
-\begin_layout Itemize
-Informal definition/description of classes of problems
+\begin_layout Standard
+Since there have been two lectures in NPC; two summaries could have been
+ made.
+ However one summary is made, and then another can later be created.
 \end_layout
 
-\begin_layout Itemize
-Decision Problems and Optimization problems
+\begin_layout Enumerate
+Encodings and why they matter
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-Abstract problem 
-\begin_inset Formula $\rightarrow$
-\end_inset
-
- decision problems
+\begin_layout Enumerate
+Decision problems
 \end_layout
 
-\begin_layout Itemize
-NPC problems informal
+\begin_layout Enumerate
+Reducibility
 \end_layout
 
-\end_deeper
-\begin_layout Itemize
-Encoding of problem instances
+\begin_layout Enumerate
+Definition of NPC
 \end_layout
 
-\begin_layout Itemize
-Formal definition of problems
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Languages
-\end_layout
-
-\begin_layout Itemize
-Definition of P and NP
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Polynomial time reducible
-\end_layout
-
-\begin_layout Itemize
-NPC definition
-\end_layout
-
-\begin_layout Itemize
+\begin_layout Enumerate
 Method for proving NPC
 \end_layout
 
-\begin_layout Itemize
-Vertex cover is NPC
+\begin_layout Enumerate
+Clique definition
+\end_layout
+
+\begin_layout Enumerate
+Show the language of CLIQUE
+\end_layout
+
+\begin_layout Enumerate
+Prove CLIQUE problem is NPC
+\end_layout
+
+\begin_layout Enumerate
+Prove TSP is NPC
+\end_layout
+
+\begin_layout Standard
+Example: 
+\begin_inset Formula $\phi=(x_{1}\lor\lnot x_{2}\lor\lnot x_{3})\land(\lnot x_{1}\lor x_{2}\lor x_{3})$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -164,7 +160,7 @@ The set of problems in
  are those problems that can be verified in polynomial time.
  Meaning, if a certificate of a solution is given, we can verify the validity
  of that certificate.
- NP-completeness problems concernes itself with decision problems rather
+ NP-completeness problems concerns itself with decision problems rather
  than optimization problems.
  That is, we concern ourselves with not finding the optimal solution to
  a problem, but we would rather like to get a yes/no answer solution to
@@ -602,11 +598,8 @@ Proof:
 \end_layout
 
 \begin_layout Standard
-We can prove this by showing that 
-\begin_inset Formula $P$
-\end_inset
-
- is both an inclusive subset, 
+We can prove this by showing that the set of language decided in polynomial
+ time is both an inclusive subset, 
 \begin_inset Formula $\subseteq$
 \end_inset
 
@@ -615,35 +608,23 @@ We can prove this by showing that
 \end_inset
 
 , of the above set.
- It is trivial to show that 
-\begin_inset Formula $P$
-\end_inset
-
- is a subset of this, since by the definition of 
-\begin_inset Formula $P$
-\end_inset
-
- being those languages that are decided, and since the languages that are
- decided in polynomial time are a subset of those that are accepted in polynomia
-l time.
- This is true, since the definition of deciding meant that it accepts 
-\begin_inset Formula $L$
-\end_inset
-
- and rejects all other inputs.
+ It is trivial to show languages decided in polynomial time is a subset
+ of those accepted in polynomial time.
+ For an algorithm to decide a language, it must both accept all yes-instances,
+ and reject all no-instances.
+ This is tighter than only constraining that yes-instances are accepted
+ and all other inputs we do not care about.
+ In fact deciding a language must be contained within accepting, since it
+ does exactly accept yes-instances.
 \end_layout
 
 \begin_layout Standard
-Therefore, we need to show that the above set is a subset as well, meaning
- that if a language is accepted by a polynomial time algorithm 
+Next, we need to show that if a language is accepted by a polynomial time
+ algorithm 
 \begin_inset Formula $A$
 \end_inset
 
- then it also decided by another polynomial time algorithm, say 
-\begin_inset Formula $A'$
-\end_inset
-
-.
+ then it also decided by another polynomial time algorithm.
  We can prove this by simulation, and we let 
 \begin_inset Formula $A'$
 \end_inset
@@ -666,7 +647,7 @@ Therefore, we need to show that the above set is a subset as well, meaning
 \end_inset
 
  steps.
- Therfore, we can let 
+ Therefore, we can let 
 \begin_inset Formula $A'$
 \end_inset
 
@@ -974,11 +955,24 @@ will not be in
 \begin_inset Formula $L_{2}$
 \end_inset
 
- and solving a decision problem in either 
-\begin_inset Formula $L_{2}/L_{1}$
+.
+ Answering whether 
+\begin_inset Formula $f(x)\in L_{2}$
 \end_inset
 
- provides the solution to the decision problem in the other language.
+ thus provides the solution to whether 
+\begin_inset Formula $x\in L_{2}$
+\end_inset
+
+ (we map yes/no instances in 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+ to the same in 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+).
  We call 
 \begin_inset Formula $f$
 \end_inset
@@ -1042,7 +1036,7 @@ We can actually say that
 \begin_layout Standard
 \begin_inset Formula 
 \[
-L_{1}\le_{p}L_{2}\land L_{2}\in L_{1}\implies L_{1}\in P
+L_{1}\le_{p}L_{2}\land L_{2}\in P\implies L_{1}\in P
 \]
 
 \end_inset
@@ -1173,6 +1167,404 @@ we have
 \end_layout
 
 \begin_layout Subsection
+Circuit satisfiability
+\end_layout
+
+\begin_layout Subsubsection
+Showing NP
+\end_layout
+
+\begin_layout Standard
+The verification algorithm takes a standard encoding of the circuit 
+\begin_inset Formula $C$
+\end_inset
+
+ as input and a certificate consisting of the boolean assignment of wires
+ in the.
+ The goal of the verification algorithm is to use the certificate to show
+ that 
+\begin_inset Formula $C$
+\end_inset
+
+ is a satisfying assignment, and that the verification algorithm then outputs
+ 1.
+\end_layout
+
+\begin_layout Standard
+We look at the output wire of each combinatorial circuit, and check that
+ the circuit produces the expected output of the certificate (in case not
+ we do not have a satisfying assignment and we must not return 1) as a function
+ of the input wire.
+ If the circuit furthermore outputs 1 on the output wire, then the verification
+ algorithm returns 1.
+ Otherwise return 0.
+\end_layout
+
+\begin_layout Standard
+This shows that only satisfiable circuits causes the verification algorithm
+ to produce 1 and CIRCUIT-SAT
+\begin_inset Formula $\in$
+\end_inset
+
+NP
+\end_layout
+
+\begin_layout Subsubsection
+Showing NP-hardness
+\end_layout
+
+\begin_layout Standard
+This is show very informally to just give intuition.
+\begin_inset Newline newline
+\end_inset
+
+Remember, to show NP-hardness we have to show that we reduce 
+\begin_inset Formula $L\le_{p}CIRCUIT-SAT$
+\end_inset
+
+ for all 
+\begin_inset Formula $L\in NP$
+\end_inset
+
+.
+ Therefore, the idea is to take any algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+, and represent it as a finite set of configurations 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ starting at 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+.
+ These configurations can then run on an abstract Turing machine 
+\begin_inset Formula $M$
+\end_inset
+
+ - producing a new configuration 
+\begin_inset Formula $c_{i+1}$
+\end_inset
+
+- until an output is produced.
+ The configuration of 
+\begin_inset Formula $A$
+\end_inset
+
+ consists of
+\end_layout
+
+\begin_layout Enumerate
+Program counter
+\end_layout
+
+\begin_layout Enumerate
+Auxiliary state
+\end_layout
+
+\begin_layout Enumerate
+input 
+\begin_inset Formula $x$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+certificate 
+\begin_inset Formula $y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+working storage
+\end_layout
+
+\begin_layout Standard
+When the algorithm 
+\begin_inset Formula $A$
+\end_inset
+
+ has finished its writes its output to a memory location and halts so the
+ value never changes.
+ The algorithm runs for 
+\begin_inset Formula $T(n)$
+\end_inset
+
+ steps and produces the final configuration at step
+\begin_inset Formula $c_{T(n)}$
+\end_inset
+
+.
+ There is however given an initial state 
+\begin_inset Formula $c_{0}$
+\end_inset
+
+ corresponding to 
+\begin_inset Formula $A$
+\end_inset
+
+ and its input, and 
+\begin_inset Formula $M$
+\end_inset
+
+ therefore runs 
+\begin_inset Formula $T(n)$
+\end_inset
+
+ steps.
+ The idea of the reduction function 
+\begin_inset Formula $F$
+\end_inset
+
+ is to make 
+\begin_inset Formula $T(n)$
+\end_inset
+
+ copies of 
+\begin_inset Formula $M$
+\end_inset
+
+, to compute the new configuration, and using wires to connect previous
+ configuration to 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+and from 
+\begin_inset Formula $M_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $c_{i+1}$
+\end_inset
+
+ giving us a single circuit.
+ 
+\end_layout
+
+\begin_layout Standard
+Now 
+\begin_inset Formula $F$
+\end_inset
+
+ computes the previously described circuit 
+\begin_inset Formula $C$
+\end_inset
+
+ given 
+\begin_inset Formula $A(x,y)$
+\end_inset
+
+.
+ With certificate 
+\begin_inset Formula $y$
+\end_inset
+
+ of size 
+\begin_inset Formula $|y|=O(n^{k})$
+\end_inset
+
+ we then calculate 
+\begin_inset Formula $C(y)$
+\end_inset
+
+ and give it as output.
+ So the reduction algorithm 
+\begin_inset Formula $F$
+\end_inset
+
+ constructs 
+\begin_inset Formula $C$
+\end_inset
+
+ and runs the certificate on 
+\begin_inset Formula $C$
+\end_inset
+
+ - giving the circuits output as the output to the decision problem.
+\end_layout
+
+\begin_layout Standard
+We need to show that 
+\begin_inset Formula $A(y)=1\iff C(y)=1$
+\end_inset
+
+ and we need to show 
+\begin_inset Formula $F$
+\end_inset
+
+ runs in polynomial time.
+ 
+\end_layout
+
+\begin_layout Standard
+We have constructed 
+\begin_inset Formula $C$
+\end_inset
+
+ in such a way that if there exists a certificate that causes 
+\begin_inset Formula $A(x,y)=1$
+\end_inset
+
+ then we also have 
+\begin_inset Formula $C(y)=1$
+\end_inset
+
+ (remember 
+\begin_inset Formula $C$
+\end_inset
+
+ ignores 
+\begin_inset Formula $x$
+\end_inset
+
+ since it is a circuit constructed from 
+\begin_inset Formula $x$
+\end_inset
+
+).
+ Now the other way, 
+\begin_inset Formula $C(y)=1$
+\end_inset
+
+, and there exists a circuit that causes the circuit to be satisfiable.
+ This must mean that 
+\begin_inset Formula $A(x,y)=1$
+\end_inset
+
+, since we create 
+\begin_inset Formula $C$
+\end_inset
+
+ so it is only satisfiable if the verification algorithm outputs 1.
+\end_layout
+
+\begin_layout Standard
+Now we show 
+\begin_inset Formula $F$
+\end_inset
+
+ runs in polynomial time in 
+\begin_inset Formula $n=|x|$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The input can be stored in polynomial bits - 
+\begin_inset Formula $\lg n$
+\end_inset
+
+ bits.
+ 
+\end_layout
+
+\begin_layout Enumerate
+The program 
+\begin_inset Formula $A$
+\end_inset
+
+ has constant length independent of input size.
+\end_layout
+
+\begin_layout Enumerate
+Certificate is required to have size 
+\begin_inset Formula $y=O(n^{k})$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The algorithm has at most 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ steps (size of 
+\begin_inset Formula $y$
+\end_inset
+
+), and so if each configuration is a step, there are at most 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ configuration
+\end_layout
+
+\begin_layout Enumerate
+We can never use more storage than steps, so the total storage is 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ as well
+\end_layout
+
+\begin_layout Enumerate
+The computer hardware implementing 
+\begin_inset Formula $M$
+\end_inset
+
+ is polynomial in size of 
+\begin_inset Formula $n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+There are at most 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ copies of 
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Therefore, 
+\begin_inset Formula $C$
+\end_inset
+
+ still has polynomial size
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $F$
+\end_inset
+
+ can then construct 
+\begin_inset Formula $C$
+\end_inset
+
+ in polynomial time, and it take polynomial time to run 
+\begin_inset Formula $C$
+\end_inset
+
+ so the reduction is polynomial
+\end_layout
+
+\begin_layout Standard
+Since we can construct 
+\begin_inset Formula $C$
+\end_inset
+
+ from any algorithm and 
+\begin_inset Formula $C$
+\end_inset
+
+ runs in polynomial time, we have shown circuit-sat is NPC (np and np-hard).
+\end_layout
+
+\begin_layout Subsection
 Satisfiability
 \end_layout
 
@@ -1225,17 +1617,7 @@ A satisfying assignment is an assignment of the
 \end_inset
 
  is satisfiable if such an assignment exists.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-remember encoding
-\end_layout
-
-\end_inset
-
-The language of the problem SAT is defined as 
+ The language of the problem SAT is defined as 
 \end_layout
 
 \begin_layout Standard
@@ -1537,7 +1919,7 @@ The reduction algorithm will now be defined.
 \end_inset
 
  in 3-CNF consists of a sequence of 
-\begin_inset Formula $k$
+\begin_inset Formula $r=1,2,...,k$
 \end_inset
 
  clauses ANDed together 
@@ -1545,7 +1927,7 @@ The reduction algorithm will now be defined.
 \end_inset
 
 .
- Each clause consists of 3-different litterals that are ORed together.
+ Each clause consists of 3-different literals that are ORed together.
  We will construct a graph that only has a clique of size 
 \begin_inset Formula $k$
 \end_inset
@@ -1563,15 +1945,32 @@ The reduction algorithm will now be defined.
 \end_layout
 
 \begin_layout Standard
-Now, we take each clause 
+Since the formula is in 3-CNF-SAT we know that each clause consists of three
+ distinct litterals
 \begin_inset Formula $C_{r}=l_{1}^{r}\lor l_{2}^{r}\lor l_{3}^{r}$
 \end_inset
 
- and place the triple 
-\begin_inset Formula $v_{1}^{r}\lor v_{2}^{r}\lor v_{3}^{r}$
+ (it is allowed to have 
+\begin_inset Formula $x\lor\lnot x$
 \end_inset
 
- into the vertex set 
+).
+ Now we construct 
+\begin_inset Formula $G$
+\end_inset
+
+ by placing a tripple of vertices for each clause
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+v_{1}^{r}\lor v_{2}^{r}\lor v_{3}^{r}
+\]
+
+\end_inset
+
+into the vertex set 
 \begin_inset Formula $V$
 \end_inset
 
@@ -1586,30 +1985,45 @@ Now, we take each clause
 
  
 \emph on
-it holds that 
+if
+\end_layout
+
+\begin_layout Enumerate
+
+\emph on
 \begin_inset Formula $r\neq s$
 \end_inset
 
 
 \emph default
 (two different triplets) 
+\end_layout
+
+\begin_layout Enumerate
+
 \emph on
-and the two literals 
+the two literals 
 \begin_inset Formula $v_{i}^{r}\text{and}v_{j}^{s}$
 \end_inset
 
  are consistent
 \emph default
-(not the negation of each other - 
-\begin_inset Formula $x_{1},\sim x_{2}$
+ (not the negation of each other - 
+\begin_inset Formula $l_{i}^{r}$
+\end_inset
+
+ is not 
+\begin_inset Formula $\lnot l_{j}^{s}$
 \end_inset
 
 )
-\emph on
- .
 \end_layout
 
 \begin_layout Standard
+This graph can be build in polynomial time in the number of clauses.
+\begin_inset Newline newline
+\end_inset
+
 
 \series bold
 Showing the 3CNF-SAT implies CLIQUE
@@ -1645,48 +2059,111 @@ Suppose that
 \end_inset
 
  vertices 
-\begin_inset Formula $V'$
-\end_inset
-
- in 
-\begin_inset Formula $V$
+\begin_inset Formula $V'\subseteq V$
 \end_inset
 
 .
- Now, any vertices 
+ Now, let us pick any two vertices 
 \begin_inset Formula $v_{i}^{r},v_{j}^{s}\in V'$
 \end_inset
 
- map to 
-\begin_inset Formula $1$
+.
+ Since their literals both map to 1, they cannot be each others negation.
+ Since we created 
+\begin_inset Formula $V'$
 \end_inset
 
- and are of different clauses (that is how we picked them).
- Furthermore since both literal 
-\begin_inset Formula $l_{i}^{r},l_{j}^{s}$
-\end_inset
-
- are 
-\begin_inset Formula $1$
-\end_inset
-
- they cannot be complements of each other - satisfying the other part of
- how we constructed 
-\begin_inset Formula $G$
-\end_inset
-
-, and therefore there must be an edge between 
-\begin_inset Formula $v_{i}^{r},v_{j}^{s}$
+ by taking a single vertex associated with a single literal that is 1 in
+ a clause, then we know 
+\begin_inset Formula $s\neq r$
 \end_inset
 
 .
+ Furthermore, we have argued they cannot be each others negation, so 
+\begin_inset Formula $G$
+\end_inset
+
+will have an edge between these vertices.
  We picked two random vertices, so this holds for all vertices.
+\series bold
+
+\begin_inset Newline newline
+\end_inset
+
+Showing CLIQUE implies 3CNF-SAT
 \end_layout
 
 \begin_layout Standard
+Now we suppose that 
+\begin_inset Formula $G$
+\end_inset
 
-\series bold
-Showing CLIQUE implies 3CNF-SAT
+ has a clique 
+\begin_inset Formula $V'$
+\end_inset
+
+ of size 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ We know from the first criteria of adding edges to 
+\begin_inset Formula $G$
+\end_inset
+
+ that there is no edge between any triplet of vertices, and that 
+\begin_inset Formula $V'$
+\end_inset
+
+ has exactly one vertex per triplet.
+ Now for a literal 
+\begin_inset Formula $l_{i}^{r}$
+\end_inset
+
+ we assign it value 
+\begin_inset Formula $1$
+\end_inset
+
+ if 
+\begin_inset Formula $v_{i}^{r}\in V'$
+\end_inset
+
+.
+ We know this wont assign 
+\begin_inset Formula $1$
+\end_inset
+
+ to the complement, since there is no edge between inconsistent edges (step
+ 2.
+ of edge creation).
+ Therefore, each clause contains a 1 and 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is satisfies.
+\end_layout
+
+\begin_layout Subsubsection
+Notes of the proof
+\end_layout
+
+\begin_layout Enumerate
+We reduce an arbitrary 3-CNF to a very specific graph with a clique.
+ This is however enough, since if we had a polynomial time algorithm for
+ CLIQUE it can also fix this restricted case.
+\end_layout
+
+\begin_layout Enumerate
+We cannot reduce general structures of 3-CNF-SAT to arbitrary instances
+ of clique.
+ This is since the easy case of 3-CNF-SAT might not be in NP-hard so we
+ have not done a proper reduction.
+\end_layout
+
+\begin_layout Enumerate
+The reduction uses an instance of 3-CNF-SAT but does not care if it is satisfied.
+ If we had relied on first deciding whether 3-CNF-SAT is satisfiable we
+ would not do the reduction in polynomial time since this is NP-hard.
 \end_layout
 
 \begin_layout Subsection
@@ -1883,7 +2360,7 @@ then we must have that
 \end_inset
 
 ).
- This means that for all vertices 
+ Taking the contrapositive, this means that all vertices 
 \begin_inset Formula $u,v\in V$
 \end_inset
 
@@ -1895,51 +2372,43 @@ then we must have that
 \begin_inset Formula $v\notin V'$
 \end_inset
 
- then we will have that 
-\begin_inset Formula $(u,v)\in E$
+ then there is not an edge 
+\begin_inset Formula $(u,v)\not\in\bar{E}$
 \end_inset
 
-, since when both edges 
-\begin_inset Formula $u,v\in V'$
+, since otherwise either 
+\begin_inset Formula $u,v$
 \end_inset
 
- then they are an edge of 
-\begin_inset Formula $\bar{E}$
-\end_inset
-
-(we chose that 
+ would be in 
 \begin_inset Formula $V'$
 \end_inset
 
- was a cover of 
-\begin_inset Formula $\bar{G}$
-\end_inset
-
-which has the edge set 
-\begin_inset Formula $\bar{E})$
-\end_inset
-
-, and whenever the pair 
-\begin_inset Formula $(u,v)$
-\end_inset
-
-are not an edge of 
+.
+ If there is not an edge in 
 \begin_inset Formula $\bar{E}$
 \end_inset
 
-they are an edge of 
-\begin_inset Formula $E$
+ then it is an edge in 
+\begin_inset Formula $(u,v)\in E$
 \end_inset
 
- (we chose 
-\begin_inset Formula $\bar{E}$
+.
+ Hence we know all the vertices that are not in 
+\begin_inset Formula $V'$
 \end_inset
 
- to be exactly all edges not in 
-\begin_inset Formula $E$
+ - these are 
+\begin_inset Formula $V-V'$
 \end_inset
 
-).
+ - they have an edge between them.
+ That is we have a clique.
+ The size of the clique is 
+\begin_inset Formula $|V-V'|=|V|-(|V|-k)=k$
+\end_inset
+
+ so we also have a yes-instance in the clique problem.
 \end_layout
 
 \begin_layout Subsection
@@ -2027,7 +2496,7 @@ Given an instance of the tour, we can as a certificate take the sequence
 \end_inset
 
 .
- This can be done in polynomial time the number of edges visited.
+ This can be done in polynomial time the number of vertices visited.
 \end_layout
 
 \begin_layout Standard
@@ -2052,7 +2521,7 @@ It can be shown that TSP is reducible from HAM-CYCLE:
 \end_inset
 
 , where we let the set of edges 
-\begin_inset Formula $E'=\{(i,j):i,j\in V\},i\ne j$
+\begin_inset Formula $E'=\{(i,j):i,j\in V\},i\ne j\}$
 \end_inset
 
 .
@@ -2140,7 +2609,7 @@ The transformed instance to the TSP problem is
 status open
 
 \begin_layout Plain Layout
-Maybe state more directly which bi-implication is proven.
+Maybe state more directly which bi-implication is proven.1
 \end_layout
 
 \end_inset

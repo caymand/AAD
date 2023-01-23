@@ -11,7 +11,7 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman "default" "default"
+\font_roman "bookman" "default"
 \font_sans "cmss" "default"
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
@@ -79,496 +79,42 @@
 
 \begin_layout Section
 Summary
-\begin_inset Note Note
-status open
-
-\begin_layout Section
-Summary
 \end_layout
 
-\begin_layout Itemize
-vEB tree and operations
+\begin_layout Enumerate
+Motivation
 \end_layout
 
-\begin_layout Itemize
-Direct addressing with superimposed tree of constant height
+\begin_layout Enumerate
+General structure
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-Summary
+\begin_layout Enumerate
+Helper functions
 \end_layout
 
-\begin_layout Itemize
-Cluster
+\begin_layout Enumerate
+Predecessor operation
 \end_layout
 
-\begin_layout Itemize
-Successor and Predecessor direct addressing
+\begin_layout Enumerate
+Insert operation
 \end_layout
 
-\end_deeper
-\begin_layout Itemize
-Proto van Emde Boas tree
+\begin_layout Standard
+Example: 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-Recursive structure
+\begin_layout Enumerate
+tree with keys [0, 4,5,7]
 \end_layout
 
-\begin_layout Itemize
-Successor operation 
+\begin_layout Enumerate
+insert 2
 \end_layout
 
-\begin_layout Itemize
-Successor recurrence and running time
-\end_layout
-
-\begin_layout Itemize
-Problems with the successor operation
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-van Emde Boas Tree
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Recursive structure difference from proto vEB
-\end_layout
-
-\begin_layout Itemize
-Successor operation
-\end_layout
-
-\begin_layout Itemize
-Recurrence and running time
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-Reflection between proto vEB and vEB
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-We get 
-\begin_inset Formula $O(\lg\lg n)$
-\end_inset
-
-since we use 
-\begin_inset Formula $\lg n$
-\end_inset
-
- bits to store a number, and we split the number at most 
-\begin_inset Formula $\lg$
-\end_inset
-
- times
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
-Detailed summary
-\end_layout
-
-\begin_layout Plain Layout
-The van Embde Boas trees is tree structure that supports the dynamic set
- operations: 
-\emph on
-search, insert, delete, minimum, maximum, predecessor and successor.
- 
-\emph default
-I will assume that duplicate keys are not allowed so instead of the 
-\emph on
-search
-\emph default
- operation a simplified 
-\emph on
-member 
-\emph default
-operation that simply returns a boolean value will be used.
- Each operation runs in 
-\begin_inset Formula $O(\lg\lg u$
-\end_inset
-
-) time where 
-\begin_inset Formula $u$
-\end_inset
-
- is the size of the universe.
-\end_layout
-
-\begin_layout Plain Layout
-Like in the book, i will go over some preliminary tree structures until
- I arrive at the van Embde Boas tree, and assume that that the universe
- size in an exact power of 
-\begin_inset Formula $2$
-\end_inset
-
-.
- That is, 
-\begin_inset Formula $u=2^{k}$
-\end_inset
-
-for some integer 
-\begin_inset Formula $k\ge1$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection
-Direct addressing
-\end_layout
-
-\begin_layout Plain Layout
-In plain direct addressing we store the dynamic set as a bit vector of length
- 
-\begin_inset Formula $u$
-\end_inset
-
-, where bit 
-\begin_inset Formula $u[i]=1$
-\end_inset
-
- if key 
-\begin_inset Formula $i$
-\end_inset
-
- is in the set and 0 otherwise.
- If we assume we have a universe of size 
-\begin_inset Formula $u=2^{2k}$
-\end_inset
-
-for some integer 
-\begin_inset Formula $k$
-\end_inset
-
-, then we will always have that 
-\begin_inset Formula $\text{\ensuremath{\sqrt{u}=\sqrt{2^{2k}}=2\sqrt{k}} is still an integer}$
-\end_inset
-
-.
- A tree of degree 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
- is then superimposed over the direct addressing scheme with height 2.
- Each internal node of this tree stores the logical 
-\series bold
-or 
-\series default
-of its children.
- Hence the root is only 
-\begin_inset Formula $1$
-\end_inset
-
-if any of the children have any members.
- The leaves of the tree is the original direct addressing bit-array.
- 
-\color red
-TODO: why does this always have depth 2?
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename directAddressing.png
-	lyxscale 50
-	width 100line%
-	rotateOrigin center
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-Since the 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
- internal nodes are the logical or of their children, we can think of of
- each internal node as holding a summary of their 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
-children.
- Therefore, we can think of the internal nodes as a summary bit-array of
- length 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
-bits, 
-\begin_inset Formula $summary[0,...,\sqrt{u}-1]$
-\end_inset
-
-.
- This means that 
-\begin_inset Formula $summary[i]=1$
-\end_inset
-
- if the sub-array 
-\begin_inset Formula $A[i\sqrt{u},...,(i+1)\sqrt{u}$
-\end_inset
-
- contains any elements.
- This sub array will be referred to as a cluster.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Understand insert,delete, minimum, maximum
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-
-\series bold
-Successor(x) and predecessor: 
-\series default
-Assuming that 
-\begin_inset Formula $x$
-\end_inset
-
- is in the tree.
- Search to the right of 
-\begin_inset Formula $x$
-\end_inset
-
-in the cluster of 
-\begin_inset Formula $x$
-\end_inset
-
- until a 
-\begin_inset Formula $1$
-\end_inset
-
-is found(the position is the successor).
- In case there is nothing, then calculate 
-\begin_inset Formula $i=\lfloor\nicefrac{x}{\text{\ensuremath{\sqrt{u}}}}\rfloor$
-\end_inset
-
-(which is the cluster of 
-\begin_inset Formula $x$
-\end_inset
-
-).
- Then search for a 
-\begin_inset Formula $1$
-\end_inset
-
- to the right of 
-\begin_inset Formula $i$
-\end_inset
-
- in the summary buffer until a 
-\begin_inset Formula $1$
-\end_inset
-
- is found.
- This gives the index of the cluster.
- Search through the cluster to find the first 1.
- The predecessor is almost the same.
- 
-\end_layout
-
-\begin_layout Plain Layout
-In the worst case, we search through two clusters of size 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
-and the summary buffer of size 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
-.
- Therefore, successor and predecessor take 
-\series bold
-
-\begin_inset Formula $O(\sqrt{u})$
-\end_inset
-
- 
-\series default
-.
- 
-\end_layout
-
-\begin_layout Subsection
-Proto van Embde Boas
-\end_layout
-
-\begin_layout Plain Layout
-For this tree structure we assume that the universe size 
-\begin_inset Formula $u=2²^{k}$
-\end_inset
-
- for some integer 
-\begin_inset Formula $k$
-\end_inset
-
-.
- We expand the previous tree structure further by making it recursive.
- We start by making a (summary) structure of size 
-\begin_inset Formula $\sqrt{u}=u^{\nicefrac{1}{2}}$
-\end_inset
-
-where each item holds 
-\begin_inset Formula $u^{\nicefrac{1}{4}}$
-\end_inset
-
-items.
- Each of the 
-\begin_inset Formula $u^{\nicefrac{1}{4}}$
-\end_inset
-
-items holds structures of 
-\begin_inset Formula $u^{\nicefrac{1}{8}}$
-\end_inset
-
-items and so on until we reach a structure of 
-\begin_inset Formula $2$
-\end_inset
-
- items.
-\end_layout
-
-\begin_layout Plain Layout
-Let us say our universe is 64-bit numbers.
- Then we have 
-\begin_inset Formula $u=2^{64}$
-\end_inset
-
- and a 
-\series bold
-
-\begin_inset Formula $\log u=\log2^{64}=64$
-\end_inset
-
-
-\series default
--bit key 
-\begin_inset Formula $x$
-\end_inset
-
-.
- From the simple direct addressing with a 
-\begin_inset Formula $\sqrt{u}$
-\end_inset
-
- -degree superimposed tree, we got the cluster number by
-\begin_inset Formula 
-\[
-cluster=\lfloor\nicefrac{x}{\sqrt{u}\rfloor}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-and if 
-\begin_inset Formula $x$
-\end_inset
-
- is a 
-\begin_inset Formula $\lg u$
-\end_inset
-
--bit number, then we by get the cluster number by the 
-\begin_inset Formula $\nicefrac{\lg u}{2}$
-\end_inset
-
- most important bits.
- Within the cluster, 
-\begin_inset Formula $x$
-\end_inset
-
- appear as the index given by the lower 
-\begin_inset Formula $\lg u/2$
-\end_inset
-
- bits.
- These are calculated by 
-\begin_inset Formula $x\mod\sqrt{u}$
-\end_inset
-
-.
- We index the different bits by
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Formula 
-\[
-high(x)=\lfloor\nicefrac{x}{\sqrt{u}\rfloor}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-low(x)=x\mod\sqrt{u}
-\]
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-index(x,y)=x\sqrt{u}+y
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-Where the 
-\begin_inset Formula $index$
-\end_inset
-
- function builds a number, treating 
-\begin_inset Formula $x$
-\end_inset
-
- as the upper half bits and 
-\begin_inset Formula $y$
-\end_inset
-
- as the lower half numbers.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Why is this the case? In general, why can we access the bits in this way?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+\begin_layout Enumerate
+predecessor 4
 \end_layout
 
 \begin_layout Section
@@ -735,7 +281,7 @@ The function
 
  bits.
  So how many times do we need to divide by 2? Exactly 
-\begin_inset Formula $\lceil(\lg u)/2\rceil$
+\begin_inset Formula $\lfloor(\lg u)/2\rfloor$
 \end_inset
 
  times.
@@ -757,15 +303,15 @@ The function
 \end_inset
 
  bits.
- How? When we take 
-\begin_inset Formula $\mod k$
-\end_inset
-
- of a number we get the remainder left after dividing by 
+ Mod a number simply return the lower 
 \begin_inset Formula $k$
 \end_inset
 
-.
+ bits - thus giving us 
+\begin_inset Formula $\sqrt[\uparrow]{u}$
+\end_inset
+
+ bits.
 \end_layout
 
 \begin_layout Standard

@@ -79,6 +79,158 @@
 Summary
 \end_layout
 
+\begin_layout Enumerate
+Y-monotone polygon definition
+\end_layout
+
+\begin_layout Enumerate
+Lemma on y-monotone polygon
+\end_layout
+
+\begin_layout Enumerate
+Algorithm for creating y-monotone pieces
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Helper of an edge and why it is safe to add diagonals
+\end_layout
+
+\begin_layout Enumerate
+Algorithm explained through example
+\end_layout
+
+\begin_layout Enumerate
+Data structure used
+\end_layout
+
+\begin_layout Enumerate
+Running time
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Triangulation
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Data structure
+\end_layout
+
+\begin_layout Enumerate
+Left and right chain
+\end_layout
+
+\begin_layout Enumerate
+Concave chain and convex corner
+\end_layout
+
+\begin_layout Enumerate
+Explain algorithm on example.
+\end_layout
+
+\begin_layout Enumerate
+Running time
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Examples
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "0.45text%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/kristofferkortbaek/Datalogi/AAD/comp_geometry/ymonotone.png
+	display false
+	height 30theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "45col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/kristofferkortbaek/Datalogi/AAD/comp_geometry/triangulation.png
+	display false
+	height 30theight%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Examples
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Art Gallery problem
 \end_layout
@@ -1035,11 +1187,16 @@ For both types of problematic vertices, we only look at the left edge, since
 \end_inset
 
 , we can save the edges of intersection the sweep line.
- By doing this, we can distinguish between left and right edge by left and
- right leaves.
+ The leaves of the tree will be the edges intersecting the sweep line, and
+ the left to right ordering of the leaves correspond to the left to right
+ order of edges in a polygon.
  Furthermore, since the algorithm only considers edges to the left of split-
  and merge edges, we can get by with only storing edges that have the inner
- of the polygon to the right (these are potential left edges).
+ of the polygon to the right (these are potential left edges), these are
+ so called edges to the left of the polygon.
+ NOTE, the tree does not store right edges, only left edges, but the edges
+ appearing in the polygon have a left to right ordering, and this is the
+ ordering of the leafs.
  Each edge also stores its helper.
  We call the tree the 
 \emph on
@@ -1059,10 +1216,6 @@ Store edges intersecting the sweep line in the leaves of a binary search
 \end_layout
 
 \begin_layout Enumerate
-Use left and right children to distinguish left- and right edges
-\end_layout
-
-\begin_layout Enumerate
 Only store edges that have the inner of the polygon to the right.
  These are the edges that can be left edges
 \end_layout
@@ -1079,12 +1232,6 @@ status
 , when moving the sweep line
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-Update the helper - we use this for merge vertices
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 We need to store the y-monotone pieces and the diagonals that splits the
  polygon into monotone pieces.
@@ -1944,7 +2091,7 @@ upside down funnel
 \begin_layout Enumerate
 One chain will consist of reflex vertices.
  These have degree of at least 
-\begin_inset Formula $180\text{\textdegree}$
+\begin_inset Formula $180\text{°}$
 \end_inset
 
 .

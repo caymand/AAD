@@ -82,7 +82,7 @@ Summary
 \end_layout
 
 \begin_layout Enumerate
-Definition of a flow network
+Flow in a graph
 \end_layout
 
 \begin_deeper
@@ -100,19 +100,9 @@ What is a flow?
 \end_layout
 
 \begin_layout Enumerate
-Residual network
+Residual network intuition
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-Residual capacity of edge
-\end_layout
-
-\begin_layout Enumerate
-Residual capacity of a path
-\end_layout
-
-\end_deeper
 \begin_layout Enumerate
 Ford Fulkerson method
 \end_layout
@@ -122,7 +112,7 @@ Max-flow min-cut theorem
 \end_layout
 
 \begin_layout Enumerate
-Ford fulkerson runtime
+Ford fulkerson algorithm
 \end_layout
 
 \begin_layout Section
@@ -2033,6 +2023,11 @@ f(S,T) & =\sum_{u\in S}\sum_{v\in T}f(u,v)-\sum_{u\in S}\sum_{v\in T}(f(v,u)\\
  as argued.
  Hence we have shown no augmenting path means the net-flow is the capacity
  of a cut.
+ Lemma 26.4 then says 
+\begin_inset Formula $f(S,T)=|f|$
+\end_inset
+
+ and so we have proven this part.
 \end_layout
 
 \begin_layout Subsubsection*

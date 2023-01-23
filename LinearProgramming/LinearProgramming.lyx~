@@ -1333,8 +1333,15 @@ Simplex algorithm
 \begin_layout Standard
 Each iteration converts one slack form into an equivalent slack form.
  How it does that is described later.
- Thereafter the objective value of the associated feasible solution is no
- less than the previous iteration.
+ Thereafter the objective value of the associated 
+\series bold
+basic
+\series default
+ 
+\series bold
+solution
+\series default
+ is no less than the previous iteration.
  We achieve this as follows
 \end_layout
 

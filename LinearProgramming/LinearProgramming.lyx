@@ -1033,7 +1033,19 @@ For the case where
 \begin_inset Formula $\bar{x_{j}}=\hat{x_{j}'}-\hat{x}_{j}''$
 \end_inset
 
- is the exact same expression.
+ is the exact same expression - 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+in the original program is 
+\begin_inset Formula $x_{2}$
+\end_inset
+
+in the new program with all 
+\begin_inset Formula $x_{3}$
+\end_inset
+
+ terms being 0.
  And when 
 \begin_inset Formula $\bar{x_{j}}<0$
 \end_inset
@@ -1042,15 +1054,21 @@ For the case where
 \begin_inset Formula $\bar{x}_{j}=\hat{x_{j}'}-\hat{x}_{j}'=-\hat{x}_{j}'=\bar{x}_{j}$
 \end_inset
 
- so we maximize the same objective function and an objective value in 
-\begin_inset Formula $L'$
+ then all terms with 
+\begin_inset Formula $x_{2}$
 \end_inset
 
- must be an objective value in 
-\begin_inset Formula $L$
+ are 
+\begin_inset Formula $0$
 \end_inset
 
-.
+ in the new program and with 
+\begin_inset Formula $x_{3}=x_{2}$
+\end_inset
+
+ in the new program.
+ So we must get the same objective value since the objective function will
+ be the same.
 \end_layout
 
 \end_deeper

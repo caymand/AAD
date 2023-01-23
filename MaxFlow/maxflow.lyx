@@ -82,10 +82,14 @@ Summary
 \end_layout
 
 \begin_layout Enumerate
-Definition of a flow network
+Flow in a graph
 \end_layout
 
 \begin_deeper
+\begin_layout Enumerate
+Flow network
+\end_layout
+
 \begin_layout Enumerate
 Formal definition
 \end_layout
@@ -100,19 +104,9 @@ What is a flow?
 \end_layout
 
 \begin_layout Enumerate
-Residual network
+Residual network intuition
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-Residual capacity of edge
-\end_layout
-
-\begin_layout Enumerate
-Residual capacity of a path
-\end_layout
-
-\end_deeper
 \begin_layout Enumerate
 Ford Fulkerson method
 \end_layout
@@ -122,7 +116,7 @@ Max-flow min-cut theorem
 \end_layout
 
 \begin_layout Enumerate
-Ford fulkerson runtime
+Ford fulkerson algorithm
 \end_layout
 
 \begin_layout Section

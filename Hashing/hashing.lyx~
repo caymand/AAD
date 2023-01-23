@@ -11,11 +11,11 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman "default" "default"
+\font_roman "cmr" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
 \font_math "auto" "auto"
-\font_default_family default
+\font_default_family sfdefault
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
@@ -29,6 +29,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -44,6 +45,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -102,7 +104,7 @@ Hash table with chaining
 
 \end_deeper
 \begin_layout Enumerate
-
+Strongly universal hash function
 \end_layout
 
 \begin_layout Section
@@ -796,7 +798,7 @@ so we can actually estimate the size of
 \color red
 Universal sampling alone is however not enough.
  Multiplication-shift-scheme will for instance have that 
-\begin_inset Formula $h(x)=0$
+\begin_inset Formula $h(0)=0$
 \end_inset
 
 , and therefore we will always sample 0 in case that 

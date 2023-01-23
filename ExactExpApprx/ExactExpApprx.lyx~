@@ -76,6 +76,84 @@
 \begin_body
 
 \begin_layout Section
+Summary
+\end_layout
+
+\begin_layout Enumerate
+Motivation from NPC problems
+\end_layout
+
+\begin_layout Enumerate
+Exact exponential algorithms
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+TSP algorithm
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Parameterized algorithms
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Simple kernelization.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Bar-fight prevention (bounded search tree)
+\end_layout
+
+\begin_layout Enumerate
+FPT
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Motivation
+\end_layout
+
+\begin_layout Standard
+We would optimally like 3 things in an algorithm
+\end_layout
+
+\begin_layout Enumerate
+it is polynomial in time
+\end_layout
+
+\begin_layout Enumerate
+polynomial in time for all problem instances
+\end_layout
+
+\begin_layout Enumerate
+finds an exact solution
+\end_layout
+
+\begin_layout Standard
+However, sometimes we cannot get all 3.
+ This is for instance the case for NPC problems.
+ Instead we can settle for 2/3 criteria and we get the following examples
+ types of algorithms
+\end_layout
+
+\begin_layout Enumerate
+Exact exponential algorithms - we relax the first property
+\end_layout
+
+\begin_layout Enumerate
+Parameterized algorithms - we relax 2.
+ Only some problems of certain sizes are polynomial and give exact solutions
+\end_layout
+
+\begin_layout Enumerate
+Approximation algorithms - we may not find the best algorithm but it is
+ polynomial and for all instances
+\end_layout
+
+\begin_layout Section
 Exact exponential algorithms
 \end_layout
 
@@ -88,13 +166,9 @@ The dynamic program
 \end_layout
 
 \begin_layout Standard
-In the traveling salesman problem, we wish for the salesmand to do a full
- tour of the graph 
-\begin_inset Formula $G=(V,E)$
-\end_inset
-
- visiting each city/vertex 
-\begin_inset Formula $v\in V$
+In the traveling salesman problem, we wish for the salesman to do a full
+ tour over a set of cities 
+\begin_inset Formula $\{c_{1},c_{2},...,c_{n}\}$
 \end_inset
 
  at a minimal cost.
@@ -106,7 +180,7 @@ In the traveling salesman problem, we wish for the salesmand to do a full
 \begin_inset Formula $c_{j}$
 \end_inset
 
- is given by the function 
+ is given by the distance function 
 \begin_inset Formula $d(c_{i},c_{j})$
 \end_inset
 
@@ -130,11 +204,7 @@ In the traveling salesman problem, we wish for the salesmand to do a full
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-that is find the 
+and find the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -155,12 +225,11 @@ best
 \end_layout
 
 \begin_layout Standard
-The dynamic programming algorithm considers a pair 
+The dynamic programming algorithm considers a pairs of the form 
 \begin_inset Formula $(S,c_{i})$
 \end_inset
 
-.
- Here we have that 
+ where 
 \begin_inset Formula $S$
 \end_inset
 
@@ -169,7 +238,7 @@ The dynamic programming algorithm considers a pair
 \end_inset
 
 , and we have that 
-\begin_inset Formula $c_{i}\in S$
+\begin_inset Formula $c_{i}\notin S$
 \end_inset
 
 .
@@ -177,7 +246,7 @@ The dynamic programming algorithm considers a pair
 \begin_inset Formula $OPT[S,c_{i}]$
 \end_inset
 
- to be the minimum/optimal length tour starting at city 
+ to be the minimum/optimal length tour of all tours starting at city 
 \begin_inset Formula $c_{1}$
 \end_inset
 
@@ -190,141 +259,140 @@ The dynamic programming algorithm considers a pair
 \end_inset
 
 .
- When 
-\begin_inset Formula $|S|=1$
+ 
+\begin_inset Newline newline
 \end_inset
 
- then it is trivial to compute 
+
+\series bold
+Lemma: 
+\series default
+We can compute 
 \begin_inset Formula $OPT[S,c_{i}]$
 \end_inset
 
-, since we then know that 
-\begin_inset Formula $S=\{c_{i}\}$
-\end_inset
-
-, so we get that 
-\begin_inset Formula $OPT[S,c_{i}]=d(c_{1},c_{i})$
-\end_inset
-
-.
- The more interesting case in then when we get that the set has size 
-\begin_inset Formula $|S|>1$
-\end_inset
-
-.
- Then the value of 
-\begin_inset Formula $OPT[S,c_{i}]$
-\end_inset
-
- can be expressed at the recursion
+ as
 \begin_inset Formula 
 \[
-OPT[S,c_{i}]=\min\left\{ OPT[S\setminus\{c_{i}\},c_{j}]+d(c_{j},c_{i}):c_{j}\in S\setminus\{c_{i}\}\right\} 
+OPT[S,c_{i}]=\begin{cases}
+d(c_{1},c_{i}) & \text{if }S=\{c_{i}\}\\
+\min\left\{ OPT[S\setminus c_{i},c_{k}]+d(c_{k},c_{i}):c_{k}\in S\setminus c_{i}\right\}  & \text{if }\{c_{i}\}\subset S
+\end{cases}
 \]
 
 \end_inset
 
- which is the optimal way to visit all cities in 
+
+\series bold
+Proof
+\series default
+: When 
 \begin_inset Formula $S$
 \end_inset
 
- and end in 
+ consists of only the single vertex 
 \begin_inset Formula $c_{i}$
 \end_inset
 
- is to visit each vertex in 
-\begin_inset Formula $S\setminus\{c_{i}\}$
+, then the shortest path starting at 
+\begin_inset Formula $c_{1}$
 \end_inset
 
- and end 
-\begin_inset Formula $c_{j}$
-\end_inset
-
- and then go to vertex 
+and ending in 
 \begin_inset Formula $c_{i}$
 \end_inset
 
- for all 
-\begin_inset Formula $c_{j}\in S\setminus\{c_{i}\}$
+ is to just go to 
+\begin_inset Formula $c_{i}$
 \end_inset
 
 .
- This can be repeated recursively until the base case.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-This can perhaps pre proven like in the lecture
+ 
 \end_layout
 
+\begin_layout Standard
+The second case is when we want to find the optimal tour starting in 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ and we visit a nonempty set of cities 
+\begin_inset Formula $S$
+\end_inset
+
+, and then visit city 
+\begin_inset Formula $c_{i}$
 \end_inset
 
 .
- Stated in other words, if we have an optimal tour in 
+ We know conceptually that 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+ exists, since we have defined it.
+ So let us call the final edge that 
+\begin_inset Formula $OPT[S,c_{i}]$
+\end_inset
+
+ takes for 
+\begin_inset Formula $e=(c_{k},c_{i})$
+\end_inset
+
+.
+ That is, we the last city visited in 
 \begin_inset Formula $S$
 \end_inset
 
- with city 
-\begin_inset Formula $c_{j}$
+ is 
+\begin_inset Formula $c_{k}$
 \end_inset
 
-preceeding 
-\begin_inset Formula $c_{i}$
-\end_inset
-
- in the tour, then we have that
-\begin_inset Formula 
-\[
-OPT[S,c_{i}]=OPT[S\setminus\{c_{i}\},c_{j}]+d(c_{j},c_{i})
-\]
-
-\end_inset
-
- the optimal tour is the tour in 
-\begin_inset Formula $S$
-\end_inset
-
- without 
-\begin_inset Formula $c_{i}$
+and we then end the tour by taking 
+\begin_inset Formula $e$
 \end_inset
 
  ending in 
-\begin_inset Formula $c_{j}$
-\end_inset
-
- and then taking the edge 
-\begin_inset Formula $(c_{j},c_{i})$
-\end_inset
-
- (since if we take any other edge to get to 
 \begin_inset Formula $c_{i}$
-\end_inset
-
- it will be at least as long).
- We however, need to find the minimum edge 
-\begin_inset Formula $c_{j}$
-\end_inset
-
- that gets us to 
-\begin_inset Formula $c_{i}$
-\end_inset
-
- so we take the minimum around it (if we took a random edge it would not
- be a minimum and the TSP has that the graph is fully connected, so there
- is always an edge from 
-\begin_inset Formula $c_{j}\rightarrow c_{i}$
-\end_inset
-
-).
- The final optimal value for ending in city 
-\begin_inset Formula $c_{i}$
-\end_inset
-
- will be 
-\begin_inset Formula $OPT[\{c_{2},c_{3},...,c_{n}\},c_{i}]+d(c_{i},c_{1})$
 \end_inset
 
 .
+ This is stated as
+\begin_inset Formula 
+\begin{equation}
+OPT[S,c_{i}]=OPT[S\setminus c_{i},c_{k}]+d(c_{k},c_{i})
+\end{equation}
+
+\end_inset
+
+But what is the last vertex 
+\begin_inset Formula $c_{k}$
+\end_inset
+
+ that gives us an optimal tour? Well, let us just try all 
+\begin_inset Formula $c_{k}\in S\setminus c_{i}$
+\end_inset
+
+ and take the minimum
+\begin_inset Formula 
+\[
+\min\left\{ OPT[S\setminus c_{i},c_{k}]+d(c_{k},c_{i}):c_{k}\in S\setminus c_{i}\right\} 
+\]
+
+\end_inset
+
+giving us what we wanted to prove.
+ Using this lemma we can find the TSP tour as the tour starting in 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ and then visiting
+\begin_inset Formula 
+\[
+\min(OPT[\{c_{2},c_{3},...,c_{n}\},c_{i}]+d(c_{i},c_{1}))
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -335,6 +403,98 @@ status open
 unit cost ram model.
  Can we assume operations take constant time
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The algorithm
+\end_layout
+
+\begin_layout Standard
+Using the lemma we can device an algorithm that iteratively finds a better
+ tour by considering larger and larger subsets 
+\begin_inset Formula $S$
+\end_inset
+
+, and using the previous optimal tour of the smaller subset to find a better
+ tour of the larger subset.
+\end_layout
+
+\begin_layout Enumerate
+Initially calculate 
+\begin_inset Formula $OPT[c_{i},c_{i}]=d(c_{1},c_{i})$
+\end_inset
+
+ for all 
+\begin_inset Formula $i=2,..,n$
+\end_inset
+
+.
+ That is the optimal tour starting in 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ visiting 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+and stopping in 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is the distance between the two cities.
+ This uses part 1 of the lemma.
+\end_layout
+
+\begin_layout Enumerate
+Now we consider all subsets of 
+\begin_inset Formula $S\subseteq\{c_{2},c_{3},...,c_{n}\}$
+\end_inset
+
+ with length 
+\begin_inset Formula $|S|=2$
+\end_inset
+
+, then consider all subsets of length 
+\begin_inset Formula $|S|=3$
+\end_inset
+
+ up to all subsets of length 
+\begin_inset Formula $|S|=n-1$
+\end_inset
+
+(remember |S|=n-1)
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+At each iteration of a subset of a particular length we use the second part
+ of the lemma just proven to update and we set 
+\begin_inset Formula 
+\[
+OPT[S,c_{i}]=\min\{OPT[S\setminus\{c_{i}\},c_{k}]+d(c_{k},c_{i}):c_{k}\in S\setminus\{c_{i}\}\}
+\]
+
+\end_inset
+
+ NOTE: This is done for each 
+\begin_inset Formula $c_{i}\in S$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Now we can just find the optimal tour by the minimal tour
+\begin_inset Formula 
+\[
+\min\{OPT[S,c_{i}]+d(c_{i},c_{1}):i\in\{1,2,...,n\}\}
+\]
 
 \end_inset
 
@@ -363,17 +523,31 @@ For a fixed size set
 \end_inset
 
  vertices, and for each of them we calculate the cost of getting to each
- of the other vertices (this is just a lookup in 
+ of the other vertices using the lookup into 
 \begin_inset Formula $OPT$
 \end_inset
 
-).
- There are however 
-\begin_inset Formula ${n \choose k}$
+.
+ This is the update of 
+\begin_inset Formula $OPT$
 \end_inset
 
- of such subsets of size 
+ for a particular subset of size 
+\begin_inset Formula $|S|=k$
+\end_inset
+
+.
+ We have to do the 
+\begin_inset Formula ${n-1 \choose k}$
+\end_inset
+
+ times for each subset of size 
 \begin_inset Formula $k$
+\end_inset
+
+.
+ We iterate over subsets of size 
+\begin_inset Formula $k\in\{2,3,...,n-1\}$
 \end_inset
 
 .
@@ -381,51 +555,64 @@ For a fixed size set
 \end_layout
 
 \begin_layout Standard
-The algorithm wants to consider subsets of size 
-\begin_inset Formula $2,3,...,n-1$
+In total we do work for each 
+\begin_inset Formula $k\in\{2,3,...,n-1\}$
 \end_inset
 
- since the case of 
-\begin_inset Formula $1$
-\end_inset
-
- is trivial as explained earlier, and 
-\begin_inset Formula $n-1$
-\end_inset
-
- since we from the optimal tour in the subset of size 
-\begin_inset Formula $n-1$
-\end_inset
-
- take the minimum edge to the last vertex.
- There are 
-\begin_inset Formula ${n \choose k}$
-\end_inset
-
- of such subsets of size 
+.
+ How much work do we do for a particular 
 \begin_inset Formula $k$
 \end_inset
 
 .
- Furthermore, when we have a given set of size 
+ Firstly, we have 
+\begin_inset Formula $\text{\ensuremath{{n-1 \choose k}}}$
+\end_inset
+
+ different subsets for a 
 \begin_inset Formula $k$
 \end_inset
 
-, we make 
-\begin_inset Formula $k-1$
-\end_inset
-
- lookups into 
+.
+ For each of those subsets we lookup into 
 \begin_inset Formula $OPT$
 \end_inset
 
- to calculate the optimal path to the other vertices in the subset for each
- 
+ the distance from 
+\begin_inset Formula $c_{k}\in S\setminus\{c_{i}\}$
+\end_inset
+
+ to 
+\begin_inset Formula $c_{i}\in S$
+\end_inset
+
+ for all vertices 
+\begin_inset Formula $c_{k}\in S$
+\end_inset
+
+, where 
+\begin_inset Formula $S$
+\end_inset
+
+ is a subset of size 
 \begin_inset Formula $k$
 \end_inset
 
- vertex.
- This gives us the sum
+.
+ This means we do work 
+\begin_inset Formula $k-1$
+\end_inset
+
+ for for each of the 
+\begin_inset Formula $k$
+\end_inset
+
+ vertices
+\begin_inset Formula $c_{i}\in S$
+\end_inset
+
+.
+ This gives us the total work to be
 \end_layout
 
 \begin_layout Standard
@@ -459,32 +646,22 @@ Why does dynamic programming work here?
 \end_layout
 
 \begin_layout Standard
-When we for a subset of size 
-\begin_inset Formula $k$
+In general for dynamic programming to work we need to show there is optimal
+ substructure - an optimal solution consists of optimal solutions to subproblems
+ that can be solved independently.
+ We showed optimal substructure by (1), since 
+\begin_inset Formula $OPT[S,c_{i}]$
 \end_inset
 
- have an optimal tour 
-\begin_inset Formula $OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k-1)}}}\},c_{\pi(k)}]$
+ consist of the optimal solution to 
+\begin_inset Formula $OPT[S\setminus\{c_{i}\},c_{i}]$
 \end_inset
 
- then we will have that the optimal tour for subsets of size 
-\begin_inset Formula $k+1$
+ and by taking the minimum over all possible choices of 
+\begin_inset Formula $c_{k}$
 \end_inset
 
- is 
-\begin_inset Formula 
-\[
-OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k)}}}\},c_{\pi(k+1)}]=OPT[\{c_{\pi(2)},...,c_{\text{\ensuremath{\pi(k-1)}}}\},c_{\pi(k)}]+d(c_{\pi(k)},c_{\pi(k+1)})
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-So we have optimal substructure, and the solution to the smaller problems
- are part of the solution to the larger problem.
+.
  The only drawback is that we have to allocate space for 
 \begin_inset Formula $OPT[S,c_{i}]$
 \end_inset
@@ -1174,7 +1351,9 @@ conflict
 \end_layout
 
 \begin_layout Standard
-Using reduction rules to reduce the problem instance is known as kernelization.
+Using reduction rules to reduce the problem instance is known as kernelization,
+ with the final problem(graph) known as the kernel.
+ We can brute force the kernel.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1297,7 +1476,406 @@ conflicts.
 \begin_inset Formula $\frac{1}{2}n\cdot k$
 \end_inset
 
- conflicts before we try the bounded search tree approach
+ conflicts before we try the bounded search tree approach.
+ So for each subproblem we have to check if removing those 
+\begin_inset Formula $k$
+\end_inset
+
+ guests solves the 
+\begin_inset Formula $O(nk)$
+\end_inset
+
+ conflicts.
+ This gives a running time of 
+\begin_inset Formula $O(nk\cdot2^{k})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If we consider 
+\begin_inset Formula $k$
+\end_inset
+
+ to be a constant, then this is actually a polynomial time algorithm.
+ The algorithm is only exponential in 
+\begin_inset Formula $k$
+\end_inset
+
+ but linear in 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ This algorithm is considers a fixed parameter algorithm FPT: 
+\begin_inset Formula $f(k)\cdot n^{c}$
+\end_inset
+
+ for a constant 
+\begin_inset Formula $c$
+\end_inset
+
+ that is independent on 
+\begin_inset Formula $n$
+\end_inset
+
+ and 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ For this algorithm we hade 
+\begin_inset Formula $f(k)=2^{k}$
+\end_inset
+
+ and 
+\begin_inset Formula $n^{c}=n^{1}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection
+FPT and XP
+\end_layout
+
+\begin_layout Standard
+The problem of vertex cover is NP-complete for finding a minimal value of
+ 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ But when we fixed 
+\begin_inset Formula $k$
+\end_inset
+
+ then we could actually construct two linear time algorithms for the problems.
+ One using kernelization and the other a bounded search tree.
+\end_layout
+
+\begin_layout Standard
+A slice-wice polynomail algorithm (XP) is if it has running time 
+\begin_inset Formula $f(k)\cdot n^{g(k)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Clique problem
+\end_layout
+
+\begin_layout Standard
+We can check if a graph contains a clique of size 
+\begin_inset Formula $k$
+\end_inset
+
+ in 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ time.
+ The naive approach is to for each subset of 
+\begin_inset Formula $k$
+\end_inset
+
+ vertices, 
+\begin_inset Formula ${n \choose k}=O(\frac{n^{k}}{k^{2}})$
+\end_inset
+
+, check in time 
+\begin_inset Formula $k^{2}$
+\end_inset
+
+ whether any of the groups form a clique.
+ This is however very hard since it is exponential in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Again, if we were to design an FPT algorithm for some 
+\begin_inset Formula $k$
+\end_inset
+
+, say 
+\begin_inset Formula $k=100$
+\end_inset
+
+, and assume it is NP-hard for 
+\begin_inset Formula $k=100$
+\end_inset
+
+, then we would have an 
+\begin_inset Formula $O(n^{100})$
+\end_inset
+
+ time algorithm using the above technique and have thus P=NP.
+ There is however an XP algorithm for this problem, and it seems hard to
+ explain why XP algorithms do not seem to have FPT algorithms.
+ In fact it is W[1]-hard that the clique problem for a fixed 
+\begin_inset Formula $k$
+\end_inset
+
+ is not in FPT.
+ Therefore we are unlikely to find a 
+\begin_inset Formula $f(k)\cdot n^{o(k)}$
+\end_inset
+
+time algorithm and our 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ is in some sense optimal
+\end_layout
+
+\begin_layout Standard
+We now imagine the town as a graph, where there is an edge between two vertices
+ if the people are friends.
+ It is believed that people get mad if they are rejected at the door of
+ the bar.
+ Furthermore, whenever a group of friends show up at the bar, and you reject
+ any one of them, then they will all get angry and attack you - they share
+ a one for all semantic and any one guest rejected in the group rejected
+ makes the entire group angry.
+ We are only capable of fighting 
+\begin_inset Formula $k-1$
+\end_inset
+
+ guests, so we are afraid of cliques of 
+\begin_inset Formula $k$
+\end_inset
+
+, since this will be a group where everyone knows everyone and rejecting
+ one of them makes them all mad.
+ We have just discussed the algorithm for determining whether a clique of
+ size 
+\begin_inset Formula $k$
+\end_inset
+
+ exists is 
+\begin_inset Formula $O(n^{k})$
+\end_inset
+
+ and it is optimal.
+\end_layout
+
+\begin_layout Standard
+However, it is imagined that people have very few friends - non-one has
+ more than 
+\begin_inset Formula $\Delta=20$
+\end_inset
+
+-friends, so we need to figure out if a 
+\begin_inset Formula $k$
+\end_inset
+
+ size clique exists within a 
+\begin_inset Formula $\Delta$
+\end_inset
+
+-degree graph.
+ Now a simple algorithm can be created.
+ If we guess a vertex 
+\begin_inset Formula $v$
+\end_inset
+
+ that is part of a clique, then we check all the 
+\begin_inset Formula $2^{\Delta}$
+\end_inset
+
+ subset of the neighbors of 
+\begin_inset Formula $v$
+\end_inset
+
+, and return the largest clique.
+ We can get away with only considering the (at most) 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ neighbors of 
+\begin_inset Formula $v$
+\end_inset
+
+ since in the clique everyone knows each other, and the clique can therefore
+ be no larger than the size of some subset of friends/neighbors of 
+\begin_inset Formula $v$
+\end_inset
+
+.
+ Therefore we consider each subset and checks if it is a clique.
+ Checking if the subset is a clique takes at most 
+\begin_inset Formula $\Delta²$
+\end_inset
+
+ time, since we for each neighbor needs to check if there is an edge to
+ every other neighbor in the subset.
+ We however never know if we guessed 
+\begin_inset Formula $v$
+\end_inset
+
+ to be a clique member, so we do it for all vertices and get the final running
+ time 
+\begin_inset Formula $O(\Delta²\cdot2^{\Delta}\cdot n)$
+\end_inset
+
+.
+ This shows that CLIQUE is FPT when the parameter to the algorithm is the
+ degree of the graph instead of the clique size.
+\end_layout
+
+\begin_layout Subsection
+Type of parameterization
+\end_layout
+
+\begin_layout Standard
+For the bar-fight prevention problem, we had that 
+\begin_inset Formula $k$
+\end_inset
+
+ was an input to the algorithm.
+ Furthermore, 
+\begin_inset Formula $k$
+\end_inset
+
+ told us something about the solution that we wanted - 
+\begin_inset Formula $k$
+\end_inset
+
+ is related to the objective of the solution we want.
+ In the clique problem however, we had that 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ was the maximum degree of the graph, and thereby a structural property
+ of the graph instead of an input to the algorithm used as part of the objective.
+ Simply put 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a measure of a property on the input we could exploit to get a good
+ algorithm.
+\end_layout
+
+\begin_layout Standard
+For successful parameterized algorithms we need to
+\end_layout
+
+\begin_layout Enumerate
+Believe that the selected parameter is typically small (otherwise the FPT
+ algorithm will not be fast since it is exponential in the parameter).
+\end_layout
+
+\begin_layout Enumerate
+We want the combinatorial explosion restricted to the parameter - we want
+ FPT algorithms.
+\end_layout
+
+\begin_layout Section
+Definitions
+\end_layout
+
+\begin_layout Enumerate
+Definition 1.1.
+ A parameterized problem is a language 
+\begin_inset Formula $L\subseteq\Sigma^{*}\times N$
+\end_inset
+
+, where 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is a fixed, finite alphabet.
+ For an instance 
+\begin_inset Formula $(x,k)\in\Sigma^{*}\times N$
+\end_inset
+
+ k is called the parameter.
+\end_layout
+
+\begin_layout Enumerate
+Definition 1.2.
+ A parameterized problem 
+\begin_inset Formula $L\subseteq\Sigma^{*}\times N$
+\end_inset
+
+is called fixed- parameter tractable (FPT) if there exists an algorithm
+ A (called a fixed-parameter algorithm), a computable function 
+\begin_inset Formula $f:N\rightarrow N$
+\end_inset
+
+, and a constant c such that, given 
+\begin_inset Formula $(x,k)\in\Sigma^{*}\times N$
+\end_inset
+
+, the algorithm A correctly decides whether (x, k) 
+\begin_inset Formula $\in$
+\end_inset
+
+ L in time bounded by 
+\begin_inset Formula $f(k)·|(x,k)|^{c}$
+\end_inset
+
+ (|(x,c)| is the encoding of the instance and the parameter).
+ The complexity class containing all fixed-parameter tractable problems
+ is called FPT.
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+You can optimize 
+\begin_inset Formula $f(k)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Optimize the polynomial factor 
+\begin_inset Formula $|(x,k)|^{c}$
+\end_inset
+
+.
+ That is, try to minimize 
+\begin_inset Formula $c$
+\end_inset
+
+.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Definition 1.3.
+ A parameterized problem 
+\begin_inset Formula $L\subseteq\times N$
+\end_inset
+
+ is called slice-wise polynomial (XP) if there exists an algorithm A and
+ two computable functions f, g: N 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ N such that, given 
+\begin_inset Formula $(x,k)\in\Sigma^{*}\times N$
+\end_inset
+
+, the algorithm A correctly decides whether 
+\begin_inset Formula $(x,k)\in L$
+\end_inset
+
+ in time bounded by 
+\begin_inset Formula $f(k)·|(x,k)|^{g(k)}$
+\end_inset
+
+.
+ The complexity class containing all slice-wise polynomial problems is called
+ XP.
+\end_layout
+
+\begin_layout Standard
+The above definition all refer to polynomial in size of the encoding of
+ the problem.
 \end_layout
 
 \end_body
