@@ -112,13 +112,15 @@ Ford Fulkerson method
 \end_layout
 
 \begin_layout Enumerate
-Max-flow min-cut theorem
+Edmonds Karp algorithm
 \end_layout
 
+\begin_deeper
 \begin_layout Enumerate
-Ford fulkerson algorithm
+Analysis
 \end_layout
 
+\end_deeper
 \begin_layout Section
 Definitions
 \end_layout
@@ -2192,13 +2194,13 @@ meaning the shortest path in
 \end_inset
 
  when augmenting flow) since otherwise if we did have 
-\begin_inset Formula $(u,v)\in E$
+\begin_inset Formula $(u,v)\in E_{f}$
 \end_inset
 
  we would get
 \begin_inset Formula 
 \begin{align*}
-\delta_{f}(s,v) & \le\delta_{f}(s,u)+1\\
+\delta_{f}(s,v) & \le\delta_{f}(s,u)+1\text{ triangle inequality + unit distance}\\
 \leq & \delta_{f'}(s,u)+1\text{ due to the way we picked u. see above}\\
 = & \delta_{f'}(s,v)
 \end{align*}
@@ -2223,34 +2225,39 @@ which contradicts that
 \end_inset
 
 .
- This means the algorithm has augmented flow along 
-\begin_inset Formula $(u,v)$
+ For this to happen, EK has augmented flow along 
+\begin_inset Formula $(v,u)$
 \end_inset
 
- and the edge appears by the flow augmentation.
- Edmonds karp always chooses 
-\begin_inset Formula $p=s\rightsquigarrow t$
-\end_inset
-
- as the shortest distance, so the augmentation augmented flow along the
- shortest path in 
-\begin_inset Formula $E_{f}$
-\end_inset
-
-.Since the residual network 
+ in 
 \begin_inset Formula $G_{f}$
 \end_inset
 
- does not have have 
+, which caused the reversal of the edge 
 \begin_inset Formula $(u,v)$
 \end_inset
 
- it will instead have 
-\begin_inset Formula $(v,u)\in E_{f}$
+ to appear.
+ However, since EK only augments flow along shortest paths, then we know
+ that 
+\begin_inset Formula $u$
+\end_inset
+
+ becomes before 
+\begin_inset Formula $p$
+\end_inset
+
+ on a shortest path in 
+\begin_inset Formula $G_{f}$
 \end_inset
 
 .
- This tells us
+ So we have 
+\begin_inset Formula $p:s\rightsquigarrow u\rightarrow v$
+\end_inset
+
+.
+ Using this we get
 \begin_inset Formula 
 \begin{align*}
 \delta_{f}(s,v) & =\delta_{f}(s,u)-1\text{ since there is an edge (v,u)}\\
@@ -2325,16 +2332,49 @@ We say an edge on an augmenting path is critical when
 
 .
  Critical edges disappear from the residual network after flow augmentation.
- Why? Since 
-\begin_inset Formula $f(u,v)=c(u,v)$
+ Why? If 
+\begin_inset Formula $(u,v)\in E$
 \end_inset
 
- which means that 
+ and has flow 
+\begin_inset Formula $f$
+\end_inset
+
+ then pushing 
+\begin_inset Formula $c_{f}(u,v)=c(u,v)-f(u,v)$
+\end_inset
+
+ more flow along the edges gives it capacity flow, and then 
 \begin_inset Formula $c_{f}(u,v)=c(u,v)-f(u,v)=0$
 \end_inset
 
 .
- There will always be at least one critical edge.
+ So the edge disappears from 
+\begin_inset Formula $G_{f}$
+\end_inset
+
+.
+ Likewise, if we have that the reversal of an edge is critical, then 
+\begin_inset Formula $c_{f}(u,v)=f(v,u)$
+\end_inset
+
+, and augmenting the flow 
+\begin_inset Formula $f\uparrow f_{p}$
+\end_inset
+
+ will cancel out the flow along 
+\begin_inset Formula $(v,u)$
+\end_inset
+
+ so that 
+\begin_inset Formula $f(v,u)=0$
+\end_inset
+
+ and the edge disappears.
+\end_layout
+
+\begin_layout Standard
+There will always be at least one critical edge.
  Why? This is how we choose the flow 
 \begin_inset Formula $f_{p}$
 \end_inset

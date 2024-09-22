@@ -84,24 +84,6 @@ Motivation from NPC problems
 \end_layout
 
 \begin_layout Enumerate
-Exact exponential algorithms
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-TSP problem
-\end_layout
-
-\begin_layout Enumerate
-TSP Algorithm
-\end_layout
-
-\begin_layout Enumerate
-Running time
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
 Parameterized algorithms
 \end_layout
 
@@ -121,6 +103,24 @@ Running time
 
 \begin_layout Enumerate
 FPT
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Exact exponential algorithms
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+TSP problem
+\end_layout
+
+\begin_layout Enumerate
+TSP Algorithm
+\end_layout
+
+\begin_layout Enumerate
+Running time
 \end_layout
 
 \end_deeper
@@ -630,7 +630,7 @@ In total we do work for each
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}(j-1) & \leq\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}n\\
+\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}(k-1) & \leq\sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{k}n\\
 \leq & \sum_{k=2}^{n-1}{n-1 \choose k}\sum_{j=1}^{n}n\\
 = & \sum_{k=2}^{n-1}{n-1 \choose k}n^{2}\\
 = & n^{2}\cdot\sum_{k=2}^{n-1}{n-1 \choose k}\\
